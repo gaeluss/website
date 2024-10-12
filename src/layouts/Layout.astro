@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions"
 import Header from '../components/Header.astro';
 import '@fontsource-variable/onest';
 
@@ -17,8 +18,12 @@ const { currentLocale } = Astro;
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="robots" content="index, follow" />
+		<meta name="keywords" content="desarrollo de software, desarrollo web, aplicaciones móviles, diseño UI/UX, consultoría tecnológica, desarrollo de aplicaciones, soluciones tecnológicas, empresa de software, creación de software, desarrollo frontend, desarrollo backend, aplicaciones multiplataforma" />
+		<meta name="author" content="Gaeluss" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
 	<body>
 		<Header />
@@ -40,20 +45,9 @@ const { currentLocale } = Astro;
 	  }
 	}
 
-	@font-face {
-	  font-family: "Tomaso";
-	  font-style: normal;
-	  font-weight: normal;
-	  font-display: swap;
-	  src: url("/fonts/tomaso.woff2") format("woff2");
-	  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-		U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
-		U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-	}
-
 	html {
 	  font-family: "Onest Variable", system-ui, sans-serif;
-	  background: #151a36;
+	  background: black;
 	}
 	
 	::-webkit-scrollbar {
