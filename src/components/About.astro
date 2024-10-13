@@ -1,10 +1,86 @@
-<section id="vision" class="py-16 my-56 flex justify-center items-center" style="clip-path: polygon(50% 0, 100% 0, 100% 90%, 50% 100%, 50% 100%, 0 90%, 0 0);">
-  <div class="container mx-auto flex flex-col gap-20">
-    <h2 class="text-3xl font-bold text-center text-white mb-12">Our Vision</h2>
-    <div class="bg-gray-800 rounded-lg shadow-md p-8">
-      <p class="text-white text-lg leading-relaxed">
-        At Gaeluss, our vision is to be a leading force in the software development industry, delivering cutting-edge, innovative solutions that empower businesses to thrive in the digital age. We strive to create a future where technology is seamlessly integrated into everyday life, enhancing efficiency, accessibility, and user experiences across all sectors.
-      </p>
-    </div>
+<section id="about" class="relative h-screen w-full">
+  <div class="sticky top-0 h-screen w-full">
+    <video id="scroll-video" class="w-full h-full object-cover" src="/motion-logo.webm" muted playsinline></video>
   </div>
 </section>
+
+<section id="content-after" class="relative h-screen w-full bg-gray-100">
+  <div class="container mx-auto p-4">
+    <h1 class="text-xl font-bold">Contenido posterior al video</h1>
+    <p>Este contenido aparecerá una vez que el video termine.</p>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const video = document.getElementById("scroll-video") as HTMLVideoElement;
+    const aboutSection = document.getElementById("about")!;
+    const contentAfter = document.getElementById("content-after")!;
+    
+    let videoPlaying = false;
+    let videoHasPlayed = false; 
+    let isScrolling = false;
+
+    if (video instanceof HTMLVideoElement && aboutSection) {
+      window.addEventListener("scroll", function () {
+        if (!isScrolling) {
+          window.requestAnimationFrame(updateVideo);
+          isScrolling = true;
+        }
+      });
+
+      function updateVideo() {
+        const sectionTop = aboutSection.offsetTop;
+        const sectionHeight = aboutSection.offsetHeight;
+        const scrollY = window.scrollY;
+
+        if (scrollY >= sectionTop && scrollY <= sectionTop + sectionHeight) {
+          videoPlaying = true;
+          contentAfter.style.display = "none";
+
+          const scrollFraction = (scrollY - sectionTop) / sectionHeight;
+          const limitedFraction = Math.max(0, Math.min(1, scrollFraction));
+
+          video.currentTime = limitedFraction * video.duration;
+        } else if (scrollY > sectionTop + sectionHeight && videoPlaying) {
+          if (video.currentTime >= video.duration) {
+            videoPlaying = false;
+            videoHasPlayed = true;
+            contentAfter.style.display = "block";
+          }
+        }
+        isScrolling = false;
+      }
+
+      video.addEventListener("ended", function () {
+        videoPlaying = false;
+        videoHasPlayed = true;
+        contentAfter.style.display = "block";
+      });
+
+      window.addEventListener("beforeunload", function (event) {
+        if (!videoHasPlayed && video.currentTime > 0) {
+          event.preventDefault();
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  #about {
+    height: 250vh;
+  }
+
+  #scroll-video {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+  }
+
+  #content-after {
+    display: none;
+  }
+</style>
