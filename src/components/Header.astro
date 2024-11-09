@@ -1,0 +1,95 @@
+---
+import LanguageSelector from './LanguageSelector.astro';
+
+import { getI18N } from '../i18n';
+
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
+<header id="header-nav" class="fixed w-screen py-3 z-20 top-0 px-8 lg:px-0">
+    <div class="flex justify-between items-center max-w-7xl mx-auto">
+        <a href="#home" class="flex-shrink-0 size-16">
+            <img src="/logo.svg" alt="Logo">
+        </a>
+
+        <nav class="hidden lg:flex flex-1 justify-center">
+            <ul class="flex gap-1 md:gap-12">
+                <li><a href="#about" class="relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{i18n.HEADER.VISION}</a></li>
+                <li><a href="#services" class="relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{i18n.HEADER.SERVICES}</a></li>
+                <li><a href="#contact" class="relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{i18n.HEADER.CONTACT}</a></li>
+            </ul>
+        </nav>
+
+        <div class="hidden lg:flex items-center">
+            <LanguageSelector />
+        </div>
+
+        <button id="menu-toggle" class="lg:hidden focus:outline-none">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </div>
+    
+    <div id="mobile-menu" class="lg:hidden hidden flex-col items-center mt-4 space-y-4">
+        <nav>
+            <ul class="flex flex-col gap-4 uppercase">
+                <li><a href="#about">{i18n.HEADER.VISION}</a></li>
+                <li><a href="#services">{i18n.HEADER.SERVICES}</a></li>
+                <li><a href="#contact">{i18n.HEADER.CONTACT}</a></li>
+            </ul>
+        </nav>
+        <LanguageSelector />
+    </div>
+</header>
+
+<script>
+    document.addEventListener('astro:page-load', function () {
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav ul li a');
+
+        const options = {
+        root: null,
+        threshold: 0.3
+        };
+
+        function handleIntersect(entries: any[]) {
+            entries.forEach((entry: { isIntersecting: any; target: { getAttribute: (arg0: string) => any; }; }) => {
+                if (entry.isIntersecting) {
+                const sectionId = entry.target.getAttribute('id');
+
+                navLinks.forEach((link) => link.classList.remove('active-link'));
+
+                const activeLink = document.querySelector(`nav ul li a[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active-link');
+                }
+                }
+            });
+        }
+
+        const observer = new IntersectionObserver(handleIntersect, options);
+
+        sections.forEach((section) => observer.observe(section));
+
+        const menuToggle = document.getElementById('menu-toggle')!;
+        const mobileMenu = document.getElementById('mobile-menu')!;
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
+</script>
+
+<style>
+.active-link::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transform: scaleX(1);
+    transition: transform 0.5s;
+}
+</style>

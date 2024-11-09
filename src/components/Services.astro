@@ -1,0 +1,64 @@
+---
+import { getI18N } from '../i18n';
+
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
+<section id="services" class="py-20 mx-12">
+  <div class="container mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-12 text-center">{i18n.SERVICES.TITLE}</h2>
+    <div class="grid gap-6 grid-cols-1 md:grid-cols-4 lg:grid-cols-6">
+      <div class="bg-gray-800 rounded-lg shadow-md p-20 relative md:col-span-2 lg:col-span-4 group overflow-hidden border border-gray-400">
+        <div class="absolute inset-0 bg-blue-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+        <div class="relative z-10">
+          <div class="flex flex-row gap-20 justify-center mb-20">
+            <img src="/assets/icons/code_rate.svg" alt="Code icon representing development rate" class="size-28 opacity-70 hidden lg:block">
+            <img src="/assets/icons/terminal.svg" alt="Terminal icon representing coding environment" class="size-28 opacity-70 hidden lg:block">
+            <img src="/assets/icons/api.svg" alt="API icon representing API integration" class="size-28 opacity-70 hidden xl:block">
+            <img src="/assets/icons/web.svg" alt="Web icon representing web applications" class="size-28 opacity-70">
+          </div>
+
+          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.WEB_DEVELOPMENT}</h3>
+          <p set:html={i18n.SERVICES.WEB_DEVELOPMENT_DESCRIPTION} class="text-white"></p>
+        </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg shadow-md p-20 relative md:col-span-2 lg:col-span-2 group overflow-hidden border border-gray-400">
+        <div class="absolute inset-0 bg-pink-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+        <div class="relative z-10">
+          <div class="flex flex-row gap-20 justify-center mb-20">
+            <img src="/assets/icons/movil2.svg" alt="Mobile phone icon representing mobile applications" class="size-28 opacity-70">
+            <img src="/assets/icons/pc_movil.svg" alt="Device icon showing compatibility with desktop and mobile" class="size-28 opacity-70">
+          </div>
+
+          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.MOBILE_DEVELOPMENT}</h3>
+          <p set:html={i18n.SERVICES.MOBILE_DEVELOPMENT_DESCRIPTION} class="text-white"></p>
+        </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg shadow-md p-20 relative md:col-span-2 lg:col-span-2 group overflow-hidden border border-gray-400">
+        <div class="absolute inset-0 bg-pink-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+        <div class="relative z-10">
+          <div class="flex flex-row justify-center mb-20">
+            <img src="/assets/icons/diseño_ordenador2.svg" alt="Design icon showing computer and creativity tools" class="size-28 opacity-70">
+          </div>
+
+          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.DESIGN}</h3>
+          <p set:html={i18n.SERVICES.DESIGN_DESCRIPTION} class="text-white"></p>
+        </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg shadow-md p-20 relative md:col-span-2 lg:col-span-4 group overflow-hidden border border-gray-400">
+        <div class="absolute inset-0 bg-blue-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+        <div class="relative z-10">
+          <div class="flex flex-row gap-20 justify-center mb-20">
+            <img src="/assets/icons/persona_pantallas.svg" alt="Person icon with screens representing consulting" class="size-28 opacity-70 hidden lg:block">
+            <img src="/assets/icons/manos_juntas.svg" alt="Hands icon symbolizing collaboration" class="size-28 opacity-70">
+            <img src="/assets/icons/conferencia.svg" alt="Conference icon representing consulting sessions" class="size-28 opacity-70">
+          </div>
+          
+          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.CONSULTING}</h3>
+          <p set:html={i18n.SERVICES.CONSULTING_DESCRIPTION} class="text-white"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

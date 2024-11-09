@@ -1,0 +1,86 @@
+---
+import { getI18N } from '../i18n';
+
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
+<section
+  id="about"
+  class="relative w-full flex items-center justify-center bg-gray-800 py-28"
+>
+  <div class="container mx-auto flex flex-col items-center md:flex-row p-4">
+    <div class="w-full md:w-5/6 lg:w-4/5 h-96 md:h-[40rem] relative overflow-hidden rounded-lg">
+      <video
+        id="about-video"
+        class="w-full h-full object-cover"
+        src="/motion-logo.webm"
+        preload="auto"
+        muted
+        playsinline
+        aria-label="Video de presentación de Gaeluss"
+      ></video>
+    </div>
+
+    <div
+      class="w-full md:w-3/4 lg:w-2/3 text-white text-center md:text-left mt-6 md:mt-0 gradient-border-alt"
+    >
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4" aria-label=`Título: ${i18n.ABOUT.TITLE}`>
+        {i18n.ABOUT.TITLE}
+      </h1>
+      <p set:html={i18n.ABOUT.DESCRIPTION} class="text-lg md:text-xl text-gray-300 mb-8"></p>
+      <h2 class="text-3xl font-semibold text-gray-100 mb-3">
+        {i18n.ABOUT.SUBTITLE}
+      </h2>
+      <ul class="list-disc list-inside text-lg md:text-xl text-gray-300 space-y-2">
+        <li set:html={i18n.ABOUT.LIST_1}></li>
+        <li set:html={i18n.ABOUT.LIST_2}></li>
+        <li set:html={i18n.ABOUT.LIST_3}></li>
+        <li set:html={i18n.ABOUT.LIST_4}></li>
+        <li set:html={i18n.ABOUT.LIST_5}></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const video = document.getElementById("about-video") as HTMLVideoElement;
+    const aboutSection = document.getElementById("about");
+
+    if (video && aboutSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              video.play();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(aboutSection);
+    }
+  });
+</script>
+
+<style>
+  #about {
+    clip-path: polygon(50% 0, 100% 10%, 100% 100%, 0 100%, 0 10%);
+  }
+  .gradient-border-alt::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border-radius: 8px;
+    background: linear-gradient(to top, #284add, #f21973);
+    z-index: -1;
+  }
+  .gradient-border-alt {
+    position: relative;
+    background-color: #1f2937;
+    padding: 40px;
+    border-radius: 8px;
+  }
+</style>

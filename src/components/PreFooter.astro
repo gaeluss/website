@@ -1,0 +1,14 @@
+---
+import { getI18N } from '../i18n';
+
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
+<section id="contact" class="py-16 bg-gradient-to-r from-blue-800 to-pink-800 text-white">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-4">{i18n.PREFOOTER.TITLE}</h2>
+    <p class="mb-8">{i18n.PREFOOTER.DESCRIPTION}</p>
+    <a href="mailto:info@gaeluss.com" class="inline-block bg-white text-gray-900 font-semibold px-8 py-3 rounded-full shadow-md hover:bg-gray-200">{i18n.PREFOOTER.BUTTON}</a>
+  </div>
+</section>

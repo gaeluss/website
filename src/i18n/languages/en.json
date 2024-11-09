@@ -1,0 +1,44 @@
+{
+  "SEO_TITLE": "Gaeluss | Innovation in Custom Software Development",
+  "SEO_DESCRIPTION": "Gaeluss offers innovative custom software development solutions for companies looking to optimize processes and digitally transform their business. Experts in web and mobile applications with a focus on quality and efficiency.",
+  "SEO_KEYWORDS": "software development, web development, mobile applications, UI/UX design, technology consulting, application development, technology solutions, software company, software creation, frontend development, backend development, cross-platform applications",
+  "VIDEO": {
+    "SUBTITLE": "The Future of Software"
+  },
+  "HEADER": {
+    "VISION": "Vision",
+    "SERVICES": "Services",
+    "CONTACT": "Contact"
+  },
+  "ABOUT": {
+    "TITLE": "About Gaeluss",
+    "DESCRIPTION": "Gaeluss is a <strong>software development company</strong> committed to <strong>innovation</strong> and <strong>quality</strong>. Our focus is on providing <strong>efficient technology solutions</strong> to help companies achieve their goals.",
+    "SUBTITLE": "Vision and Values:",
+    "LIST_1": "<strong>Constant innovation</strong> to stay at the forefront of technology.",
+    "LIST_2": "<strong>Quality</strong> in every detail of our work, ensuring reliable solutions.",
+    "LIST_3": "<strong>Transparency and ethics</strong> in our relationships with clients and collaborators.",
+    "LIST_4": "<strong>Client-centered approach</strong> to understand and meet their expectations.",
+    "LIST_5": "Collaboration as the foundation for building successful projects."
+  },
+  "SERVICES": {
+    "TITLE": "Our Services",
+    "WEB_DEVELOPMENT": "Web Development",
+    "WEB_DEVELOPMENT_DESCRIPTION": "We create <strong>high-quality web applications</strong> using <strong>modern technologies</strong> such as <strong>React</strong>, <strong>Astro</strong>, and more.",
+    "MOBILE_DEVELOPMENT": "Mobile Application Development",
+    "MOBILE_DEVELOPMENT_DESCRIPTION": "Creation of <strong>cross-platform mobile applications</strong> with an <strong>intuitive design</strong> that provides the best user experience.",
+    "DESIGN": "UI/UX Design",
+    "DESIGN_DESCRIPTION": "Our team focuses on <strong>user-friendly interface design</strong> that prioritizes <strong>user experience</strong> and <strong>engagement</strong>.",
+    "CONSULTING": "Consulting Services",
+    "CONSULTING_DESCRIPTION": "We offer <strong>consulting services</strong> to help you choose the <strong>technology solutions</strong> suited to your <strong>company's needs</strong>."
+  },
+  "PREFOOTER": {
+    "TITLE": "Ready to bring your ideas to life?",
+    "DESCRIPTION": "At Gaeluss, we transform your ideas into impactful digital solutions.",
+    "BUTTON": "Contact Us"
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Innovative software solutions for web and mobile. We create technology that enhances your business.",
+    "LINKS": "Quick Links",
+    "FOLLOW": "Follow Us"
+  }
+}
