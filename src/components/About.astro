@@ -47,24 +47,25 @@ const i18n = getI18N({ currentLocale });
 
 <script>
   document.addEventListener("astro:page-load", () => {
-    const video = document.getElementById("about-video") as HTMLVideoElement;
-    const aboutSection = document.getElementById("about");
+  const video = document.getElementById("about-video") as HTMLVideoElement;
 
-    if (video && aboutSection) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              video.play();
-              observer.disconnect();
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-      observer.observe(aboutSection);
-    }
-  });
+  if (window.innerWidth > 768 && video) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(video);
+  } else if (video) {
+    video.play();
+  }
+});
 </script>
 
 <style>
