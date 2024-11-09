@@ -16,11 +16,12 @@ const i18n = getI18N({ currentLocale });
         class="w-full h-full object-cover hidden"
         preload="auto"
         autoplay
+        loop
         muted
         playsinline
         aria-label="Video de presentación de Gaeluss"
       >
-        <source src="/motion-logo.webm" type="video/webm" />
+        <!-- Solo un formato (mp4) para asegurar compatibilidad -->
         <source src="/motion-logo.mp4" type="video/mp4" />
       </video>
     </div>
@@ -51,25 +52,11 @@ const i18n = getI18N({ currentLocale });
     const video = document.getElementById("about-video") as HTMLVideoElement;
 
     if (video) {
-      if (window.innerWidth <= 768) {
-        video.play();
-        video.classList.remove("hidden");
-      } else {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                video.classList.remove("hidden");
-                video.play();
-                observer.disconnect();
-              }
-            });
-          },
-          { threshold: 0.5 }
-        );
-        observer.observe(video);
-      }
-
+      // Mostrar el video y reproducirlo en todos los dispositivos al cargar la página
+      video.classList.remove("hidden");
+      video.play();
+      
+      // Verificar que el video esté visible en el DOM después de cargarse
       video.addEventListener("loadeddata", () => {
         video.classList.remove("hidden");
       });
@@ -94,5 +81,15 @@ const i18n = getI18N({ currentLocale });
     background-color: #1f2937;
     padding: 40px;
     border-radius: 8px;
+  }
+
+  /* Ajustes para dispositivos móviles */
+  @media (max-width: 768px) {
+    #about-video {
+      width: 100vw;
+      height: auto;
+      max-height: 100vh;
+      object-fit: cover;
+    }
   }
 </style>
