@@ -1,54 +1,99 @@
-# Astro Starter Kit: Basics
+# 🌠 Gaeluss - Astro + Tailwind CSS
+
+![Astro](https://img.shields.io/badge/Astro-333333?style=for-the-badge&logo=astro&logoColor=FF5E00)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![PNPM](https://img.shields.io/badge/PNPM-F69220?style=for-the-badge&logo=pnpm&logoColor=white)
+
+> 🚀 Gaeluss es un proyecto que combina **Astro** y **Tailwind CSS** para crear una experiencia web moderna y de alto rendimiento. Utilizamos `pnpm` para la gestión eficiente de dependencias, proporcionando una base sólida para el desarrollo rápido y escalable de sitios web.
+
+## ✨ Características
+
+- **Astro**: Framework basado en componentes que optimiza la carga del sitio y el rendimiento.
+- **Tailwind CSS**: Framework de utilidades para crear interfaces modernas y responsivas rápidamente.
+- **pnpm**: Gestor de paquetes rápido y eficiente.
+- **Multilenguaje**: Soporte para múltiples idiomas utilizando `i18n`.
+
+## 📦 Instalación
+
+Para comenzar a trabajar en este proyecto, primero asegúrate de tener `pnpm` instalado en tu máquina. Si no lo tienes, puedes instalarlo ejecutando:
 
 ```sh
-npm create astro@latest -- --template basics
+npm install -g pnpm
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Luego, clona el repositorio e instala las dependencias:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+```sh
+git clone https://github.com/tu-usuario/gaeluss.git
+cd gaeluss
+pnpm install
+```
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## 🚀 Iniciar el Proyecto
 
-## 🚀 Project Structure
+Para iniciar el servidor de desarrollo, ejecuta:
 
-Inside of your Astro project, you'll see the following folders and files:
+```sh
+pnpm dev
+```
 
-```text
-/
-├── public/
-│   └── favicon.svg
+Esto iniciará un servidor local en `http://localhost:3000` donde podrás ver y trabajar en el proyecto en tiempo real.
+
+## 🛠️ Comandos Disponibles
+
+- `pnpm dev` - Inicia el servidor de desarrollo.
+- `pnpm build` - Crea una versión optimizada para producción.
+- `pnpm preview` - Previsualiza la versión optimizada.
+- `pnpm lint` - Revisa el código para encontrar errores y aplicar buenas prácticas.
+
+## 📂 Estructura del Proyecto
+
+```sh
+├── public/                # Archivos estáticos
 ├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/        # Componentes reutilizables de Astro
+│   ├── layouts/           # Layouts para páginas
+│   ├── pages/             # Páginas principales del sitio
+│   └── i18n/              # Archivos de internacionalización
+├── astro.config.mjs       # Configuración de Astro
+├── tailwind.config.cjs    # Configuración de Tailwind CSS
+└── package.json           # Archivo de configuración de dependencias
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🌌 Tecnologías Utilizadas
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- **[Astro](https://astro.build/)** 
+- **[Tailwind CSS](https://tailwindcss.com/)** 
+- **[pnpm](https://pnpm.io/)** 
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 🌍 Despliegue
 
-## 🧞 Commands
+Puedes desplegar este proyecto utilizando servicios como **Vercel** o **Netlify**. Ambos soportan Astro de forma nativa.
 
-All commands are run from the root of the project, from a terminal:
+Para desplegar en **Vercel**, puedes utilizar el siguiente comando:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+pnpm build
+```
 
-## 👀 Want to learn more?
+Luego sube la carpeta `dist/` a Vercel o conecta tu repositorio a través de su interfaz gráfica.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 📜 Contribuir
+
+¡Contribuciones son siempre bienvenidas! Si quieres contribuir:
+
+1. Haz un **fork** del proyecto.
+2. Crea una nueva **rama** (`git checkout -b feature/nueva-caracteristica`).
+3. Realiza los cambios y haz **commit** (`git commit -m 'Añadir nueva característica'`).
+4. Envía los cambios a tu repositorio (`git push origin feature/nueva-caracteristica`).
+5. Abre un **pull request**.
+
+## 📄 Licencia
+
+Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](./LICENSE) para más detalles.
+
+## 💬 Contacto
+
+Si tienes alguna duda o sugerencia, siéntete libre de contactar:
+
+- **Email**: info@gaeluss.com
