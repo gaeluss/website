@@ -14,12 +14,14 @@ const i18n = getI18N({ currentLocale });
       <video
         id="about-video"
         class="w-full h-full object-cover"
-        src="/motion-logo.webm"
         preload="auto"
         muted
         playsinline
         aria-label="Video de presentación de Gaeluss"
-      ></video>
+      >
+        <source src="/motion-logo.webm" type="video/webm" />
+        <source src="/motion-logo.mp4" type="video/mp4" />
+      </video>
     </div>
 
     <div
