@@ -1,12 +1,44 @@
 {
-    "nav": {
-      "inicio": "Hjem",
-      "vota": "Stemme",
-      "info": "Informasjon",
-      "archivo": "Arkiv",
-      "legal": "Juridisk merknad",
-      "privacidad": "Personvern",
-      "cookies": "Informasjonskapsler"
-    }
+  "SEO_TITLE": "Gaeluss | Innovasjon innen skreddersydd programvareutvikling",
+  "SEO_DESCRIPTION": "Gaeluss tilbyr innovative skreddersydde programvareløsninger for selskaper som ønsker å optimalisere prosesser og digitalt transformere virksomheten sin. Eksperter på web- og mobilapplikasjoner med fokus på kvalitet og effektivitet.",
+  "SEO_KEYWORDS": "programvareutvikling, webutvikling, mobilapplikasjoner, UI/UX-design, teknologikonsultasjon, applikasjonsutvikling, teknologiløsninger, programvareselskap, programvareopprettelse, frontend-utvikling, backend-utvikling, plattformuavhengige applikasjoner",
+  "VIDEO": {
+    "SUBTITLE": "Fremtidens programvare"
+  },
+  "HEADER": {
+    "VISION": "Visjon",
+    "SERVICES": "Tjenester",
+    "CONTACT": "Kontakt"
+  },
+  "ABOUT": {
+    "TITLE": "Om Gaeluss",
+    "DESCRIPTION": "Gaeluss er et <strong>programvareselskap</strong> dedikert til <strong>innovasjon</strong> og <strong>kvalitet</strong>. Vårt fokus er å levere <strong>effektive teknologiløsninger</strong> som hjelper selskaper med å nå sine mål.",
+    "SUBTITLE": "Visjon og Verdier:",
+    "LIST_1": "<strong>Konstant innovasjon</strong> for å holde oss i forkant av teknologien.",
+    "LIST_2": "<strong>Kvalitet</strong> i alle detaljer i vårt arbeid, som sikrer pålitelige løsninger.",
+    "LIST_3": "<strong>Åpenhet og etikk</strong> i våre relasjoner med kunder og samarbeidspartnere.",
+    "LIST_4": "<strong>Kundefokusert tilnærming</strong> for å forstå og oppfylle deres forventninger.",
+    "LIST_5": "Samarbeid som grunnlag for å bygge vellykkede prosjekter."
+  },
+  "SERVICES": {
+    "TITLE": "Våre Tjenester",
+    "WEB_DEVELOPMENT": "Webutvikling",
+    "WEB_DEVELOPMENT_DESCRIPTION": "Vi skaper <strong>webapplikasjoner av høy kvalitet</strong> ved hjelp av <strong>moderne teknologier</strong> som <strong>React</strong>, <strong>Astro</strong> og mer.",
+    "MOBILE_DEVELOPMENT": "Mobilapputvikling",
+    "MOBILE_DEVELOPMENT_DESCRIPTION": "Utvikling av <strong>plattformuavhengige mobilapplikasjoner</strong> med et <strong>intuitivt design</strong> som gir den beste brukeropplevelsen.",
+    "DESIGN": "UI/UX-design",
+    "DESIGN_DESCRIPTION": "Vårt team fokuserer på <strong>brukervennlig grensesnittutforming</strong> som prioriterer <strong>brukeropplevelse</strong> og <strong>engasjement</strong>.",
+    "CONSULTING": "Konsulenttjenester",
+    "CONSULTING_DESCRIPTION": "Vi tilbyr <strong>konsulenttjenester</strong> for å hjelpe deg med å velge <strong>teknologiløsninger</strong> som passer til <strong>din bedrifts behov</strong>."
+  },
+  "PREFOOTER": {
+    "TITLE": "Klar til å realisere dine ideer?",
+    "DESCRIPTION": "Hos Gaeluss forvandler vi dine ideer til digitale løsninger med betydelig effekt.",
+    "BUTTON": "Kontakt oss"
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Innovative programvareløsninger for web og mobil. Vi skaper teknologi som forbedrer din virksomhet.",
+    "LINKS": "Hurtigkoblinger",
+    "FOLLOW": "Følg oss"
   }
-  
+}

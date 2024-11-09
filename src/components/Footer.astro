@@ -1,25 +1,32 @@
+---
+import { getI18N } from '../i18n';
+
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
 <footer class="bg-black text-gray-300 py-12 mx-16">
     <div class="container mx-auto px-6">
       <div class="flex flex-col md:flex-row md:justify-between">
         <div class="mb-8 md:mb-0">
           <h3 class="text-xl font-semibold text-white mb-4">Gaeluss</h3>
-          <p class="text-gray-400">Innovative software solutions for web and mobile. We create technology that enhances your business.</p>
+          <p class="text-gray-300">{i18n.FOOTER.DESCRIPTION}</p>
         </div>
         <div class="mb-8 md:mb-0">
-          <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+          <h4 class="text-lg font-semibold text-white mb-4">{i18n.FOOTER.LINKS}</h4>
           <ul>
-            <li><a href="#services" class="hover:text-blue-400">Services</a></li>
-            <li><a href="#about" class="hover:text-blue-400">About Us</a></li>
-            <li><a href="#contact" class="hover:text-blue-400">Contact</a></li>
+            <li><a href="#services" class="hover:text-blue-400">{i18n.HEADER.VISION}</a></li>
+            <li><a href="#about" class="hover:text-blue-400">{i18n.HEADER.SERVICES}</a></li>
+            <li><a href="#contact" class="hover:text-blue-400">{i18n.HEADER.CONTACT}</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-lg font-semibold text-white mb-4">Follow Us</h4>
+          <h4 class="text-lg font-semibold text-white mb-4">{i18n.FOOTER.FOLLOW}</h4>
           <div class="flex space-x-4">
-            <a href="#" class="hover:text-blue-400"><img src="/assets/icons/linkedin.svg" loading="lazy" alt="" class="size-7 hover:text-blue-700"></i></a>
-            <a href="#" class="hover:text-blue-400"><img src="/assets/icons/instagram.svg" loading="lazy" alt="" class="size-7 hover:text-blue-700"></i></a>
-            <a href="#" class="hover:text-blue-400"><img src="/assets/icons/facebook.svg" loading="lazy" alt="" class="size-7 hover:text-blue-700"></i></a>
-            <a href="#" class="hover:text-blue-400"><img src="/assets/icons/tiktok.svg" loading="lazy" alt="" class="size-7 hover:text-blue-700"></i></a>
+            <a href="https://www.linkedin.com/company/gaeluss" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400"><img src="/assets/icons/linkedin.svg" loading="lazy" alt="Linkedin" class="size-7"></a>
+            <a href="https://www.instagram.com/gaeluss_es" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400"><img src="/assets/icons/instagram.svg" loading="lazy" alt="Instagram" class="size-7"></a>
+            <a href="https://x.com/gaeluss_es?s=11&t=gDZVcxFrO1uma1HGotha5Q" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400"><img src="/assets/icons/twitter.svg" loading="lazy" alt="Twitter" class="size-7"></a>
+          </div>
           </div>
         </div>
       </div>

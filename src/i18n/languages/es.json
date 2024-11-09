@@ -1,12 +1,44 @@
 {
-    "nav": {
-      "inicio": "Inicio",
-      "vota": "Vota",
-      "info": "Información",
-      "archivo": "Archivo",
-      "legal": "Aviso Legal",
-      "privacidad": "Privacidad",
-      "cookies": "Cookies"
-    }
+  "SEO_TITLE": "Gaeluss | Innovación en Desarrollo de Software Personalizado",
+  "SEO_DESCRIPTION": "Gaeluss ofrece soluciones innovadoras de desarrollo de software a medida para empresas que buscan optimizar sus procesos y transformar digitalmente su negocio. Expertos en aplicaciones web y móviles con un enfoque en calidad y eficiencia.",
+  "SEO_KEYWORDS": "desarrollo de software, desarrollo web, aplicaciones móviles, diseño UI/UX, consultoría tecnológica, desarrollo de aplicaciones, soluciones tecnológicas, empresa de software, creación de software, desarrollo frontend, desarrollo backend, aplicaciones multiplataforma",
+  "VIDEO": {
+    "SUBTITLE": "El Futuro del Software"
+  },
+  "HEADER": {
+    "VISION": "Visión",
+    "SERVICES": "Servicios",
+    "CONTACT": "Contacto"
+  },
+  "ABOUT": {
+    "TITLE": "Sobre Gaeluss",
+    "DESCRIPTION": "Gaeluss es una <strong>empresa de desarrollo de software</strong> comprometida con la <strong>innovación</strong> y la <strong>calidad</strong>. Nuestro enfoque se centra en ofrecer <strong>soluciones tecnológicas eficientes</strong> que ayuden a las empresas a alcanzar sus objetivos.",
+    "SUBTITLE": "Visión y Valores:",
+    "LIST_1": "<strong>Innovación constante</strong> para mantenernos a la vanguardia de la tecnología.",
+    "LIST_2": "<strong>Calidad</strong> en cada detalle de nuestro trabajo, asegurando soluciones confiables.",
+    "LIST_3": "<strong>Transparencia y ética</strong> en nuestras relaciones con clientes y colaboradores.",
+    "LIST_4": "<strong>Enfoque centrado en el cliente</strong> para entender y cumplir sus expectativas.",
+    "LIST_5": "Colaboración como base para construir proyectos exitosos."
+  },
+  "SERVICES": {
+    "TITLE": "Nuestros servicios",
+    "WEB_DEVELOPMENT": "Desarrollo Web",
+    "WEB_DEVELOPMENT_DESCRIPTION": "Creamos <strong>aplicaciones web de alta calidad</strong> utilizando <strong>tecnologías modernas</strong> como <strong>React</strong>, <strong>Astro</strong> y más.",
+    "MOBILE_DEVELOPMENT": "Desarrollo de aplicaciones móviles",
+    "MOBILE_DEVELOPMENT_DESCRIPTION": "Creación de <strong>aplicaciones móviles multiplataforma</strong> con un <strong>diseño intuitivo</strong> que proporciona la mejor experiencia de usuario.",
+    "DESIGN": "Diseño UI/UX",
+    "DESIGN_DESCRIPTION": "Nuestro equipo se centra en el <strong>diseño de interfaces fáciles de usar</strong> que den prioridad a la <strong>experiencia</strong> y el <strong>compromiso del usuario</strong>.",
+    "CONSULTING": "Servicios de consultoría",
+    "CONSULTING_DESCRIPTION": "Ofrecemos <strong>servicios de consultoría</strong> para ayudarle a elegir las <strong>soluciones tecnológicas</strong> adecuadas a las <strong>necesidades de su empresa</strong>."
+  },
+  "PREFOOTER": {
+    "TITLE": "¿Listo para dar vida a tus ideas?",
+    "DESCRIPTION": "En Gaeluss, transformamos sus ideas en soluciones digitales reales que causan impacto.",
+    "BUTTON": "Contactanos"
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Soluciones de software innovadoras para web y móvil. Creamos tecnología que mejora su negocio.",
+    "LINKS": "Enlaces rápidos",
+    "FOLLOW": "Síguenos"
   }
-  
+}

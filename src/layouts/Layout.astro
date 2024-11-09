@@ -1,5 +1,6 @@
 ---
-import { ViewTransitions } from "astro:transitions"
+import { ViewTransitions } from "astro:transitions";
+import { getI18N } from '../i18n';
 import Header from '../components/Header.astro';
 import '@fontsource-variable/onest';
 
@@ -10,6 +11,7 @@ interface Props {
 
 const { description, title } = Astro.props;
 const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
 ---
 
 <!doctype html>
@@ -19,7 +21,7 @@ const { currentLocale } = Astro;
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content="index, follow" />
-		<meta name="keywords" content="desarrollo de software, desarrollo web, aplicaciones móviles, diseño UI/UX, consultoría tecnológica, desarrollo de aplicaciones, soluciones tecnológicas, empresa de software, creación de software, desarrollo frontend, desarrollo backend, aplicaciones multiplataforma" />
+		<meta name="keywords" content={i18n.SEO_KEYWORDS} />
 		<meta name="author" content="Gaeluss" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{title}</title>
@@ -32,6 +34,13 @@ const { currentLocale } = Astro;
 </html>
 
 <style is:global>
+	@font-face {
+	  font-family: 'NewestShape';
+	  src: url('/fonts/NewestShape.ttf') format('truetype');
+      font-weight: normal;
+	  font-style: normal;
+	}
+
 	:root {
 	  color-scheme: dark;
 	  --entry-animation: -20px;
@@ -48,6 +57,7 @@ const { currentLocale } = Astro;
 	html {
 	  font-family: "Onest Variable", system-ui, sans-serif;
 	  background: black;
+	  scroll-behavior: smooth;
 	}
 	
 	::-webkit-scrollbar {

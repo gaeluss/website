@@ -1,86 +1,86 @@
-<section id="about" class="relative h-screen w-full">
-  <div class="sticky top-0 h-screen w-full">
-    <video id="scroll-video" class="w-full h-full object-cover" src="/motion-logo.webm" muted playsinline></video>
-  </div>
-</section>
+---
+import { getI18N } from '../i18n';
 
-<section id="content-after" class="relative h-screen w-full bg-gray-100">
-  <div class="container mx-auto p-4">
-    <h1 class="text-xl font-bold">Contenido posterior al video</h1>
-    <p>Este contenido aparecerá una vez que el video termine.</p>
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
+<section
+  id="about"
+  class="relative w-full flex items-center justify-center bg-gray-800 py-28"
+>
+  <div class="container mx-auto flex flex-col items-center md:flex-row p-4">
+    <div class="w-full md:w-5/6 lg:w-4/5 h-96 md:h-[40rem] relative overflow-hidden rounded-lg">
+      <video
+        id="about-video"
+        class="w-full h-full object-cover"
+        src="/motion-logo.webm"
+        preload="auto"
+        muted
+        playsinline
+        aria-label="Video de presentación de Gaeluss"
+      ></video>
+    </div>
+
+    <div
+      class="w-full md:w-3/4 lg:w-2/3 text-white text-center md:text-left mt-6 md:mt-0 gradient-border-alt"
+    >
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4" aria-label=`Título: ${i18n.ABOUT.TITLE}`>
+        {i18n.ABOUT.TITLE}
+      </h1>
+      <p set:html={i18n.ABOUT.DESCRIPTION} class="text-lg md:text-xl text-gray-300 mb-8"></p>
+      <h2 class="text-3xl font-semibold text-gray-100 mb-3">
+        {i18n.ABOUT.SUBTITLE}
+      </h2>
+      <ul class="list-disc list-inside text-lg md:text-xl text-gray-300 space-y-2">
+        <li set:html={i18n.ABOUT.LIST_1}></li>
+        <li set:html={i18n.ABOUT.LIST_2}></li>
+        <li set:html={i18n.ABOUT.LIST_3}></li>
+        <li set:html={i18n.ABOUT.LIST_4}></li>
+        <li set:html={i18n.ABOUT.LIST_5}></li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const video = document.getElementById("scroll-video") as HTMLVideoElement;
-    const aboutSection = document.getElementById("about")!;
-    const contentAfter = document.getElementById("content-after")!;
-    
-    let videoPlaying = false;
-    let videoHasPlayed = false; 
-    let isScrolling = false;
+  document.addEventListener("astro:page-load", () => {
+    const video = document.getElementById("about-video") as HTMLVideoElement;
+    const aboutSection = document.getElementById("about");
 
-    if (video instanceof HTMLVideoElement && aboutSection) {
-      window.addEventListener("scroll", function () {
-        if (!isScrolling) {
-          window.requestAnimationFrame(updateVideo);
-          isScrolling = true;
-        }
-      });
-
-      function updateVideo() {
-        const sectionTop = aboutSection.offsetTop;
-        const sectionHeight = aboutSection.offsetHeight;
-        const scrollY = window.scrollY;
-
-        if (scrollY >= sectionTop && scrollY <= sectionTop + sectionHeight) {
-          videoPlaying = true;
-          contentAfter.style.display = "none";
-
-          const scrollFraction = (scrollY - sectionTop) / sectionHeight;
-          const limitedFraction = Math.max(0, Math.min(1, scrollFraction));
-
-          video.currentTime = limitedFraction * video.duration;
-        } else if (scrollY > sectionTop + sectionHeight && videoPlaying) {
-          if (video.currentTime >= video.duration) {
-            videoPlaying = false;
-            videoHasPlayed = true;
-            contentAfter.style.display = "block";
-          }
-        }
-        isScrolling = false;
-      }
-
-      video.addEventListener("ended", function () {
-        videoPlaying = false;
-        videoHasPlayed = true;
-        contentAfter.style.display = "block";
-      });
-
-      window.addEventListener("beforeunload", function (event) {
-        if (!videoHasPlayed && video.currentTime > 0) {
-          event.preventDefault();
-        }
-      });
+    if (video && aboutSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              video.play();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(aboutSection);
     }
   });
 </script>
 
 <style>
   #about {
-    height: 250vh;
+    clip-path: polygon(50% 0, 100% 10%, 100% 100%, 0 100%, 0 10%);
   }
-
-  #scroll-video {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
+  .gradient-border-alt::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border-radius: 8px;
+    background: linear-gradient(to top, #284add, #f21973);
+    z-index: -1;
   }
-
-  #content-after {
-    display: none;
+  .gradient-border-alt {
+    position: relative;
+    background-color: #1f2937;
+    padding: 40px;
+    border-radius: 8px;
   }
 </style>
