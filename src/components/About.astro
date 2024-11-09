@@ -10,19 +10,19 @@ const i18n = getI18N({ currentLocale });
   class="relative w-full flex items-center justify-center bg-gray-800 py-28"
 >
   <div class="container mx-auto flex flex-col items-center md:flex-row p-4">
-    <div class="w-full md:w-5/6 lg:w-4/5 h-96 md:h-[40rem] relative rounded-lg">
+    <div class="w-full md:w-5/6 lg:w-4/5 h-96 md:h-[40rem] relative overflow-hidden rounded-lg">
       <video
         id="about-video"
         class="w-full h-full object-cover"
+        src="/motion-logo.webm"
         preload="auto"
-        autoplay
-        loop
         muted
         playsinline
         aria-label="Video de presentación de Gaeluss"
+        poster="/assets/images7logo-blanco.png"
       >
-        <source src="/motion-logo.webm" type="video/webm" />
-        <source src="/motion-logo.mp4" type="video/mp4" />
+      <source src="/video.webm" type="video/webm" />
+      <source src="/video.mp4" type="video/mp4" />
       </video>
     </div>
 
@@ -47,6 +47,28 @@ const i18n = getI18N({ currentLocale });
   </div>
 </section>
 
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const video = document.getElementById("about-video") as HTMLVideoElement;
+    const aboutSection = document.getElementById("about");
+
+    if (video && aboutSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              video.play();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.5 }
+      );
+      observer.observe(aboutSection);
+    }
+  });
+</script>
+
 <style>
   #about {
     clip-path: polygon(50% 0, 100% 10%, 100% 100%, 0 100%, 0 10%);
@@ -64,15 +86,5 @@ const i18n = getI18N({ currentLocale });
     background-color: #1f2937;
     padding: 40px;
     border-radius: 8px;
-  }
-
-  /* Ajustes para dispositivos móviles */
-  @media (max-width: 768px) {
-    #about-video {
-      width: 100vw;
-      height: auto;
-      max-height: 100vh;
-      object-fit: cover;
-    }
   }
 </style>
