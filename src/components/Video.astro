@@ -40,7 +40,7 @@ const i18n = getI18N({ currentLocale });
 </div>
 
 <script is:inline data-astro-rerun>
-  document.addEventListener("astro:page-load", () => {
+  function playVideo() {
     const firstVideo = document.querySelector("#main-video");
 
     if (firstVideo) {
@@ -54,7 +54,10 @@ const i18n = getI18N({ currentLocale });
         });
       }
     }
-  });
+  }
+
+  document.addEventListener("astro:page-load", playVideo);
+  document.addEventListener("astro:after-swap", playVideo);
 </script>
 
 <style>
