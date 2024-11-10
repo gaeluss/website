@@ -39,9 +39,9 @@ const i18n = getI18N({ currentLocale });
   </div>
 </div>
 
-<script>
+<script is:inline data-astro-rerun>
   document.addEventListener("astro:page-load", () => {
-    const firstVideo = document.querySelector("#main-video") as HTMLMediaElement;
+    const firstVideo = document.querySelector("#main-video");
 
     if (firstVideo) {
       const videos = document.querySelectorAll(".video");
