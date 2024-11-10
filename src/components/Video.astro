@@ -47,10 +47,16 @@ const i18n = getI18N({ currentLocale });
       if (firstVideo.readyState >= 3) {
         firstVideo.classList.remove("hidden");
         firstVideo.classList.add("animate-fade");
+        firstVideo.play().catch((error) => {
+          console.warn("El video no se pudo reproducir automáticamente:", error);
+        });
       } else {
         firstVideo.addEventListener("loadeddata", () => {
           firstVideo.classList.remove("hidden");
           firstVideo.classList.add("animate-fade");
+          firstVideo.play().catch((error) => {
+            console.warn("El video no se pudo reproducir automáticamente:", error);
+          });
         });
       }
     }
