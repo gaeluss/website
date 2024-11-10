@@ -14,12 +14,13 @@ const i18n = getI18N({ currentLocale });
       <video
         id="about-video"
         class="w-full h-full object-cover"
-        preload="auto"
+        preload="metadata"
         muted
         playsinline
         aria-label="Video de presentación de Gaeluss"
       >
       <source src="/motion-logo.webm" type="video/webm" />
+      <source src="/motion-logo.mov" type="video/mov" />
       <source src="/motion-logo.mp4" type="video/mp4" />
       </video>
     </div>
@@ -60,7 +61,7 @@ const i18n = getI18N({ currentLocale });
             }
           });
         },
-        { threshold: 1 }
+        { threshold: 0.4 }
       );
       observer.observe(aboutSection);
     }
