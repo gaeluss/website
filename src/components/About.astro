@@ -14,12 +14,10 @@ const i18n = getI18N({ currentLocale });
       <video
         id="about-video"
         class="w-full h-full object-cover"
-        src="/motion-logo.webm"
         preload="auto"
         muted
         playsinline
         aria-label="Video de presentación de Gaeluss"
-        poster="/assets/images/logo-blanco.png"
       >
       <source src="/video.webm" type="video/webm" />
       <source src="/video.mp4" type="video/mp4" />
@@ -62,7 +60,7 @@ const i18n = getI18N({ currentLocale });
             }
           });
         },
-        { threshold: 0.5 }
+        { threshold: 1 }
       );
       observer.observe(aboutSection);
     }
