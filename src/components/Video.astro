@@ -44,22 +44,15 @@ const i18n = getI18N({ currentLocale });
     const firstVideo = document.querySelector("#main-video");
 
     if (firstVideo) {
-      const videos = document.querySelectorAll(".video");
-
       if (firstVideo.readyState >= 3) {
-        videos.forEach((videoEl) => {
-          videoEl.classList.remove("hidden");
-          videoEl.classList.add("animate-fade");
+        firstVideo.classList.remove("hidden");
+        firstVideo.classList.add("animate-fade");
+      } else {
+        firstVideo.addEventListener("loadeddata", () => {
+          firstVideo.classList.remove("hidden");
+          firstVideo.classList.add("animate-fade");
         });
-        return;
       }
-
-      firstVideo.addEventListener("loadeddata", () => {
-        videos.forEach((videoEl) => {
-          videoEl.classList.remove("hidden");
-          videoEl.classList.add("animate-fade");
-        });
-      });
     }
   });
 </script>
