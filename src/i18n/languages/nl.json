@@ -1,0 +1,44 @@
+{
+  "SEO_TITLE": "Gaeluss | Innovatie in Maatwerk Softwareontwikkeling",
+  "SEO_DESCRIPTION": "Gaeluss biedt innovatieve maatwerk softwareoplossingen voor bedrijven die hun processen willen optimaliseren en hun bedrijf digitaal willen transformeren. Experts in web- en mobiele applicaties met een focus op kwaliteit en efficiëntie.",
+  "SEO_KEYWORDS": "softwareontwikkeling, webontwikkeling, mobiele applicaties, UI/UX design, technologieconsulting, applicatieontwikkeling, technologieoplossingen, softwarebedrijf, softwarecreatie, frontend ontwikkeling, backend ontwikkeling, cross-platform applicaties",
+  "VIDEO": {
+    "SUBTITLE": "De Toekomst van Software"
+  },
+  "HEADER": {
+    "VISION": "Visie",
+    "SERVICES": "Diensten",
+    "CONTACT": "Contact"
+  },
+  "ABOUT": {
+    "TITLE": "Over Gaeluss",
+    "DESCRIPTION": "Gaeluss is een <strong>softwareontwikkelingsbedrijf</strong> toegewijd aan <strong>innovatie</strong> en <strong>kwaliteit</strong>. Onze focus ligt op het bieden van <strong>efficiënte technologische oplossingen</strong> om bedrijven te helpen hun doelen te bereiken.",
+    "SUBTITLE": "Visie en Waarden:",
+    "LIST_1": "<strong>Continue innovatie</strong> om voorop te blijven in technologie.",
+    "LIST_2": "<strong>Kwaliteit</strong> in elk detail van ons werk, om betrouwbare oplossingen te garanderen.",
+    "LIST_3": "<strong>Transparantie en ethiek</strong> in onze relaties met klanten en medewerkers.",
+    "LIST_4": "<strong>Klantgerichte aanpak</strong> om hun verwachtingen te begrijpen en te voldoen.",
+    "LIST_5": "Samenwerking als de basis voor het bouwen van succesvolle projecten."
+  },
+  "SERVICES": {
+    "TITLE": "Onze Diensten",
+    "WEB_DEVELOPMENT": "Webontwikkeling",
+    "WEB_DEVELOPMENT_DESCRIPTION": "Wij creëren <strong>hoogwaardige webapplicaties</strong> met behulp van <strong>moderne technologieën</strong> zoals <strong>React</strong>, <strong>Astro</strong> en meer.",
+    "MOBILE_DEVELOPMENT": "Ontwikkeling van Mobiele Applicaties",
+    "MOBILE_DEVELOPMENT_DESCRIPTION": "Ontwikkeling van <strong>cross-platform mobiele applicaties</strong> met een <strong>intuïtief ontwerp</strong> dat de beste gebruikerservaring biedt.",
+    "DESIGN": "UI/UX Ontwerp",
+    "DESIGN_DESCRIPTION": "Ons team richt zich op <strong>gebruiksvriendelijk interfaceontwerp</strong> dat prioriteit geeft aan <strong>gebruikerservaring</strong> en <strong>betrokkenheid</strong>.",
+    "CONSULTING": "Consultancydiensten",
+    "CONSULTING_DESCRIPTION": "Wij bieden <strong>consultancydiensten</strong> om u te helpen bij het kiezen van de <strong>technologieoplossingen</strong> die passen bij de <strong>behoeften van uw bedrijf</strong>."
+  },
+  "PREFOOTER": {
+    "TITLE": "Klaar om uw ideeën tot leven te brengen?",
+    "DESCRIPTION": "Bij Gaeluss transformeren we uw ideeën in impactvolle digitale oplossingen.",
+    "BUTTON": "Neem Contact Op"
+  },
+  "FOOTER": {
+    "DESCRIPTION": "Innovatieve softwareoplossingen voor web en mobiel. Wij creëren technologie die uw bedrijf versterkt.",
+    "LINKS": "Snelle Links",
+    "FOLLOW": "Volg Ons"
+  }  
+}

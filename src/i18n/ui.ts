@@ -1,6 +1,7 @@
 import SpainFlag from '../components/flags/spain.astro';
 import EnglandFlag from '../components/flags/england.astro';
 import NorwayFlag from '../components/flags/norway.astro';
+import DutchFlag from '../components/flags/netherlands.astro';
 
 export const LANGUAGES: Record<
   string,
@@ -21,6 +22,11 @@ export const LANGUAGES: Record<
     name: 'Norsk',
     flag: NorwayFlag,
   },
+  nl: {  
+    code: 'nl',
+    name: 'Dutch',
+    flag: DutchFlag,
+  },
 };
 
 export const defaultLang = 'es';
@@ -30,10 +36,12 @@ export const ui = {
     es: {},
     en: {},
     no: {},
+    nl: {},
 } as const;
 
 export const routes = {
     es: {},
     en: {},
     no: {},
+    nl: {},
 };  
