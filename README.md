@@ -4,24 +4,24 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![PNPM](https://img.shields.io/badge/PNPM-F69220?style=for-the-badge&logo=pnpm&logoColor=white)
 
-> 🚀 Gaeluss es un proyecto que combina **Astro** y **Tailwind CSS** para crear una experiencia web moderna y de alto rendimiento. Utilizamos `pnpm` para la gestión eficiente de dependencias, proporcionando una base sólida para el desarrollo rápido y escalable de sitios web.
+> 🚀 Gaeluss is a project that combines **Astro** and **Tailwind CSS** to create a modern, high-performance web experience. We use `pnpm` for efficient dependency management, providing a solid foundation for rapid and scalable web development.
 
-## ✨ Características
+## ✨ Features
 
-- **Astro**: Framework basado en componentes que optimiza la carga del sitio y el rendimiento.
-- **Tailwind CSS**: Framework de utilidades para crear interfaces modernas y responsivas rápidamente.
-- **pnpm**: Gestor de paquetes rápido y eficiente.
-- **Multilenguaje**: Soporte para múltiples idiomas utilizando `i18n`.
+- **Astro**: Component-based framework that optimizes site loading and performance.
+- **Tailwind CSS**: Utility-first CSS framework for quickly creating modern and responsive interfaces.
+- **pnpm**: Fast and efficient package manager.
+- **Multilanguage**: Support for multiple languages using `i18n`.
 
-## 📦 Instalación
+## 📦 Installation
 
-Para comenzar a trabajar en este proyecto, primero asegúrate de tener `pnpm` instalado en tu máquina. Si no lo tienes, puedes instalarlo ejecutando:
+To get started with this project, make sure you have `pnpm` installed on your machine. If you don't have it yet, you can install it by running:
 
 ```sh
 npm install -g pnpm
 ```
 
-Luego, clona el repositorio e instala las dependencias:
+Then, clone the repository and install the dependencies:
 
 ```sh
 git clone https://github.com/tu-usuario/gaeluss.git
@@ -29,71 +29,71 @@ cd gaeluss
 pnpm install
 ```
 
-## 🚀 Iniciar el Proyecto
+## 🚀 Starting the Project
 
-Para iniciar el servidor de desarrollo, ejecuta:
+To start the development server, run:
 
 ```sh
 pnpm dev
 ```
 
-Esto iniciará un servidor local en `http://localhost:3000` donde podrás ver y trabajar en el proyecto en tiempo real.
+This will start a local server at http://localhost:3000 where you can view and work on the project in real time.
 
-## 🛠️ Comandos Disponibles
+## 🛠️ Available Commands
 
-- `pnpm dev` - Inicia el servidor de desarrollo.
-- `pnpm build` - Crea una versión optimizada para producción.
-- `pnpm preview` - Previsualiza la versión optimizada.
-- `pnpm lint` - Revisa el código para encontrar errores y aplicar buenas prácticas.
+- `pnpm dev` - Starts the development server.
+- `pnpm build` - Builds an optimized version for production.
+- `pnpm preview` - Previews the optimized build.
+- `pnpm lint` - Checks the code for errors and best practices.
 
-## 📂 Estructura del Proyecto
+## 📂 Project Structure
 
 ```sh
-├── public/                # Archivos estáticos
+├── public/                # Static files
 ├── src/
-│   ├── components/        # Componentes reutilizables de Astro
-│   ├── layouts/           # Layouts para páginas
-│   ├── pages/             # Páginas principales del sitio
-│   └── i18n/              # Archivos de internacionalización
-├── astro.config.mjs       # Configuración de Astro
-├── tailwind.config.cjs    # Configuración de Tailwind CSS
-└── package.json           # Archivo de configuración de dependencias
+│   ├── components/        # Reusable Astro components
+│   ├── layouts/           # Layouts for pages
+│   ├── pages/             # Main site pages
+│   └── i18n/              # Internationalization files
+├── astro.config.mjs       # Astro configuration
+├── tailwind.config.cjs    # Tailwind CSS configuration
+└── package.json           # Dependency configuration file
 ```
 
-## 🌌 Tecnologías Utilizadas
+## 🌌 Technologies Used
 
 - **[Astro](https://astro.build/)** 
 - **[Tailwind CSS](https://tailwindcss.com/)** 
 - **[pnpm](https://pnpm.io/)** 
 
-## 🌍 Despliegue
+## 🌍 Deployment
 
-Puedes desplegar este proyecto utilizando servicios como **Vercel** o **Netlify**. Ambos soportan Astro de forma nativa.
+You can deploy this project using services like **Vercel** or **Netlify**. Both of which support Astro natively
 
-Para desplegar en **Vercel**, puedes utilizar el siguiente comando:
+To deploy on **Vercel**, you can use the following command:
 
 ```sh
 pnpm build
 ```
 
-Luego sube la carpeta `dist/` a Vercel o conecta tu repositorio a través de su interfaz gráfica.
+Then upload the `dist/` folder to Vercel or connect your repository through their graphical interface.
 
-## 📜 Contribuir
+## 📜 Contributing
 
-¡Contribuciones son siempre bienvenidas! Si quieres contribuir:
+Contributions are always welcome! If you want to contribute:
 
-1. Haz un **fork** del proyecto.
-2. Crea una nueva **rama** (`git checkout -b feature/nueva-caracteristica`).
-3. Realiza los cambios y haz **commit** (`git commit -m 'Añadir nueva característica'`).
-4. Envía los cambios a tu repositorio (`git push origin feature/nueva-caracteristica`).
-5. Abre un **pull request**.
+1. **Fork** the project.
+2. Create a new **branch** (`git checkout -b feature/new-feature`).
+3. Make your changes and **commit** them (`git commit -m 'Add new feature'`).
+4. Push your changes to your repository (`git push origin feature/new-feature`).
+5. Open a **pull request**.
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](./LICENSE) para más detalles.
+This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE) file for more details.
 
-## 💬 Contacto
+## 💬 Contact
 
-Si tienes alguna duda o sugerencia, siéntete libre de contactar:
+If you have any questions or suggestions, feel free to get in touch:
 
 - **Email**: info@gaeluss.com
