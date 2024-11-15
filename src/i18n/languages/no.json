@@ -40,5 +40,11 @@
     "DESCRIPTION": "Innovative programvareløsninger for web og mobil. Vi skaper teknologi som forbedrer din virksomhet.",
     "LINKS": "Hurtigkoblinger",
     "FOLLOW": "Følg oss"
+  },
+  "ERRORS": {
+    "PAGE_NOT_FOUND_TITLE": "Siden ble ikke funnet",
+    "PAGE_NOT_FOUND_DESCRIPTION": "Siden du ser etter eksisterer ikke.",
+    "PAGE_NOT_FOUND_MESSAGE": "Beklager, vi kunne ikke finne siden du leter etter.",
+    "GO_BACK_HOME": "Gå tilbake til hjemmesiden"
   }
 }
