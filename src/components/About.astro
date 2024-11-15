@@ -13,7 +13,7 @@ const i18n = getI18N({ currentLocale });
     <div class="w-full md:w-5/6 lg:w-4/5 h-96 md:h-[40rem] relative overflow-hidden rounded-lg">
       <video
         id="about-video"
-        class="hidden lg:block w-full h-full object-cover"
+        class="w-full h-full object-cover hidden"
         preload="metadata"
         muted
         playsinline
@@ -24,9 +24,10 @@ const i18n = getI18N({ currentLocale });
       </video>
 
       <img
-        src="/assets/images/logo-blanco.png"
+        id="about-image"
+        src="/assets/images/logo-blanco.webp"
         alt="Animación del logo de Gaeluss"
-        class="block lg:hidden w-full h-full object-cover"
+        class="block w-full h-full object-cover"
       >
     </div>
 
@@ -52,11 +53,30 @@ const i18n = getI18N({ currentLocale });
 </section>
 
 <script>
+  function isMobile() {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
+  }
+
+  function hasTouchSupport() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
+
   document.addEventListener("astro:page-load", () => {
     const video = document.getElementById("about-video") as HTMLVideoElement;
+    const image = document.getElementById("about-image") as HTMLImageElement;
     const aboutSection = document.getElementById("about");
 
-    if (window.innerWidth > 1024 && video && aboutSection) {
+    if (isMobile() || hasTouchSupport()) {
+      video.classList.add("hidden");
+      image.classList.remove("hidden");
+      return;
+    }
+
+    if (video && aboutSection) {
+      video.classList.remove("hidden");
+      image.classList.add("hidden");
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
