@@ -39,31 +39,24 @@ const i18n = getI18N({ currentLocale });
   </div>
 </div>
 
-<script is:inline data-astro-rerun>
-  function playVideo() {
-    const firstVideo = document.querySelector("#main-video");
+<script>
+  function resetAndPlayVideo() {
+    const firstVideo = document.querySelector("#main-video") as HTMLVideoElement;
 
     if (firstVideo) {
-      if (firstVideo.readyState >= 3) {
-        firstVideo.classList.remove("hidden");
-        firstVideo.classList.add("animate-fade");
-        firstVideo.play().catch((error) => {
-          console.warn("El video no se pudo reproducir automáticamente:", error);
-        });
-      } else {
-        firstVideo.addEventListener("loadeddata", () => {
-          firstVideo.classList.remove("hidden");
-          firstVideo.classList.add("animate-fade");
-          firstVideo.play().catch((error) => {
-            console.warn("El video no se pudo reproducir automáticamente:", error);
-          });
-        });
-      }
+      firstVideo.pause();
+      firstVideo.currentTime = 0;
+
+      firstVideo.classList.remove("hidden");
+      firstVideo.classList.add("animate-fade");
+
+      firstVideo.play().catch((error) => {
+        console.warn("El video no se pudo reproducir automáticamente:", error);
+      });
     }
   }
 
-  document.addEventListener("astro:page-load", playVideo);
-  document.addEventListener("astro:after-swap", playVideo);
+  document.addEventListener("astro:page-load", resetAndPlayVideo);
 </script>
 
 <style>
