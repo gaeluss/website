@@ -1,0 +1,30 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import { getLangFromUrl } from "../i18n/utils";
+
+interface Props {
+  description: string
+  title: string
+}
+
+const { description, title } = Astro.props;
+const currentLocale = getLangFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html lang={currentLocale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="robots" content="nofollow, noindex" />
+    <title>{title}</title>
+    <slot name="preload" />
+    <ViewTransitions />
+  </head>
+
+  <body class="bg-black text-white overflow-hidden">
+    <slot />
+  </body>
+</html>
