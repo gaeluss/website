@@ -40,5 +40,11 @@
     "DESCRIPTION": "Innovatieve softwareoplossingen voor web en mobiel. Wij creëren technologie die uw bedrijf versterkt.",
     "LINKS": "Snelle Links",
     "FOLLOW": "Volg Ons"
-  }  
+  },
+  "ERRORS": {
+    "PAGE_NOT_FOUND_TITLE": "Pagina niet gevonden",
+    "PAGE_NOT_FOUND_DESCRIPTION": "De pagina die u zoekt bestaat niet.",
+    "PAGE_NOT_FOUND_MESSAGE": "Sorry, we konden de pagina die u zoekt niet vinden.",
+    "GO_BACK_HOME": "Terug naar de homepage"
+  }
 }

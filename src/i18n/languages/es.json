@@ -40,5 +40,11 @@
     "DESCRIPTION": "Soluciones de software innovadoras para web y móvil. Creamos tecnología que mejora su negocio.",
     "LINKS": "Enlaces rápidos",
     "FOLLOW": "Síguenos"
+  },
+  "ERRORS": {
+    "PAGE_NOT_FOUND_TITLE": "Página no encontrada",
+    "PAGE_NOT_FOUND_DESCRIPTION": "La página que estás buscando no existe.",
+    "PAGE_NOT_FOUND_MESSAGE": "Lo sentimos, no pudimos encontrar la página que buscas.",
+    "GO_BACK_HOME": "Volver a la página principal"
   }
 }
