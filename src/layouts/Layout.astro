@@ -119,4 +119,10 @@ const isProduction = import.meta.env.PROD;
 		backdrop-filter: blur(10px);
 	  }
 	}
-  </style>
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+</style>
