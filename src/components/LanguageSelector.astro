@@ -1,7 +1,7 @@
 ---
 import ArrowDisplay from './icons/arrowDisplay.astro';
-import { LANGUAGES } from '../i18n/ui';
-import { getRouteFromUrl, useTranslatedPath, getLangFromUrl } from '../i18n/utils';
+import { LANGUAGES } from '@/i18n/ui';
+import { getRouteFromUrl, useTranslatedPath, getLangFromUrl } from '@/i18n/utils';
 
 const route = getRouteFromUrl(Astro.url);
 const lang = getLangFromUrl(Astro.url);
