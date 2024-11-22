@@ -1,5 +1,5 @@
 ---
-import { getI18N } from '../i18n';
+import { getI18N } from '@/i18n';
 
 const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
@@ -37,11 +37,11 @@ const i18n = getI18N({ currentLocale });
       <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4" aria-label={`Título: ${i18n.ABOUT.TITLE}`}>
         {i18n.ABOUT.TITLE}
       </h1>
-      <p set:html={i18n.ABOUT.DESCRIPTION} class="text-lg md:text-xl text-gray-300 mb-8"></p>
+      <p set:html={i18n.ABOUT.DESCRIPTION} class="text-lg md:text-xl text-gray-300 text-pretty mb-8"></p>
       <h2 class="text-3xl font-semibold text-gray-100 mb-3">
         {i18n.ABOUT.SUBTITLE}
       </h2>
-      <ul class="list-disc list-inside text-lg md:text-xl text-gray-300 space-y-2">
+      <ul class="list-disc list-inside text-lg md:text-xl text-gray-300 text-pretty space-y-2">
         <li set:html={i18n.ABOUT.LIST_1}></li>
         <li set:html={i18n.ABOUT.LIST_2}></li>
         <li set:html={i18n.ABOUT.LIST_3}></li>
