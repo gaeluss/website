@@ -16,9 +16,24 @@ const i18n = getI18N({ currentLocale });
         <div class="mb-8 md:mb-0">
           <h4 class="text-lg font-semibold text-white mb-4">{i18n.FOOTER.LINKS}</h4>
           <ul>
-            <li><a href="#about" class="hover:text-blue-400">{i18n.HEADER.VISION}</a></li>
-            <li><a href="#services" class="hover:text-blue-400">{i18n.HEADER.SERVICES}</a></li>
-            <li><a href="#contact" class="hover:text-blue-400">{i18n.HEADER.CONTACT}</a></li>
+            <li>
+              <a href="#about" class="relative group">
+                {i18n.HEADER.VISION}
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-500 group-hover:w-full"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#services" class="relative group">
+                {i18n.HEADER.SERVICES}
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-500 group-hover:w-full"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#contact" class="relative group">
+                {i18n.HEADER.CONTACT}
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-500 group-hover:w-full"></span>
+              </a>
+            </li>            
           </ul>
         </div>
         <div>
