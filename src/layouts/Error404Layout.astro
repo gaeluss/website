@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css';
+import '@fontsource-variable/space-grotesk';
 
 interface Props {
   description: string
@@ -17,20 +18,13 @@ const { description, title, lang } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="nofollow, noindex" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#000000" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <slot name="preload" />
   </head>
 
-  <body class="bg-black text-white overflow-hidden">
+  <body class="bg-black text-white">
     <slot />
   </body>
 </html>
-
-<style is:global>
-  @media (prefers-reduced-motion: no-preference) {
-    @view-transition {
-      navigation: auto;
-    }
-  }
-</style>
