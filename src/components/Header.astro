@@ -125,6 +125,29 @@ const navItems = [
         scroll-target-group: auto;
     }
 
+    @keyframes header-backdrop {
+        to {
+            box-shadow:
+                0 5px 50px -5px rgb(0 0 0 / 0.1),
+                0 0 0 1px rgb(0 0 0 / 0.3);
+            background: rgb(0 0 0 / 0.3);
+            backdrop-filter: blur(10px);
+        }
+    }
+
+    #header-nav {
+        animation-name: header-backdrop;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+    }
+
+    @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+        #header-nav {
+            animation-timeline: scroll(root);
+            animation-range: 0 500px;
+        }
+    }
+
     .nav-link:is(:target-current, .target-current)::after {
         scale: 1;
     }

@@ -1,9 +1,148 @@
 @import "tailwindcss";
 @import "tailwindcss-animated";
 
+@theme {
+  --font-sans: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-blue: #284add;
+  --color-brand-pink: #f21973;
+  --color-brand-indigo: #5b7bff;
+  --color-brand-periwinkle: #7d97ff;
+  --color-brand-rose: #ff7ab0;
+  --color-night: #05070e;
+  --color-night-blue: #0b1122;
+  --color-surface: #0a0e19;
+  --color-surface-raised: #121a2e;
+}
+
+@property --p {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --glow {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@font-face {
+  font-family: 'Gaeluss Title';
+  src: url('/fonts/gaeluss-title.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+:root {
+  color-scheme: dark;
+  --scrollbar-thumb: rgb(255 255 255 / 0.4);
+  --scrollbar-thumb-hover: rgb(255 255 255 / 0.6);
+  --scrollbar-track: transparent;
+}
+
+html {
+  font-size-adjust: 0.486;
+  background: black;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@supports not (scrollbar-color: auto) {
+  html {
+    scrollbar-width: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+
+  p {
+    color: rgb(255 255 255 / 0.9);
+    line-height: 1.6;
+    margin-bottom: 1em;
+    font-weight: 300;
+    font-size: 1em;
+  }
+
+  p strong {
+    color: white;
+    font-weight: 700;
+  }
+}
+
+@utility starfield {
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 22%, #fff, transparent),
+    radial-gradient(1px 1px at 17% 64%, #fffc, transparent),
+    radial-gradient(1px 1px at 24% 12%, #fff9, transparent),
+    radial-gradient(1.5px 1.5px at 31% 41%, #c8d3ffcc, transparent),
+    radial-gradient(1px 1px at 39% 8%, #fff, transparent),
+    radial-gradient(1px 1px at 46% 30%, #fff8, transparent),
+    radial-gradient(1.5px 1.5px at 57% 15%, #ffd1e4, transparent),
+    radial-gradient(1px 1px at 63% 47%, #fffa, transparent),
+    radial-gradient(1px 1px at 71% 25%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 78% 58%, #fffb, transparent),
+    radial-gradient(1px 1px at 84% 10%, #fff9, transparent),
+    radial-gradient(1px 1px at 91% 36%, #c8d3ff, transparent),
+    radial-gradient(1px 1px at 96% 70%, #fff8, transparent),
+    radial-gradient(1px 1px at 4% 52%, #fff9, transparent),
+    radial-gradient(1px 1px at 52% 62%, #fff6, transparent);
+}
+
+@utility link-underline {
+  padding-bottom: 0.125rem;
+  background: linear-gradient(90deg, var(--color-brand-periwinkle), var(--color-brand-pink)) 0 100% / 0 1px no-repeat;
+  transition:
+    background-size 0.4s cubic-bezier(0.22, 0.8, 0.24, 1),
+    color 0.2s ease-out;
+
+  &:hover {
+    background-size: 100% 1px;
+    color: white;
+  }
+}
+
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 3px;
   }
 }

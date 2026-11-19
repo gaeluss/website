@@ -1,68 +1,119 @@
 ---
 import { getI18N } from '@/i18n';
+import BentoCard from '@/components/services/BentoCard.astro';
+import BentoOrb from '@/components/services/BentoOrb.astro';
+import WebArt from '@/components/services/art/WebArt.astro';
+import MobileArt from '@/components/services/art/MobileArt.astro';
+import DesignArt from '@/components/services/art/DesignArt.astro';
+import ConsultingArt from '@/components/services/art/ConsultingArt.astro';
 
 const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
-
-const card = 'bg-gray-800 rounded-lg shadow-md p-8 xl:p-12 2xl:p-20 relative group overflow-hidden border border-gray-400';
-const iconRow = 'flex flex-wrap justify-center gap-8 2xl:gap-16 mb-10 lg:mb-20';
-const icon = 'size-20 xl:size-24 2xl:size-28 opacity-70';
 ---
 
-<section id="services" tabindex="-1" class="py-20 mx-4 md:mx-12">
+<section id="services" tabindex="-1" class="services py-24 md:py-32 px-4 md:px-12">
   <div class="container mx-auto">
-    <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-12 text-center">{i18n.SERVICES.TITLE}</h2>
-    <div class="grid gap-6 grid-cols-1 md:grid-cols-4 lg:grid-cols-6">
-      <div class:list={[card, 'md:col-span-2 lg:col-span-4']}>
-        <div class="absolute inset-0 bg-blue-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-        <div class="relative z-10">
-          <div class={iconRow}>
-            <img src="/assets/icons/code_rate.svg" alt="" loading="lazy" class:list={[icon, 'hidden lg:block']}>
-            <img src="/assets/icons/terminal.svg" alt="" loading="lazy" class:list={[icon, 'hidden lg:block']}>
-            <img src="/assets/icons/api.svg" alt="" loading="lazy" class:list={[icon, 'hidden xl:block']}>
-            <img src="/assets/icons/web.svg" alt="" loading="lazy" class={icon}>
-          </div>
+    <h2 class="services-title mb-14 md:mb-20 text-center text-4xl md:text-6xl font-semibold tracking-tight text-balance text-white">
+      {i18n.SERVICES.TITLE}
+    </h2>
 
-          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.WEB_DEVELOPMENT}</h3>
-          <p set:html={i18n.SERVICES.WEB_DEVELOPMENT_DESCRIPTION} class="text-white text-pretty"></p>
-        </div>
-      </div>
-      <div class:list={[card, 'md:col-span-2 lg:col-span-2']}>
-        <div class="absolute inset-0 bg-pink-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-        <div class="relative z-10">
-          <div class={iconRow}>
-            <img src="/assets/icons/movil2.svg" alt="" loading="lazy" class={icon}>
-            <img src="/assets/icons/pc_movil.svg" alt="" loading="lazy" class={icon}>
-          </div>
-
-          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.MOBILE_DEVELOPMENT}</h3>
-          <p set:html={i18n.SERVICES.MOBILE_DEVELOPMENT_DESCRIPTION} class="text-white text-pretty"></p>
-        </div>
-      </div>
-      <div class:list={[card, 'md:col-span-2 lg:col-span-2']}>
-        <div class="absolute inset-0 bg-pink-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-        <div class="relative z-10">
-          <div class={iconRow}>
-            <img src="/assets/icons/diseño_ordenador2.svg" alt="" loading="lazy" class={icon}>
-          </div>
-
-          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.DESIGN}</h3>
-          <p set:html={i18n.SERVICES.DESIGN_DESCRIPTION} class="text-white text-pretty"></p>
-        </div>
-      </div>
-      <div class:list={[card, 'md:col-span-2 lg:col-span-4']}>
-        <div class="absolute inset-0 bg-blue-900 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
-        <div class="relative z-10">
-          <div class={iconRow}>
-            <img src="/assets/icons/persona_pantallas.svg" alt="" loading="lazy" class:list={[icon, 'hidden lg:block']}>
-            <img src="/assets/icons/manos_juntas.svg" alt="" loading="lazy" class={icon}>
-            <img src="/assets/icons/conferencia.svg" alt="" loading="lazy" class={icon}>
-          </div>
-
-          <h3 class="text-xl font-semibold text-white mb-4">{i18n.SERVICES.CONSULTING}</h3>
-          <p set:html={i18n.SERVICES.CONSULTING_DESCRIPTION} class="text-white text-pretty"></p>
-        </div>
-      </div>
+    <div class="bento" data-bento>
+      <BentoCard variant="web" title={i18n.SERVICES.WEB_DEVELOPMENT} description={i18n.SERVICES.WEB_DEVELOPMENT_DESCRIPTION}>
+        <WebArt />
+      </BentoCard>
+      <BentoCard variant="mobile" title={i18n.SERVICES.MOBILE_DEVELOPMENT} description={i18n.SERVICES.MOBILE_DEVELOPMENT_DESCRIPTION}>
+        <MobileArt />
+      </BentoCard>
+      <BentoCard variant="design" title={i18n.SERVICES.DESIGN} description={i18n.SERVICES.DESIGN_DESCRIPTION}>
+        <DesignArt />
+      </BentoCard>
+      <BentoCard variant="consulting" title={i18n.SERVICES.CONSULTING} description={i18n.SERVICES.CONSULTING_DESCRIPTION}>
+        <ConsultingArt />
+      </BentoCard>
+      <BentoOrb />
     </div>
   </div>
 </section>
+
+<script>
+  import { trackPointer } from '@/scripts/pointer';
+
+  const bento = document.querySelector<HTMLElement>('[data-bento]');
+
+  if (bento) {
+    const cards = [...bento.querySelectorAll<HTMLElement>('.bento-card')];
+
+    trackPointer(bento, (x, y) => {
+      const rects = cards.map((card) => card.getBoundingClientRect());
+      cards.forEach((card, index) => {
+        card.style.setProperty('--mx', `${x - rects[index].left}px`);
+        card.style.setProperty('--my', `${y - rects[index].top}px`);
+      });
+    });
+  }
+</script>
+
+<style>
+  .bento {
+    --g: 1rem;
+    --r: 0px;
+    --radius: 1.75rem;
+    --pad: 1.75rem;
+    position: relative;
+    display: grid;
+    gap: var(--g);
+  }
+
+  @media (width >= 48rem) {
+    .bento {
+      --r: clamp(4.5rem, 3rem + 5vw, 7rem);
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .bento {
+      --g: 1.25rem;
+      --pad: 2.25rem;
+      grid-template-columns: 7fr 5fr;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .bento:hover {
+      --glow: 1;
+    }
+  }
+
+  @keyframes services-rise {
+    from {
+      opacity: 0;
+      translate: 0 2.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      .services {
+        view-timeline-name: --services;
+        view-timeline-inset: 0;
+      }
+
+      .services-title {
+        animation-name: services-rise;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --services;
+        animation-range: entry 0% entry 35%;
+      }
+
+      .bento {
+        animation-name: services-rise;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --services;
+        animation-range: entry 10% entry 50%;
+      }
+    }
+  }
+</style>

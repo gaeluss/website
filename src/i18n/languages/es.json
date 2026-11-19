@@ -15,12 +15,12 @@
   "ABOUT": {
     "TITLE": "Sobre Gaeluss",
     "DESCRIPTION": "Gaeluss es una <strong>empresa de desarrollo de software</strong> comprometida con la <strong>innovación</strong> y la <strong>calidad</strong>. Nuestro enfoque se centra en ofrecer <strong>soluciones tecnológicas eficientes</strong> que ayuden a las empresas a alcanzar sus objetivos.",
-    "SUBTITLE": "Visión y Valores:",
+    "SUBTITLE": "Visión y Valores",
     "LIST_1": "<strong>Innovación constante</strong> para mantenernos a la vanguardia de la tecnología.",
     "LIST_2": "<strong>Calidad</strong> en cada detalle de nuestro trabajo, asegurando soluciones confiables.",
     "LIST_3": "<strong>Transparencia y ética</strong> en nuestras relaciones con clientes y colaboradores.",
     "LIST_4": "<strong>Enfoque centrado en el cliente</strong> para entender y cumplir sus expectativas.",
-    "LIST_5": "Colaboración como base para construir proyectos exitosos."
+    "LIST_5": "<strong>Colaboración</strong> como base para construir proyectos exitosos."
   },
   "SERVICES": {
     "TITLE": "Nuestros servicios",
@@ -36,7 +36,10 @@
   "PREFOOTER": {
     "TITLE": "¿Listo para dar vida a tus ideas?",
     "DESCRIPTION": "En Gaeluss, transformamos sus ideas en soluciones digitales reales que causan impacto.",
-    "BUTTON": "Contáctanos"
+    "BUTTON": "Contáctanos",
+    "COPY": "Copiar correo",
+    "COPIED": "Copiado",
+    "COPY_FAILED": "No se pudo copiar"
   },
   "FOOTER": {
     "DESCRIPTION": "Soluciones de software innovadoras para web y móvil. Creamos tecnología que mejora su negocio.",

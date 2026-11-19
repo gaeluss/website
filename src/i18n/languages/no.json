@@ -15,12 +15,12 @@
   "ABOUT": {
     "TITLE": "Om Gaeluss",
     "DESCRIPTION": "Gaeluss er et <strong>programvareselskap</strong> dedikert til <strong>innovasjon</strong> og <strong>kvalitet</strong>. Vårt fokus er å levere <strong>effektive teknologiløsninger</strong> som hjelper selskaper med å nå sine mål.",
-    "SUBTITLE": "Visjon og Verdier:",
+    "SUBTITLE": "Visjon og Verdier",
     "LIST_1": "<strong>Konstant innovasjon</strong> for å holde oss i forkant av teknologien.",
     "LIST_2": "<strong>Kvalitet</strong> i alle detaljer i vårt arbeid, som sikrer pålitelige løsninger.",
     "LIST_3": "<strong>Åpenhet og etikk</strong> i våre relasjoner med kunder og samarbeidspartnere.",
     "LIST_4": "<strong>Kundefokusert tilnærming</strong> for å forstå og oppfylle deres forventninger.",
-    "LIST_5": "Samarbeid som grunnlag for å bygge vellykkede prosjekter."
+    "LIST_5": "<strong>Samarbeid</strong> som grunnlag for å bygge vellykkede prosjekter."
   },
   "SERVICES": {
     "TITLE": "Våre Tjenester",
@@ -36,7 +36,10 @@
   "PREFOOTER": {
     "TITLE": "Klar til å realisere dine ideer?",
     "DESCRIPTION": "Hos Gaeluss forvandler vi dine ideer til digitale løsninger med betydelig effekt.",
-    "BUTTON": "Kontakt oss"
+    "BUTTON": "Kontakt oss",
+    "COPY": "Kopier e-post",
+    "COPIED": "Kopiert",
+    "COPY_FAILED": "Kunne ikke kopiere"
   },
   "FOOTER": {
     "DESCRIPTION": "Innovative programvareløsninger for web og mobil. Vi skaper teknologi som forbedrer din virksomhet.",

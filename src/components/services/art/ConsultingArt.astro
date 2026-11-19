@@ -1,0 +1,101 @@
+<svg class="graph" viewBox="0 0 320 192" fill="none" focusable="false">
+  <defs>
+    <linearGradient id="graph-gradient" x1="0" x2="1" y1="0" y2="0">
+      <stop class="graph-stop-start" offset="0" />
+      <stop class="graph-stop-end" offset="1" />
+    </linearGradient>
+  </defs>
+  <g class="graph-lines">
+    <path d="M28 96C73 96 73 40 118 40" />
+    <path d="M28 96H118" />
+    <path d="M28 96C73 96 73 152 118 152" />
+    <path d="M118 40C162 40 162 24 206 24" />
+    <path d="M118 40C162 40 162 72 206 72" />
+    <path d="M118 96C162 96 162 72 206 72" />
+    <path d="M118 96C162 96 162 128 206 128" />
+    <path d="M118 152C162 152 162 128 206 128" />
+    <path d="M206 72C249 72 249 96 292 96" />
+    <path d="M206 128C249 128 249 96 292 96" />
+  </g>
+  <path class="step graph-path" pathLength="1" d="M28 96C73 96 73 40 118 40C162 40 162 72 206 72C249 72 249 96 292 96" />
+  <g class="graph-nodes">
+    <circle class="step is-route" cx="28" cy="96" r="6" />
+    <circle class="step is-route" cx="118" cy="40" r="6" />
+    <circle cx="118" cy="96" r="6" />
+    <circle cx="118" cy="152" r="6" />
+    <circle cx="206" cy="24" r="6" />
+    <circle class="step is-route" cx="206" cy="72" r="6" />
+    <circle cx="206" cy="128" r="6" />
+  </g>
+  <g class="step graph-goal">
+    <circle cx="292" cy="96" r="15" />
+    <path pathLength="1" d="M285.5 96.5l4.5 4.5 8.5-9.5" />
+  </g>
+</svg>
+
+<style>
+  .graph {
+    width: min(100%, 21rem);
+    overflow: visible;
+  }
+
+  .graph-stop-start {
+    stop-color: var(--color-brand-indigo);
+  }
+
+  .graph-stop-end {
+    stop-color: var(--color-brand-pink);
+  }
+
+  .graph-lines path {
+    stroke: rgb(255 255 255 / 0.14);
+    stroke-width: 1.5;
+  }
+
+  .graph-path {
+    --span: 0.8;
+    stroke: url(#graph-gradient);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--t));
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-brand-pink) 45%, transparent));
+  }
+
+  .graph-nodes circle {
+    fill: #0d1222;
+    stroke: rgb(255 255 255 / 0.3);
+    stroke-width: 1.5;
+  }
+
+  .graph-nodes .is-route {
+    --span: 0.12;
+    fill: color-mix(in oklab, #3a1430 calc(var(--t) * 100%), #0d1222);
+    stroke: color-mix(in oklab, var(--color-brand-pink) calc(var(--t) * 100%), rgb(255 255 255 / 0.3));
+  }
+
+  .graph-nodes .is-route:nth-child(1) { --d: 0; }
+  .graph-nodes .is-route:nth-child(2) { --d: 0.26; }
+  .graph-nodes .is-route:nth-child(6) { --d: 0.52; }
+
+  .graph-goal {
+    --d: 0.78;
+    --span: 0.22;
+    filter: drop-shadow(0 0 calc(var(--t) * 12px) color-mix(in srgb, var(--color-brand-pink) 65%, transparent));
+  }
+
+  .graph-goal circle {
+    fill: color-mix(in oklab, #3a1430 calc(var(--t) * 100%), #0d1222);
+    stroke: color-mix(in oklab, var(--color-brand-pink) calc(var(--t) * 100%), rgb(255 255 255 / 0.3));
+    stroke-width: 1.5;
+  }
+
+  .graph-goal path {
+    stroke: white;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--t));
+  }
+</style>
