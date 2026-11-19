@@ -120,6 +120,15 @@ html {
     radial-gradient(1px 1px at 52% 62%, #fff6, transparent);
 }
 
+@utility section-title {
+  font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: white;
+  text-wrap: balance;
+}
+
 @utility link-underline {
   padding-bottom: 0.125rem;
   background: linear-gradient(90deg, var(--color-brand-periwinkle), var(--color-brand-pink)) 0 100% / 0 1px no-repeat;

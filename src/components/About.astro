@@ -36,7 +36,7 @@ const values = [
     <LogoStage />
 
     <div class="about-copy">
-      <h2 class="about-title">{i18n.ABOUT.TITLE}</h2>
+      <h2 class="about-title section-title">{i18n.ABOUT.TITLE}</h2>
       <p set:html={i18n.ABOUT.DESCRIPTION} class="about-text"></p>
       <ValuesList title={i18n.ABOUT.SUBTITLE} items={values} />
     </div>
@@ -126,11 +126,6 @@ const values = [
 
   .about-title {
     margin-bottom: 1.25rem;
-    font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
-    font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-    text-wrap: balance;
   }
 
   .about-text {
