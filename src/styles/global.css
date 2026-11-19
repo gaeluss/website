@@ -34,6 +34,7 @@
 
 :root {
   color-scheme: dark;
+  --about-peak: clamp(4rem, 10vw, 8rem);
   --scrollbar-thumb: rgb(255 255 255 / 0.4);
   --scrollbar-thumb-hover: rgb(255 255 255 / 0.6);
   --scrollbar-track: transparent;
@@ -117,6 +118,15 @@ html {
     radial-gradient(1px 1px at 96% 70%, #fff8, transparent),
     radial-gradient(1px 1px at 4% 52%, #fff9, transparent),
     radial-gradient(1px 1px at 52% 62%, #fff6, transparent);
+}
+
+@utility section-title {
+  font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: white;
+  text-wrap: balance;
 }
 
 @utility link-underline {

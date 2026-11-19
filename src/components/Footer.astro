@@ -119,21 +119,24 @@ const links = [
 
   .footer-wordmark {
     container-type: inline-size;
-    margin-top: 1.5rem;
-    padding-inline: 1rem;
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(2rem, 4vw, 3.5rem);
     user-select: none;
   }
 
   .wordmark {
     --mx: 50%;
     --my: 50%;
-    display: block;
+    --bleed: 0.08em;
+    flex: none;
+    margin-top: calc(-1 * var(--bleed));
     margin-right: -0.12em;
+    padding-top: var(--bleed);
     font-family: var(--font-gaeluss-title);
-    font-size: 20.4cqi;
+    font-size: 18.8cqi;
     line-height: 0.75;
     letter-spacing: 0.12em;
-    text-align: center;
     color: transparent;
     background:
       radial-gradient(
@@ -145,8 +148,8 @@ const links = [
       linear-gradient(90deg, color-mix(in srgb, var(--color-brand-blue) 40%, transparent), color-mix(in srgb, var(--color-brand-pink) 40%, transparent)),
       linear-gradient(rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.1));
     background-clip: text;
-    mask: linear-gradient(#000 35%, transparent 98%);
-    translate: 0 12%;
+    mask: linear-gradient(#000 calc(var(--bleed) + 0.2625em), transparent calc(var(--bleed) + 0.735em));
+    translate: 0 0.09em;
     transition: --glow 0.6s ease;
   }
 
@@ -157,8 +160,7 @@ const links = [
   }
 
   @media (width >= 48rem) {
-    .footer-inner,
-    .footer-wordmark {
+    .footer-inner {
       padding-inline: 3rem;
     }
 
@@ -170,7 +172,7 @@ const links = [
 
   @keyframes wordmark-rise {
     from {
-      translate: 0 75%;
+      translate: 0 0.5625em;
     }
   }
 

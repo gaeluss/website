@@ -4,6 +4,7 @@ import Footer from '@/components/Footer.astro';
 import About from '@/components/About.astro';
 import PreFooter from '@/components/PreFooter.astro';
 import Video from '@/components/Video.astro';
+import Horizon from '@/components/ui/Horizon.astro';
 import Layout from '@/layouts/Layout.astro';
 
 import { getI18N } from '../../i18n';
@@ -12,15 +13,49 @@ const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
 ---
 
-<Layout 
+<Layout
   title={i18n.SEO_TITLE}
   description={i18n.SEO_DESCRIPTION}
 >
 	<Video />
-	<main>
+	<main class="page">
+		<div class="sky" aria-hidden="true">
+			<div class="sky-stars starfield"></div>
+			<div class="sky-stars sky-stars-far starfield"></div>
+		</div>
 		<About />
+		<Horizon />
 		<Services />
 		<PreFooter />
 	</main>
 	<Footer />
 </Layout>
+
+<style>
+	.page {
+		position: relative;
+		isolation: isolate;
+	}
+
+	.sky {
+		position: absolute;
+		inset: var(--about-peak) 0 0;
+		z-index: -1;
+		overflow: hidden;
+		background: linear-gradient(var(--color-night) calc(100% - 24rem), #000);
+		pointer-events: none;
+	}
+
+	.sky-stars {
+		position: absolute;
+		inset: 0;
+		background-size: 100% 52rem;
+		mask: linear-gradient(#000 calc(100% - 30rem), transparent calc(100% - 6rem));
+	}
+
+	.sky-stars-far {
+		background-size: 100% 34rem;
+		background-position: 50% 17rem;
+		opacity: 0.45;
+	}
+</style>

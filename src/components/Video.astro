@@ -4,7 +4,7 @@ const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
 ---
 
-<div id="home" class="hero relative isolate h-dvh w-full max-w-[100vw] md:aspect-video md:h-[80vh] xl:h-full overflow-hidden">
+<div id="home" class="hero relative isolate w-full max-w-[100vw] overflow-hidden">
   <div class="hero-media absolute inset-0">
     <video
       loop
@@ -21,7 +21,7 @@ const i18n = getI18N({ currentLocale });
 
   <div class="hero-shade absolute inset-0 bg-black opacity-70"></div>
 
-  <div class="hero-content absolute inset-0 flex items-center justify-center">
+  <div class="hero-content absolute inset-x-0 flex items-center justify-center">
     <div class="motion-safe:animate-fade-up flex justify-center items-center gap-8 flex-col">
       <h1 class="title text-4xl md:text-6xl lg:text-8xl text-white">
         <span class="sr-only">Gaeluss</span>{" "}
@@ -36,7 +36,7 @@ const i18n = getI18N({ currentLocale });
         </span>
       </h1>
 
-      <p class="subtitle text-xl lg:text-2xl text-center text-wrap px-4 text-white">
+      <p class="subtitle mb-0 text-xl lg:text-2xl text-center text-wrap px-4 text-white">
         {i18n.VIDEO.SUBTITLE}
       </p>
     </div>
@@ -63,6 +63,15 @@ const i18n = getI18N({ currentLocale });
 </script>
 
 <style>
+  .hero {
+    height: calc(100dvh + var(--about-peak));
+  }
+
+  .hero-content {
+    top: 5.5rem;
+    bottom: var(--about-peak);
+  }
+
   .title {
     font-family: var(--font-gaeluss-title);
   }

@@ -1,0 +1,92 @@
+<div class="horizon" aria-hidden="true">
+  <div class="horizon-planet">
+    <div class="horizon-halo"></div>
+    <div class="horizon-body"></div>
+  </div>
+</div>
+
+<style>
+  .horizon {
+    --size: max(190%, 72rem);
+    position: relative;
+    z-index: -1;
+    height: clamp(9rem, 16vw, 14rem);
+    margin-block: calc(-0.5 * clamp(9rem, 16vw, 14rem));
+    overflow: clip;
+    pointer-events: none;
+    mask: linear-gradient(#000 45%, transparent);
+  }
+
+  .horizon-planet {
+    position: absolute;
+    left: 50%;
+    top: clamp(3rem, 6vw, 5rem);
+    width: var(--size);
+    aspect-ratio: 1;
+    translate: -50% 0;
+  }
+
+  .horizon-halo,
+  .horizon-body,
+  .horizon-body::after {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+
+  .horizon-halo {
+    inset: -2px;
+    background: linear-gradient(90deg, transparent 22%, var(--color-brand-blue) 36%, #7b3fe4 50%, var(--color-brand-pink) 64%, transparent 78%);
+    filter: blur(24px);
+    opacity: 0.55;
+  }
+
+  .horizon-body {
+    background: radial-gradient(circle at 50% 0%, var(--color-night-blue), var(--color-night) 12%);
+  }
+
+  .horizon-body::after {
+    content: '';
+    padding: 1px;
+    background: linear-gradient(90deg, transparent 24%, var(--color-brand-periwinkle) 38%, #fff 50%, var(--color-brand-rose) 62%, transparent 76%);
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+
+  @keyframes horizon-rise {
+    from {
+      translate: -50% 4rem;
+    }
+  }
+
+  @keyframes horizon-glow {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      .horizon {
+        view-timeline-name: --horizon;
+      }
+
+      .horizon-planet {
+        animation-name: horizon-rise;
+        animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+        animation-fill-mode: both;
+        animation-timeline: --horizon;
+        animation-range: entry 0% cover 50%;
+      }
+
+      .horizon-halo {
+        animation-name: horizon-glow;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --horizon;
+        animation-range: entry 20% cover 50%;
+      }
+    }
+  }
+</style>

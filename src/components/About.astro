@@ -18,14 +18,25 @@ const values = [
 <section id="about" tabindex="-1" class="about relative isolate w-full">
   <div class="about-blend" aria-hidden="true"></div>
   <svg class="about-peak" aria-hidden="true" viewBox="0 0 100 10" preserveAspectRatio="none" focusable="false">
-    <polygon points="0,10 50,0 100,10" />
+    <defs>
+      <linearGradient id="peak-rim" x1="0" x2="1" y1="0" y2="0">
+        <stop class="peak-stop peak-stop-fade" offset="0" />
+        <stop class="peak-stop peak-stop-blue" offset="0.22" />
+        <stop class="peak-stop peak-stop-white" offset="0.5" />
+        <stop class="peak-stop peak-stop-pink" offset="0.78" />
+        <stop class="peak-stop peak-stop-fade peak-stop-pink" offset="1" />
+      </linearGradient>
+    </defs>
+    <polygon class="peak-body" points="0,10 50,0 100,10" />
+    <polyline class="peak-edge peak-glow" points="0,10 50,0 100,10" />
+    <polyline class="peak-edge" points="0,10 50,0 100,10" />
   </svg>
 
   <div class="about-inner">
     <LogoStage />
 
     <div class="about-copy">
-      <h2 class="about-title">{i18n.ABOUT.TITLE}</h2>
+      <h2 class="about-title section-title">{i18n.ABOUT.TITLE}</h2>
       <p set:html={i18n.ABOUT.DESCRIPTION} class="about-text"></p>
       <ValuesList title={i18n.ABOUT.SUBTITLE} items={values} />
     </div>
@@ -34,17 +45,11 @@ const values = [
 
 <style>
   .about {
-    --peak: clamp(4rem, 10vw, 8rem);
+    --peak: var(--about-peak);
     margin-top: calc(-1 * var(--peak));
     padding-top: max(7rem, calc(var(--peak) + 2rem));
     padding-bottom: clamp(6rem, 12vw, 10rem);
     overflow-x: clip;
-    background: linear-gradient(
-      in oklab,
-      transparent var(--peak),
-      var(--color-gray-800) var(--peak) calc(100% - 16rem),
-      #000
-    );
   }
 
   .about-peak {
@@ -54,8 +59,41 @@ const values = [
     z-index: -1;
     width: 100%;
     height: calc(var(--peak) + 1px);
-    fill: var(--color-gray-800);
+    overflow: visible;
     transform-origin: bottom;
+  }
+
+  .peak-body {
+    fill: var(--color-night);
+  }
+
+  .peak-edge {
+    fill: none;
+    stroke: url(#peak-rim);
+    stroke-width: 1.5px;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .peak-glow {
+    stroke-width: 9px;
+    opacity: 0.22;
+  }
+
+  .peak-stop {
+    stop-color: var(--color-brand-periwinkle);
+  }
+
+  .peak-stop-white {
+    stop-color: white;
+  }
+
+  .peak-stop-pink {
+    stop-color: var(--color-brand-rose);
+  }
+
+  .peak-stop-fade {
+    stop-opacity: 0;
   }
 
   .about-blend {
@@ -67,8 +105,8 @@ const values = [
     background: linear-gradient(
       in oklab,
       transparent,
-      color-mix(in oklab, var(--color-gray-800) 55%, transparent) 55%,
-      var(--color-gray-800)
+      color-mix(in oklab, var(--color-night) 55%, transparent) 55%,
+      var(--color-night)
     );
     opacity: 0;
     pointer-events: none;
@@ -88,11 +126,6 @@ const values = [
 
   .about-title {
     margin-bottom: 1.25rem;
-    font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
-    font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.025em;
-    text-wrap: balance;
   }
 
   .about-text {
