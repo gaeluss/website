@@ -10,7 +10,7 @@ const i18n = getI18N({ currentLocale: defaultLng })
 const translatePath = useTranslatedPath(lang);
 ---
 
-<Error404Layout title=`${i18n.ERRORS.PAGE_NOT_FOUND_TITLE}&nbsp;${new Date().getFullYear()}` description={i18n.ERRORS.PAGE_NOT_FOUND_DESCRIPTION}>
+<Error404Layout lang={defaultLng} title=`${i18n.ERRORS.PAGE_NOT_FOUND_TITLE}&nbsp;${new Date().getFullYear()}` description={i18n.ERRORS.PAGE_NOT_FOUND_DESCRIPTION}>
     <div class="relative min-h-screen flex items-center justify-center">
         <div class="absolute inset-0 overflow-hidden">
           <div class="absolute w-[500px] h-[500px] rounded-full bg-[#284add] opacity-70 blur-[100px] -top-48 -left-24"></div>

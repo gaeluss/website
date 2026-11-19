@@ -8,7 +8,9 @@
   "HEADER": {
     "VISION": "Visión",
     "SERVICES": "Servicios",
-    "CONTACT": "Contacto"
+    "CONTACT": "Contacto",
+    "MENU": "Menú",
+    "LANGUAGE": "Idioma"
   },
   "ABOUT": {
     "TITLE": "Sobre Gaeluss",
@@ -39,7 +41,8 @@
   "FOOTER": {
     "DESCRIPTION": "Soluciones de software innovadoras para web y móvil. Creamos tecnología que mejora su negocio.",
     "LINKS": "Enlaces rápidos",
-    "FOLLOW": "Síguenos"
+    "FOLLOW": "Síguenos",
+    "RIGHTS": "Todos los derechos reservados."
   },
   "ERRORS": {
     "PAGE_NOT_FOUND_TITLE": "Página no encontrada",

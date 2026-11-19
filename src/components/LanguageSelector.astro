@@ -1,41 +1,54 @@
 ---
 import ArrowDisplay from './icons/arrowDisplay.astro';
+import { getI18N } from '@/i18n';
 import { LANGUAGES } from '@/i18n/ui';
 import { getRouteFromUrl, useTranslatedPath, getLangFromUrl } from '@/i18n/utils';
 
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const listId = `${id}-list`;
+
 const route = getRouteFromUrl(Astro.url);
 const lang = getLangFromUrl(Astro.url);
+const i18n = getI18N({ currentLocale: lang });
 const translatePath = useTranslatedPath(lang);
 
-const currentLocaleData = LANGUAGES[lang]
+const currentLocaleData = LANGUAGES[lang];
 const otherLocales = Object.values(LANGUAGES).filter(
   (locale) => locale.code !== lang
-)
+);
 ---
 
-<div class="relative inline-block text-left justify-self-end">
+<div class="relative inline-block text-left justify-self-end" data-lang-selector>
   <div
-    class="group text-white rounded-md text-xs font-semibold bg-slate-500/30 hover:bg-slate-500/70 transition-all"
+    class="text-white rounded-md text-xs font-semibold bg-slate-500/30 hover:bg-slate-500/70 transition-all"
   >
     <button
       type="button"
-      class="inline-flex justify-start items-center w-full gap-x-2 px-3 py-2"
-      aria-expanded="true"
-      aria-haspopup="true"
+      class="group inline-flex justify-start items-center w-full gap-x-2 px-3 py-2"
+      aria-expanded="false"
+      aria-controls={listId}
     >
       <currentLocaleData.flag />
+      <span class="sr-only">{i18n.HEADER.LANGUAGE}:</span>
       {currentLocaleData.name}
       <ArrowDisplay />
     </button>
     <ul
-      class="group-hover:block group-hover:animate-fade-down group-hover:animate-duration-300 hidden pt-0.5 absolute w-full"
+      id={listId}
+      class="hidden motion-safe:animate-fade-down motion-safe:animate-duration-300 pt-0.5 absolute w-full"
     >
       {
         otherLocales.map((locale) => (
           <li class="py-[3px]">
             <a
-              class="rounded-md bg-slate-500/30 hover:bg-slate-500/70 whitespace-no-wrap inline-flex justify-start items-center w-full gap-x-2 px-3 py-2"
+              class="rounded-md bg-slate-500/30 hover:bg-slate-500/70 whitespace-nowrap inline-flex justify-start items-center w-full gap-x-2 px-3 py-2"
               href={translatePath(`/${route ? route : ''}`, locale.code)}
+              hreflang={locale.code}
+              lang={locale.code}
             >
               <locale.flag />
               {locale.name}
@@ -46,3 +59,60 @@ const otherLocales = Object.values(LANGUAGES).filter(
     </ul>
   </div>
 </div>
+
+<script>
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  document.querySelectorAll<HTMLElement>('[data-lang-selector]').forEach((selector) => {
+    const button = selector.querySelector('button');
+    const list = selector.querySelector('ul');
+    if (!button || !list) return;
+
+    let previewing = false;
+
+    const isOpen = () => button.getAttribute('aria-expanded') === 'true';
+    const setOpen = (open: boolean) => {
+      button.setAttribute('aria-expanded', String(open));
+      list.classList.toggle('hidden', !open);
+      if (!open) previewing = false;
+    };
+
+    button.addEventListener('click', () => {
+      if (previewing) {
+        previewing = false;
+        return;
+      }
+      setOpen(!isOpen());
+    });
+
+    selector.addEventListener('pointerenter', (event) => {
+      if (event.pointerType !== 'mouse' || !canHover.matches || isOpen()) return;
+      setOpen(true);
+      previewing = true;
+    });
+
+    selector.addEventListener('pointerleave', () => {
+      if (previewing) setOpen(false);
+    });
+
+    selector.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && isOpen()) {
+        setOpen(false);
+        button.focus();
+        event.stopPropagation();
+      }
+    });
+
+    selector.addEventListener('focusout', (event) => {
+      if (event.relatedTarget instanceof Node && !selector.contains(event.relatedTarget)) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (isOpen() && event.target instanceof Node && !selector.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+  });
+</script>

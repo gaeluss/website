@@ -3,10 +3,7 @@ import EnglandFlag from '@/components/flags/england.astro';
 import NorwayFlag from '@/components/flags/norway.astro';
 import DutchFlag from '@/components/flags/netherlands.astro';
 
-export const LANGUAGES: Record<
-  string,
-  { code: string; name: string; flag: typeof SpainFlag }
-> = {
+export const LANGUAGES = {
   en: {
     code: 'en',
     name: 'English',
@@ -17,31 +14,26 @@ export const LANGUAGES: Record<
     name: 'Español',
     flag: SpainFlag,
   },
-  no: {  
+  no: {
     code: 'no',
     name: 'Norsk',
     flag: NorwayFlag,
   },
-  nl: {  
+  nl: {
     code: 'nl',
-    name: 'Dutch',
+    name: 'Nederlands',
     flag: DutchFlag,
   },
-};
+} satisfies Record<string, { code: string; name: string; flag: typeof SpainFlag }>;
 
-export const defaultLang = 'es';
+export type Lang = keyof typeof LANGUAGES;
+
+export const defaultLang: Lang = 'es';
 export const showDefaultLang = false;
 
-export const ui = {
+export const routes: Record<Lang, Record<string, string>> = {
     es: {},
     en: {},
     no: {},
     nl: {},
-} as const;
-
-export const routes = {
-    es: {},
-    en: {},
-    no: {},
-    nl: {},
-};  
+};

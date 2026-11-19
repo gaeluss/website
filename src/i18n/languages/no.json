@@ -8,7 +8,9 @@
   "HEADER": {
     "VISION": "Visjon",
     "SERVICES": "Tjenester",
-    "CONTACT": "Kontakt"
+    "CONTACT": "Kontakt",
+    "MENU": "Meny",
+    "LANGUAGE": "Språk"
   },
   "ABOUT": {
     "TITLE": "Om Gaeluss",
@@ -39,7 +41,8 @@
   "FOOTER": {
     "DESCRIPTION": "Innovative programvareløsninger for web og mobil. Vi skaper teknologi som forbedrer din virksomhet.",
     "LINKS": "Hurtigkoblinger",
-    "FOLLOW": "Følg oss"
+    "FOLLOW": "Følg oss",
+    "RIGHTS": "Alle rettigheter forbeholdt."
   },
   "ERRORS": {
     "PAGE_NOT_FOUND_TITLE": "Siden ble ikke funnet",

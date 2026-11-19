@@ -8,7 +8,9 @@
   "HEADER": {
     "VISION": "Visie",
     "SERVICES": "Diensten",
-    "CONTACT": "Contact"
+    "CONTACT": "Contact",
+    "MENU": "Menu",
+    "LANGUAGE": "Taal"
   },
   "ABOUT": {
     "TITLE": "Over Gaeluss",
@@ -39,7 +41,8 @@
   "FOOTER": {
     "DESCRIPTION": "Innovatieve softwareoplossingen voor web en mobiel. Wij creëren technologie die uw bedrijf versterkt.",
     "LINKS": "Snelle Links",
-    "FOLLOW": "Volg Ons"
+    "FOLLOW": "Volg Ons",
+    "RIGHTS": "Alle rechten voorbehouden."
   },
   "ERRORS": {
     "PAGE_NOT_FOUND_TITLE": "Pagina niet gevonden",

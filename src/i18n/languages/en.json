@@ -8,7 +8,9 @@
   "HEADER": {
     "VISION": "Vision",
     "SERVICES": "Services",
-    "CONTACT": "Contact"
+    "CONTACT": "Contact",
+    "MENU": "Menu",
+    "LANGUAGE": "Language"
   },
   "ABOUT": {
     "TITLE": "About Gaeluss",
@@ -39,7 +41,8 @@
   "FOOTER": {
     "DESCRIPTION": "Innovative software solutions for web and mobile. We create technology that enhances your business.",
     "LINKS": "Quick Links",
-    "FOLLOW": "Follow Us"
+    "FOLLOW": "Follow Us",
+    "RIGHTS": "All rights reserved."
   },
   "ERRORS": {
     "PAGE_NOT_FOUND_TITLE": "Page Not Found",

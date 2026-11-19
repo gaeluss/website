@@ -7,6 +7,7 @@ const i18n = getI18N({ currentLocale });
 
 <section
   id="about"
+  tabindex="-1"
   class="relative w-full flex items-center justify-center bg-gray-800 py-28"
 >
   <div class="container mx-auto flex flex-col items-center md:flex-row p-4">
@@ -17,7 +18,7 @@ const i18n = getI18N({ currentLocale });
         preload="metadata"
         muted
         playsinline
-        aria-label="Video de presentación de Gaeluss"
+        aria-hidden="true"
       >
         <source src="/motion-logo.webm" type="video/webm" />
         <source src="/motion-logo.mp4" type="video/mp4" />
@@ -26,7 +27,8 @@ const i18n = getI18N({ currentLocale });
       <img
         id="about-image"
         src="/assets/images/logo-blanco.webp"
-        alt="Animación del logo de Gaeluss"
+        alt=""
+        loading="lazy"
         class="block w-full h-full object-cover"
       >
     </div>
@@ -34,13 +36,13 @@ const i18n = getI18N({ currentLocale });
     <div
       class="w-full md:w-3/4 lg:w-2/3 text-white text-center md:text-left mt-6 md:mt-0 gradient-border-alt"
     >
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4" aria-label={`Título: ${i18n.ABOUT.TITLE}`}>
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
         {i18n.ABOUT.TITLE}
-      </h1>
-      <p set:html={i18n.ABOUT.DESCRIPTION} class="text-lg md:text-xl text-gray-300 text-pretty mb-8"></p>
-      <h2 class="text-3xl font-semibold text-gray-100 mb-3">
-        {i18n.ABOUT.SUBTITLE}
       </h2>
+      <p set:html={i18n.ABOUT.DESCRIPTION} class="text-lg md:text-xl text-gray-300 text-pretty mb-8"></p>
+      <h3 class="text-3xl font-semibold text-gray-100 mb-3">
+        {i18n.ABOUT.SUBTITLE}
+      </h3>
       <ul class="list-disc list-inside text-lg md:text-xl text-gray-300 text-pretty space-y-2">
         <li set:html={i18n.ABOUT.LIST_1}></li>
         <li set:html={i18n.ABOUT.LIST_2}></li>
@@ -53,44 +55,31 @@ const i18n = getI18N({ currentLocale });
 </section>
 
 <script>
-  function isMobile() {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    return regex.test(navigator.userAgent);
+  const video = document.getElementById('about-video') as HTMLVideoElement | null;
+  const image = document.getElementById('about-image');
+  const aboutSection = document.getElementById('about');
+
+  const prefersVideo = window.matchMedia(
+    '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+  );
+
+  if (video && image && aboutSection && prefersVideo.matches) {
+    video.classList.remove('hidden');
+    image.classList.add('hidden');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        video.play().catch(() => {
+          video.classList.add('hidden');
+          image.classList.remove('hidden');
+        });
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(aboutSection);
   }
-
-  function hasTouchSupport() {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  }
-
-  document.addEventListener("astro:page-load", () => {
-    const video = document.getElementById("about-video") as HTMLVideoElement;
-    const image = document.getElementById("about-image") as HTMLImageElement;
-    const aboutSection = document.getElementById("about");
-
-    if (isMobile() || hasTouchSupport()) {
-      video.classList.add("hidden");
-      image.classList.remove("hidden");
-      return;
-    }
-
-    if (video && aboutSection) {
-      video.classList.remove("hidden");
-      image.classList.add("hidden");
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              video.play();
-              observer.disconnect();
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-      observer.observe(aboutSection);
-    }
-  });
 </script>
 
 <style>

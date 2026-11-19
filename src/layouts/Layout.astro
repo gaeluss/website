@@ -1,6 +1,7 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import { getI18N } from '@/i18n';
+import { LANGUAGES, defaultLang } from '@/i18n/ui';
+import { getLangFromUrl, useTranslatedPath } from '@/i18n/utils';
 import Header from '@/components/Header.astro';
 import GoogleAnalytics from "@/components/GoogleAnalytics.astro";
 import '@fontsource-variable/onest';
@@ -14,22 +15,35 @@ const { description, title } = Astro.props;
 const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
 
+const translatePath = useTranslatedPath(getLangFromUrl(Astro.url));
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const alternates = Object.values(LANGUAGES).map(({ code }) => ({
+	hreflang: code,
+	href: new URL(translatePath('/', code), Astro.site).href,
+}));
+const defaultURL = new URL(translatePath('/', defaultLang), Astro.site).href;
+
 const isProduction = import.meta.env.PROD;
 ---
 
 <!doctype html>
 <html lang={currentLocale}>
 	<head>
-		{isProduction && <GoogleAnalytics />}
 		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
 		<meta name="robots" content="index, follow" />
 		<meta name="keywords" content={i18n.SEO_KEYWORDS} />
 		<meta name="author" content="Gaeluss" />
+		<link rel="canonical" href={canonicalURL} />
+		{alternates.map(({ hreflang, href }) => (
+			<link rel="alternate" hreflang={hreflang} href={href} />
+		))}
+		<link rel="alternate" hreflang="x-default" href={defaultURL} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<title>{title}</title>
-		<ViewTransitions />
+		<link rel="preload" href="/fonts/gaeluss-title.woff2" as="font" type="font/woff2" crossorigin />
+		{isProduction && <GoogleAnalytics />}
 	</head>
 	<body>
 		<Header />
@@ -39,9 +53,9 @@ const isProduction = import.meta.env.PROD;
 
 <style is:global>
 	@font-face {
-	  font-family: 'NewestShape';
-	  src: url('/fonts/NewestShape.ttf') format('truetype');
-      font-weight: normal;
+	  font-family: 'Gaeluss Title';
+	  src: url('/fonts/gaeluss-title.woff2') format('woff2');
+	  font-weight: normal;
 	  font-style: normal;
 	}
 
@@ -49,6 +63,9 @@ const isProduction = import.meta.env.PROD;
 	  color-scheme: dark;
 	  --entry-animation: -20px;
 	  --cover-animation: 20px;
+	  --scrollbar-thumb: rgb(255 255 255 / 0.4);
+	  --scrollbar-thumb-hover: rgb(255 255 255 / 0.6);
+	  --scrollbar-track: transparent;
 	}
 
 	@media (min-width: 1400px) {
@@ -58,27 +75,38 @@ const isProduction = import.meta.env.PROD;
 	  }
 	}
 
+	@media (prefers-reduced-motion: no-preference) {
+	  @view-transition {
+		navigation: auto;
+	  }
+	}
+
 	html {
 	  font-family: "Onest Variable", system-ui, sans-serif;
 	  background: black;
 	  scroll-behavior: smooth;
+	  scroll-padding-top: 5.5rem;
+	  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+	  scrollbar-width: thin;
 	}
-	
-	::-webkit-scrollbar {
-	  width: 8px;
-	}
-	::-webkit-scrollbar-track {
-	  background: transparent;
-	  backdrop-filter: blur(10px);
-	  border-radius: 5px;
-	}
-	::-webkit-scrollbar-thumb {
-	  background: rgba(255, 255, 255, 0.3);
-	  backdrop-filter: blur(10px);
-	  border-radius: 5px;
-	}
-	::-webkit-scrollbar-thumb:hover {
-	  background: rgba(255, 255, 255, 0.5);
+
+	@supports not (scrollbar-color: auto) {
+	  html {
+		scrollbar-width: auto;
+	  }
+	  ::-webkit-scrollbar {
+		width: 8px;
+	  }
+	  ::-webkit-scrollbar-track {
+		background: var(--scrollbar-track);
+	  }
+	  ::-webkit-scrollbar-thumb {
+		background: var(--scrollbar-thumb);
+		border-radius: 5px;
+	  }
+	  ::-webkit-scrollbar-thumb:hover {
+		background: var(--scrollbar-thumb-hover);
+	  }
 	}
 
 	p {
@@ -105,12 +133,17 @@ const isProduction = import.meta.env.PROD;
 	}
 
 	#header-nav {
-	  animation: blur linear both;
-	  animation-timeline: scroll();
-	  animation-range: 0 500px;
+	  animation: header-backdrop linear both;
 	}
 
-	@keyframes blur {
+	@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+	  #header-nav {
+		animation-timeline: scroll(root);
+		animation-range: 0 500px;
+	  }
+	}
+
+	@keyframes header-backdrop {
 	  to {
 		box-shadow:
 		  0px 5px 50px -5px rgba(0, 0, 0, 0.1),
