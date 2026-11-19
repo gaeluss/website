@@ -49,14 +49,17 @@ This will start a local server at http://localhost:4321 where you can view and w
 ## 📂 Project Structure
 
 ```sh
-├── public/                # Static files (robots.txt, sitemap.xml, fonts, media)
+├── public/                # Static files (robots.txt, brand images, videos)
 ├── src/
-│   ├── components/        # Reusable Astro components
+│   ├── assets/            # Optimized images and self-hosted fonts
+│   ├── components/        # Astro components, grouped by section (about, services, ui, 404)
+│   ├── data/              # Company details and social profiles
 │   ├── layouts/           # Layouts for pages
-│   ├── pages/             # Main site pages
-│   ├── i18n/              # Internationalization files
-│   └── styles/            # Global CSS (Tailwind)
-├── astro.config.mjs       # Astro configuration
+│   ├── pages/             # Site pages and llms.txt endpoint
+│   ├── i18n/              # Translations and language list
+│   ├── scripts/           # Shared client-side scripts
+│   └── styles/            # Global CSS, theme tokens and utilities (Tailwind)
+├── astro.config.mjs       # Astro configuration (i18n, fonts, sitemap)
 └── package.json           # Dependency configuration file
 ```
 
