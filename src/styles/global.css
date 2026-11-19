@@ -2,7 +2,7 @@
 @import "tailwindcss-animated";
 
 @theme {
-  --font-sans: "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-space-grotesk);
   --color-brand-blue: #284add;
   --color-brand-pink: #f21973;
   --color-brand-indigo: #5b7bff;
@@ -26,13 +26,6 @@
   initial-value: 0;
 }
 
-@font-face {
-  font-family: 'Gaeluss Title';
-  src: url('/fonts/gaeluss-title.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
     navigation: auto;
@@ -47,7 +40,6 @@
 }
 
 html {
-  font-size-adjust: 0.486;
   background: black;
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;

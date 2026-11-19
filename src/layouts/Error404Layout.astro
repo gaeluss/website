@@ -1,6 +1,6 @@
 ---
+import { Font } from 'astro:assets';
 import '@/styles/global.css';
-import '@fontsource-variable/space-grotesk';
 
 interface Props {
   description: string
@@ -21,6 +21,7 @@ const { description, title, lang } = Astro.props;
     <meta name="robots" content="noindex" />
     <meta name="theme-color" content="#000000" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <Font cssVariable="--font-space-grotesk" />
     <slot name="preload" />
   </head>
 

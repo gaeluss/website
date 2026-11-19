@@ -1,3 +1,8 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/images/logo-blanco.webp';
+---
+
 <div class="about-stage" aria-hidden="true" data-stage>
   <div class="stage-tilt">
     <div class="stage-layer stage-glow"></div>
@@ -20,15 +25,15 @@
         <source src="/motion-logo.webm" type="video/webm" />
         <source src="/motion-logo.mp4" type="video/mp4" />
       </video>
-      <img
+      <Image
         id="about-image"
-        src="/assets/images/logo-blanco.webp"
+        src={logo}
         alt=""
-        width="4526"
-        height="4526"
+        widths={[272, 416, 544, 832]}
+        sizes="(width >= 48rem) 26rem, 17rem"
         loading="lazy"
         decoding="async"
-      >
+      />
     </div>
   </div>
 </div>
@@ -165,7 +170,7 @@
   }
 
   .stage-logo video,
-  .stage-logo img {
+  .stage-logo :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;

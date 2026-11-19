@@ -3,8 +3,8 @@ import { getI18N } from '@/i18n';
 import Header from '@/components/Header.astro';
 import GoogleAnalytics from "@/components/GoogleAnalytics.astro";
 import Seo from '@/components/Seo.astro';
+import { Font } from 'astro:assets';
 import '@/styles/global.css';
-import '@fontsource-variable/space-grotesk';
 
 interface Props {
 	description: string;
@@ -31,7 +31,8 @@ const isProduction = import.meta.env.PROD;
 		<Seo title={title} description={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/brand/logo.png" />
-		<link rel="preload" href="/fonts/gaeluss-title.woff2" as="font" type="font/woff2" crossorigin />
+		<Font cssVariable="--font-gaeluss-title" preload />
+		<Font cssVariable="--font-space-grotesk" />
 		{isProduction && <GoogleAnalytics />}
 	</head>
 	<body>
