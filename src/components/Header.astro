@@ -15,7 +15,7 @@ const navItems = [
 
 <header id="header-nav" class="fixed inset-x-0 top-0 z-20 py-3 px-8 lg:px-0">
     <div class="flex justify-between items-center max-w-7xl mx-auto">
-        <a href="#home" class="flex-shrink-0 size-16">
+        <a href="#home" class="shrink-0 size-16">
             <img src="/logo.svg" alt="Gaeluss" width="64" height="64">
         </a>
 
@@ -126,7 +126,7 @@ const navItems = [
     }
 
     .nav-link:is(:target-current, .target-current)::after {
-        transform: scaleX(1);
+        scale: 1;
     }
 
     #mobile-menu .nav-link:is(:target-current, .target-current) {

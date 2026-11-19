@@ -15,7 +15,7 @@
 
 ## 📦 Installation
 
-To get started with this project, make sure you have `pnpm` installed on your machine. If you don't have it yet, you can install it by running:
+To get started with this project, make sure you have Node.js 22.23.4 or later (the version in `.nvmrc`, use `nvm use`) and `pnpm` installed on your machine. If you don't have it yet, you can install it by running:
 
 ```sh
 npm install -g pnpm
@@ -54,9 +54,9 @@ This will start a local server at http://localhost:4321 where you can view and w
 │   ├── components/        # Reusable Astro components
 │   ├── layouts/           # Layouts for pages
 │   ├── pages/             # Main site pages
-│   └── i18n/              # Internationalization files
+│   ├── i18n/              # Internationalization files
+│   └── styles/            # Global CSS (Tailwind)
 ├── astro.config.mjs       # Astro configuration
-├── tailwind.config.mjs    # Tailwind CSS configuration
 └── package.json           # Dependency configuration file
 ```
 

@@ -33,7 +33,7 @@ const otherLocales = Object.values(LANGUAGES).filter(
       aria-controls={listId}
     >
       <currentLocaleData.flag />
-      <span class="sr-only">{i18n.HEADER.LANGUAGE}:</span>
+      <span class="sr-only">{`${i18n.HEADER.LANGUAGE}: `}</span>
       {currentLocaleData.name}
       <ArrowDisplay />
     </button>
