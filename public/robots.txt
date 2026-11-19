@@ -18,4 +18,4 @@ User-agent: meta-externalagent
 User-agent: MistralAI-User
 Allow: /
 
-Sitemap: https://gaeluss.com/sitemap.xml
+Sitemap: https://gaeluss.com/sitemap-index.xml

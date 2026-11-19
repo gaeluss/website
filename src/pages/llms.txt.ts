@@ -1,15 +1,14 @@
 import type { APIRoute } from 'astro';
 import { getI18N } from '@/i18n';
 import { LANGUAGES, type Lang } from '@/i18n/ui';
-import { useTranslatedPath } from '@/i18n/utils';
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
 import { COMPANY, SOCIAL_PROFILES, stripTags, toMarkdown } from '@/data/company';
 
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL('https://gaeluss.com');
   const absolute = (path: string) => new URL(path, base).href;
-  const translatePath = useTranslatedPath('en');
   const en = getI18N({ currentLocale: 'en' });
-  const englishURL = absolute(translatePath('/', 'en'));
+  const englishURL = getAbsoluteLocaleUrl('en');
 
   const services = [
     [en.SERVICES.WEB_DEVELOPMENT, en.SERVICES.WEB_DEVELOPMENT_DESCRIPTION],
@@ -22,7 +21,7 @@ export const GET: APIRoute = ({ site }) => {
 
   const languages = (Object.keys(LANGUAGES) as Lang[]).map((code) => {
     const copy = getI18N({ currentLocale: code });
-    return `- [${LANGUAGES[code].name}](${absolute(translatePath('/', code))}): ${copy.SEO_TITLE}`;
+    return `- [${LANGUAGES[code].name}](${getAbsoluteLocaleUrl(code)}): ${copy.SEO_TITLE}`;
   });
 
   const body = [
@@ -56,7 +55,7 @@ export const GET: APIRoute = ({ site }) => {
     '',
     '## Optional',
     '',
-    `- [Sitemap](${absolute('/sitemap.xml')})`,
+    `- [Sitemap](${absolute('/sitemap-index.xml')})`,
     '',
   ].join('\n');
 

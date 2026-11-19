@@ -2,7 +2,7 @@
 import Error404Layout from '@/layouts/Error404Layout.astro';
 import { getI18N } from '@/i18n';
 import { LANGUAGES, defaultLang, type Lang } from '@/i18n/ui';
-import { useTranslatedPath } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { COMPANY } from '@/data/company';
 import LostPlanet from '@/components/404/LostPlanet.astro';
 import PillButton from '@/components/ui/PillButton.astro';
@@ -13,7 +13,7 @@ const codes = Object.keys(LANGUAGES) as Lang[];
 const copy = Object.fromEntries(
   codes.map((code) => {
     const i18n = getI18N({ currentLocale: code });
-    const home = useTranslatedPath(code)('/');
+    const home = getRelativeLocaleUrl(code);
     return [
       code,
       {

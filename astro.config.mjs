@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import partytown from '@astrojs/partytown';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
@@ -11,6 +12,17 @@ export default defineConfig({
       config: {
         forward: ['dataLayer.push'],
       },
+    }),
+    sitemap({
+      filter: (page) => !/\/404\/?$/.test(new URL(page).pathname),
+      i18n: {
+        defaultLocale: 'es',
+        locales: { es: 'es', en: 'en', nl: 'nl', no: 'no' },
+      },
+      serialize: (item) => ({
+        ...item,
+        links: [...(item.links ?? []), { url: 'https://gaeluss.com/', lang: 'x-default' }],
+      }),
     }),
   ],
   vite: {

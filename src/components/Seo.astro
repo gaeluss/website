@@ -1,7 +1,7 @@
 ---
 import { getI18N } from '@/i18n';
 import { LANGUAGES, defaultLang, type Lang } from '@/i18n/ui';
-import { getLangFromUrl, useTranslatedPath } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { COMPANY, OG_LOCALES, SOCIAL_PROFILES, stripTags } from '@/data/company';
 
 interface Props {
@@ -10,9 +10,8 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const lang = getLangFromUrl(Astro.url);
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
 const i18n = getI18N({ currentLocale: lang });
-const translatePath = useTranslatedPath(lang);
 
 const site = Astro.site ?? new URL(Astro.url.origin);
 const absolute = (path: string) => new URL(path, site).href;
@@ -22,9 +21,9 @@ const homeURL = absolute('/');
 const languageCodes = Object.keys(LANGUAGES) as Lang[];
 const alternates = languageCodes.map((code) => ({
   hreflang: code,
-  href: absolute(translatePath('/', code)),
+  href: absolute(getRelativeLocaleUrl(code)),
 }));
-const defaultURL = absolute(translatePath('/', defaultLang));
+const defaultURL = absolute(getRelativeLocaleUrl(defaultLang));
 const ogImage = absolute(COMPANY.ogImage);
 
 const organizationId = `${homeURL}#organization`;
