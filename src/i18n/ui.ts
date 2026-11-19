@@ -4,25 +4,25 @@ import NorwayFlag from '@/components/flags/norway.astro';
 import DutchFlag from '@/components/flags/netherlands.astro';
 
 export const LANGUAGES = {
-  en: {
-    code: 'en',
-    name: 'English',
-    flag: EnglandFlag,
-  },
   es: {
     code: 'es',
     name: 'Español',
     flag: SpainFlag,
   },
-  no: {
-    code: 'no',
-    name: 'Norsk',
-    flag: NorwayFlag,
+  en: {
+    code: 'en',
+    name: 'English',
+    flag: EnglandFlag,
   },
   nl: {
     code: 'nl',
     name: 'Nederlands',
     flag: DutchFlag,
+  },
+  no: {
+    code: 'no',
+    name: 'Norsk',
+    flag: NorwayFlag,
   },
 } satisfies Record<string, { code: string; name: string; flag: typeof SpainFlag }>;
 
