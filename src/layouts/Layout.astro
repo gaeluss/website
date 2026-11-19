@@ -1,11 +1,10 @@
 ---
 import { getI18N } from '@/i18n';
-import { LANGUAGES, defaultLang } from '@/i18n/ui';
-import { getLangFromUrl, useTranslatedPath } from '@/i18n/utils';
 import Header from '@/components/Header.astro';
 import GoogleAnalytics from "@/components/GoogleAnalytics.astro";
+import Seo from '@/components/Seo.astro';
+import { Font } from 'astro:assets';
 import '@/styles/global.css';
-import '@fontsource-variable/onest';
 
 interface Props {
 	description: string;
@@ -15,14 +14,6 @@ interface Props {
 const { description, title } = Astro.props;
 const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
-
-const translatePath = useTranslatedPath(getLangFromUrl(Astro.url));
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const alternates = Object.values(LANGUAGES).map(({ code }) => ({
-	hreflang: code,
-	href: new URL(translatePath('/', code), Astro.site).href,
-}));
-const defaultURL = new URL(translatePath('/', defaultLang), Astro.site).href;
 
 const isProduction = import.meta.env.PROD;
 ---
@@ -34,16 +25,14 @@ const isProduction = import.meta.env.PROD;
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		<meta name="robots" content="index, follow" />
 		<meta name="keywords" content={i18n.SEO_KEYWORDS} />
 		<meta name="author" content="Gaeluss" />
-		<link rel="canonical" href={canonicalURL} />
-		{alternates.map(({ hreflang, href }) => (
-			<link rel="alternate" hreflang={hreflang} href={href} />
-		))}
-		<link rel="alternate" hreflang="x-default" href={defaultURL} />
+		<meta name="theme-color" content="#000000" />
+		<Seo title={title} description={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="preload" href="/fonts/gaeluss-title.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="apple-touch-icon" href="/brand/logo.png" />
+		<Font cssVariable="--font-gaeluss-title" preload />
+		<Font cssVariable="--font-space-grotesk" />
 		{isProduction && <GoogleAnalytics />}
 	</head>
 	<body>
@@ -51,118 +40,3 @@ const isProduction = import.meta.env.PROD;
 		<slot />
 	</body>
 </html>
-
-<style is:global>
-	@font-face {
-	  font-family: 'Gaeluss Title';
-	  src: url('/fonts/gaeluss-title.woff2') format('woff2');
-	  font-weight: normal;
-	  font-style: normal;
-	}
-
-	:root {
-	  color-scheme: dark;
-	  --entry-animation: -20px;
-	  --cover-animation: 20px;
-	  --scrollbar-thumb: rgb(255 255 255 / 0.4);
-	  --scrollbar-thumb-hover: rgb(255 255 255 / 0.6);
-	  --scrollbar-track: transparent;
-	}
-
-	@media (min-width: 1400px) {
-	  :root {
-		--entry-animation: -100px;
-		--cover-animation: 100px;
-	  }
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
-	  @view-transition {
-		navigation: auto;
-	  }
-	}
-
-	html {
-	  font-family: "Onest Variable", system-ui, sans-serif;
-	  background: black;
-	  scroll-behavior: smooth;
-	  scroll-padding-top: 5.5rem;
-	  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-	  scrollbar-width: thin;
-	}
-
-	@supports not (scrollbar-color: auto) {
-	  html {
-		scrollbar-width: auto;
-	  }
-	  ::-webkit-scrollbar {
-		width: 8px;
-	  }
-	  ::-webkit-scrollbar-track {
-		background: var(--scrollbar-track);
-	  }
-	  ::-webkit-scrollbar-thumb {
-		background: var(--scrollbar-thumb);
-		border-radius: 5px;
-	  }
-	  ::-webkit-scrollbar-thumb:hover {
-		background: var(--scrollbar-thumb-hover);
-	  }
-	}
-
-	[tabindex="-1"]:focus {
-	  outline: none;
-	}
-
-	@layer base {
-	  p {
-	    color: rgba(255, 255, 255, 0.9);
-	    line-height: 1.4;
-	    margin-bottom: 1em;
-	    font-weight: 100;
-	    font-size: 1em;
-	    letter-spacing: 0.5px;
-	  }
-
-	  p strong {
-	    color: white;
-	    font-weight: 700;
-	  }
-	}
-
-	.text__glowing {
-	  transition: text-shadow 0.3s ease;
-	}
-
-	.text__glowing:hover {
-	  text-shadow:
-	  1px 1px 20px #fff;
-	}
-
-	#header-nav {
-	  animation: header-backdrop linear both;
-	}
-
-	@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
-	  #header-nav {
-		animation-timeline: scroll(root);
-		animation-range: 0 500px;
-	  }
-	}
-
-	@keyframes header-backdrop {
-	  to {
-		box-shadow:
-		  0px 5px 50px -5px rgba(0, 0, 0, 0.1),
-		  0px 0px 0 1px rgba(0, 0, 0, 0.3);
-		background: rgba(0, 0, 0, 0.3);
-		backdrop-filter: blur(10px);
-	  }
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		html {
-			scroll-behavior: auto;
-		}
-	}
-</style>

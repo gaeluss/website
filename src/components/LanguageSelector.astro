@@ -1,8 +1,8 @@
 ---
 import ArrowDisplay from './icons/arrowDisplay.astro';
 import { getI18N } from '@/i18n';
-import { LANGUAGES } from '@/i18n/ui';
-import { getRouteFromUrl, useTranslatedPath, getLangFromUrl } from '@/i18n/utils';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { LANGUAGES, defaultLang, type Lang } from '@/i18n/ui';
 
 interface Props {
   id: string;
@@ -11,10 +11,8 @@ interface Props {
 const { id } = Astro.props;
 const listId = `${id}-list`;
 
-const route = getRouteFromUrl(Astro.url);
-const lang = getLangFromUrl(Astro.url);
+const lang = (Astro.currentLocale ?? defaultLang) as Lang;
 const i18n = getI18N({ currentLocale: lang });
-const translatePath = useTranslatedPath(lang);
 
 const currentLocaleData = LANGUAGES[lang];
 const otherLocales = Object.values(LANGUAGES).filter(
@@ -46,7 +44,7 @@ const otherLocales = Object.values(LANGUAGES).filter(
           <li class="py-[3px]">
             <a
               class="rounded-md bg-slate-500/30 hover:bg-slate-500/70 whitespace-nowrap inline-flex justify-start items-center w-full gap-x-2 px-3 py-2"
-              href={translatePath(`/${route ? route : ''}`, locale.code)}
+              href={getRelativeLocaleUrl(locale.code)}
               hreflang={locale.code}
               lang={locale.code}
             >

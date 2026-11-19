@@ -1,0 +1,132 @@
+<div class="phone">
+  <div class="phone-screen">
+    <span class="phone-notch"></span>
+    <div class="step phone-feed">
+      <span class="feed-item"></span>
+      <span class="feed-item"></span>
+      <span class="feed-item"></span>
+      <span class="feed-item"></span>
+      <span class="feed-item"></span>
+      <span class="feed-item"></span>
+    </div>
+  </div>
+</div>
+<div class="step toast">
+  <span class="toast-icon"></span>
+  <span class="toast-lines"><span></span><span></span></span>
+</div>
+
+<style>
+  .phone {
+    position: absolute;
+    top: 1.75rem;
+    right: max(var(--pad), 12%);
+    width: min(48%, 11.5rem);
+    aspect-ratio: 9 / 19;
+    padding: 0.45rem;
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 1.9rem;
+    background: #05070d;
+    box-shadow: 0 2rem 3rem -1.5rem rgb(0 0 0 / 0.9);
+  }
+
+  .phone-screen {
+    container-type: inline-size;
+    position: relative;
+    height: 100%;
+    border-radius: 1.5rem;
+    background: linear-gradient(#121a35, #0b1022);
+    overflow: hidden;
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 4cqi;
+    left: 50%;
+    z-index: 1;
+    width: 32%;
+    height: 5cqi;
+    border-radius: 99px;
+    background: #05070d;
+    translate: -50% 0;
+  }
+
+  .phone-feed {
+    --span: 0.9;
+    display: flex;
+    flex-direction: column;
+    gap: 5cqi;
+    padding: 16cqi 6cqi 6cqi;
+    translate: 0 calc(var(--t) * -78cqi);
+  }
+
+  .feed-item {
+    flex: none;
+    height: 34cqi;
+    border-radius: 7cqi;
+    background:
+      linear-gradient(rgb(255 255 255 / 0.3) 0 0) 31cqi 9cqi / 44cqi 4cqi no-repeat,
+      linear-gradient(rgb(255 255 255 / 0.13) 0 0) 31cqi 17cqi / 30cqi 4cqi no-repeat,
+      linear-gradient(rgb(255 255 255 / 0.09) 0 0) 8cqi 26cqi / 70cqi 3cqi no-repeat,
+      radial-gradient(circle at 16cqi 14cqi, var(--c) 8cqi, #0000 calc(8cqi + 1px)),
+      rgb(255 255 255 / 0.05);
+  }
+
+  .feed-item:nth-child(3n + 1) { --c: var(--color-brand-pink); }
+  .feed-item:nth-child(3n + 2) { --c: var(--color-brand-indigo); }
+  .feed-item:nth-child(3n) { --c: #a78bfa; }
+
+  .toast {
+    --d: 0.35;
+    --span: 0.4;
+    position: absolute;
+    top: 2.75rem;
+    left: var(--pad);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    width: min(56%, 13rem);
+    padding: 0.75rem 0.9rem;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: 1rem;
+    background: rgb(18 24 43 / 0.82);
+    box-shadow: 0 1rem 2rem -0.75rem rgb(0 0 0 / 0.85);
+    backdrop-filter: blur(10px);
+    opacity: var(--t);
+    translate: 0 calc((1 - var(--t)) * -0.75rem);
+    scale: calc(0.94 + 0.06 * var(--t));
+  }
+
+  .toast-icon {
+    flex: none;
+    width: 1.6rem;
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-pink));
+    box-shadow: 0 0 1rem color-mix(in srgb, var(--color-brand-pink) 45%, transparent);
+  }
+
+  .toast-lines {
+    flex: 1;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .toast-lines span {
+    height: 0.35rem;
+    border-radius: 99px;
+    background: rgb(255 255 255 / 0.32);
+  }
+
+  .toast-lines span:last-child {
+    width: 65%;
+    background: rgb(255 255 255 / 0.15);
+  }
+
+  @media (width >= 48rem) {
+    .phone {
+      top: 1.25rem;
+    }
+  }
+</style>

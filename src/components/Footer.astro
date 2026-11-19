@@ -1,58 +1,193 @@
 ---
 import { getI18N } from '@/i18n';
+import { COMPANY } from '@/data/company';
+import SocialLinks from '@/components/ui/SocialLinks.astro';
 
 const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
 const year = new Date().getFullYear();
 
-const linkUnderline = 'absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-500 group-hover:w-full';
-const socialLink = 'transition-opacity hover:opacity-70';
+const links = [
+  { href: '#about', label: i18n.HEADER.VISION },
+  { href: '#services', label: i18n.HEADER.SERVICES },
+  { href: '#contact', label: i18n.HEADER.CONTACT },
+];
 ---
 
-<footer class="bg-black text-gray-300 py-12 mx-4 md:mx-16">
-  <div class="container mx-auto px-6">
-    <div class="flex flex-col md:flex-row md:justify-between">
-      <div class="mb-8 md:mb-0">
-        <h2 class="text-xl font-semibold text-white mb-4">Gaeluss</h2>
-        <p class="text-gray-300">{i18n.FOOTER.DESCRIPTION}</p>
-        <p class="text-gray-300">
-          <a href="mailto:info@gaeluss.com" class="underline-offset-4 hover:underline">info@gaeluss.com</a>
-        </p>
+<footer class="footer" data-footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h2 class="footer-name">Gaeluss</h2>
+        <p class="footer-text">{i18n.FOOTER.DESCRIPTION}</p>
+        <a href={`mailto:${COMPANY.email}`} class="footer-mail link-underline focus-ring text-gray-200">{COMPANY.email}</a>
       </div>
-      <div class="mb-8 md:mb-0">
-        <h2 class="text-lg font-semibold text-white mb-4">{i18n.FOOTER.LINKS}</h2>
-        <ul>
-          <li>
-            <a href="#about" class="relative group">
-              {i18n.HEADER.VISION}
-              <span class={linkUnderline}></span>
-            </a>
-          </li>
-          <li>
-            <a href="#services" class="relative group">
-              {i18n.HEADER.SERVICES}
-              <span class={linkUnderline}></span>
-            </a>
-          </li>
-          <li>
-            <a href="#contact" class="relative group">
-              {i18n.HEADER.CONTACT}
-              <span class={linkUnderline}></span>
-            </a>
-          </li>
+
+      <nav aria-labelledby="footer-links-title">
+        <h2 id="footer-links-title" class="footer-heading">{i18n.FOOTER.LINKS}</h2>
+        <ul class="footer-list" role="list">
+          {links.map(({ href, label }) => (
+            <li><a href={href} class="link-underline focus-ring text-gray-200">{label}</a></li>
+          ))}
         </ul>
-      </div>
+      </nav>
+
       <div>
-        <h2 class="text-lg font-semibold text-white mb-4">{i18n.FOOTER.FOLLOW}</h2>
-        <div class="flex space-x-4">
-          <a href="https://www.linkedin.com/company/gaeluss" target="_blank" rel="noopener noreferrer" class={socialLink}><img src="/assets/icons/linkedin.svg" loading="lazy" alt="LinkedIn" class="size-7"></a>
-          <a href="https://www.instagram.com/gaeluss_es" target="_blank" rel="noopener noreferrer" class={socialLink}><img src="/assets/icons/instagram.svg" loading="lazy" alt="Instagram" class="size-7"></a>
-          <a href="https://x.com/gaeluss_es" target="_blank" rel="noopener noreferrer" class={socialLink}><img src="/assets/icons/twitter.svg" loading="lazy" alt="X (Twitter)" class="size-7"></a>
-        </div>
+        <h2 class="footer-heading">{i18n.FOOTER.FOLLOW}</h2>
+        <SocialLinks />
       </div>
     </div>
-    <div class="mt-8 text-center text-gray-500">
-      <p>&copy; {year} Gaeluss. {i18n.FOOTER.RIGHTS}</p>
-    </div>
+
+    <p class="footer-legal">&copy; {year} Gaeluss. {i18n.FOOTER.RIGHTS}</p>
+  </div>
+
+  <div class="footer-wordmark" aria-hidden="true">
+    <span class="wordmark" data-wordmark>GAELUSS</span>
   </div>
 </footer>
+
+<script>
+  import { setPointerOrigin, trackPointer } from '@/scripts/pointer';
+
+  const footer = document.querySelector<HTMLElement>('[data-footer]');
+  const wordmark = footer?.querySelector<HTMLElement>('[data-wordmark]');
+
+  if (footer && wordmark) {
+    trackPointer(footer, (x, y) => setPointerOrigin(wordmark, x, y));
+  }
+</script>
+
+<style>
+  .footer {
+    padding-top: clamp(4rem, 8vw, 6rem);
+    overflow: clip;
+    background: #000;
+    color: var(--color-gray-300);
+  }
+
+  .footer-inner {
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .footer-name {
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: white;
+  }
+
+  .footer-text {
+    max-width: 42ch;
+    margin-bottom: 1rem;
+    color: var(--color-gray-400);
+    text-wrap: pretty;
+  }
+
+  .footer-heading {
+    margin-bottom: 1rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+  }
+
+  .footer-list {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .footer-mail {
+    font-weight: 500;
+  }
+
+  .footer-legal {
+    margin: 3.5rem 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+    font-size: 0.875rem;
+    color: var(--color-gray-500);
+  }
+
+  .footer-wordmark {
+    container-type: inline-size;
+    margin-top: 1.5rem;
+    padding-inline: 1rem;
+    user-select: none;
+  }
+
+  .wordmark {
+    --mx: 50%;
+    --my: 50%;
+    display: block;
+    margin-right: -0.12em;
+    font-family: var(--font-gaeluss-title);
+    font-size: 20.4cqi;
+    line-height: 0.75;
+    letter-spacing: 0.12em;
+    text-align: center;
+    color: transparent;
+    background:
+      radial-gradient(
+        18rem circle at var(--mx) var(--my),
+        rgb(255 122 176 / calc(var(--glow) * 0.95)),
+        rgb(91 123 255 / calc(var(--glow) * 0.7)) 45%,
+        transparent 75%
+      ),
+      linear-gradient(90deg, color-mix(in srgb, var(--color-brand-blue) 40%, transparent), color-mix(in srgb, var(--color-brand-pink) 40%, transparent)),
+      linear-gradient(rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.1));
+    background-clip: text;
+    mask: linear-gradient(#000 35%, transparent 98%);
+    translate: 0 12%;
+    transition: --glow 0.6s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .footer:hover .wordmark {
+      --glow: 1;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .footer-inner,
+    .footer-wordmark {
+      padding-inline: 3rem;
+    }
+
+    .footer-grid {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+      gap: 3rem;
+    }
+  }
+
+  @keyframes wordmark-rise {
+    from {
+      translate: 0 75%;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      .footer {
+        view-timeline-name: --footer;
+        view-timeline-inset: 0;
+      }
+
+      .wordmark {
+        animation-name: wordmark-rise;
+        animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+        animation-fill-mode: both;
+        animation-timeline: --footer;
+        animation-range: entry 0% entry 100%;
+      }
+    }
+  }
+</style>

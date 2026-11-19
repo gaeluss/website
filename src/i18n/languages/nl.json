@@ -15,12 +15,12 @@
   "ABOUT": {
     "TITLE": "Over Gaeluss",
     "DESCRIPTION": "Gaeluss is een <strong>softwareontwikkelingsbedrijf</strong> toegewijd aan <strong>innovatie</strong> en <strong>kwaliteit</strong>. Onze focus ligt op het bieden van <strong>efficiënte technologische oplossingen</strong> om bedrijven te helpen hun doelen te bereiken.",
-    "SUBTITLE": "Visie en Waarden:",
+    "SUBTITLE": "Visie en Waarden",
     "LIST_1": "<strong>Continue innovatie</strong> om voorop te blijven in technologie.",
     "LIST_2": "<strong>Kwaliteit</strong> in elk detail van ons werk, om betrouwbare oplossingen te garanderen.",
     "LIST_3": "<strong>Transparantie en ethiek</strong> in onze relaties met klanten en medewerkers.",
     "LIST_4": "<strong>Klantgerichte aanpak</strong> om hun verwachtingen te begrijpen en te voldoen.",
-    "LIST_5": "Samenwerking als de basis voor het bouwen van succesvolle projecten."
+    "LIST_5": "<strong>Samenwerking</strong> als de basis voor het bouwen van succesvolle projecten."
   },
   "SERVICES": {
     "TITLE": "Onze Diensten",
@@ -36,7 +36,10 @@
   "PREFOOTER": {
     "TITLE": "Klaar om uw ideeën tot leven te brengen?",
     "DESCRIPTION": "Bij Gaeluss transformeren we uw ideeën in impactvolle digitale oplossingen.",
-    "BUTTON": "Neem Contact Op"
+    "BUTTON": "Neem Contact Op",
+    "COPY": "E-mail kopiëren",
+    "COPIED": "Gekopieerd",
+    "COPY_FAILED": "Kopiëren mislukt"
   },
   "FOOTER": {
     "DESCRIPTION": "Innovatieve softwareoplossingen voor web en mobiel. Wij creëren technologie die uw bedrijf versterkt.",

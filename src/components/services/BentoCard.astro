@@ -1,0 +1,205 @@
+---
+interface Props {
+  variant: 'web' | 'mobile' | 'design' | 'consulting';
+  title: string;
+  description: string;
+}
+
+const { variant, title, description } = Astro.props;
+---
+
+<article class:list={['bento-card', `card-${variant}`]}>
+  <div class="art" aria-hidden="true">
+    <slot />
+  </div>
+  <h3 class="card-title">{title}</h3>
+  <p class="card-text" set:html={description}></p>
+</article>
+
+<style>
+  .bento-card {
+    --bx: 100%;
+    --by: 100%;
+    --sx: 1;
+    --sy: 1;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-radius: var(--radius);
+    overflow: clip;
+    transition:
+      --glow 0.5s ease,
+      --p 0.9s cubic-bezier(0.22, 0.8, 0.24, 1);
+  }
+
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(20rem circle at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / calc(var(--glow) * 0.55)), transparent 70%),
+      linear-gradient(rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.05));
+  }
+
+  .bento-card::after {
+    --o: 1px;
+    --e: 1px;
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: calc(var(--radius) - 1px);
+    background:
+      radial-gradient(28rem circle at var(--mx, 50%) var(--my, 0%), rgb(91 118 255 / calc(var(--glow) * 0.14)), transparent 65%),
+      linear-gradient(165deg, var(--color-surface-raised), var(--color-surface) 65%);
+  }
+
+  .card-title {
+    margin: 1.5rem var(--pad) 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: white;
+    text-wrap: balance;
+  }
+
+  .card-text {
+    max-width: 46ch;
+    margin: 0 var(--pad) var(--pad);
+    color: rgb(255 255 255 / 0.68);
+    text-wrap: pretty;
+  }
+
+  .art {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-block-size: 15rem;
+    padding: 1.5rem var(--pad);
+    overflow: hidden;
+    container-type: inline-size;
+  }
+
+  .art :global(.step) {
+    --t: clamp(0, (var(--p) - var(--d, 0)) / var(--span, 0.5), 1);
+  }
+
+  .card-mobile .art {
+    min-block-size: 17rem;
+  }
+
+  @media (width >= 48rem) {
+    .card-web {
+      grid-area: 1 / 1;
+    }
+
+    .card-mobile {
+      --bx: 0%;
+      --sx: -1;
+      grid-area: 1 / 2;
+    }
+
+    .card-design {
+      --by: 0%;
+      --sy: -1;
+      grid-area: 2 / 1;
+    }
+
+    .card-consulting {
+      --bx: 0%;
+      --sx: -1;
+      --by: 0%;
+      --sy: -1;
+      grid-area: 2 / 2;
+    }
+
+    .bento-card::before,
+    .bento-card::after,
+    .art {
+      mask: radial-gradient(
+        circle at calc(var(--bx) + var(--sx) * (var(--g) / 2 + var(--o, 0px))) calc(var(--by) + var(--sy) * (var(--g) / 2 + var(--o, 0px))),
+        #0000 calc(var(--r) + var(--e, 0px)),
+        #000 calc(var(--r) + var(--e, 0px) + 1px)
+      );
+    }
+
+    .art {
+      --e: 1px;
+    }
+
+    .card-web .art,
+    .card-mobile .art {
+      order: 1;
+      flex: 1;
+      min-block-size: 16rem;
+    }
+
+    .card-web .card-title,
+    .card-mobile .card-title {
+      margin-top: var(--pad);
+    }
+
+    .card-web .card-text,
+    .card-mobile .card-text {
+      margin-bottom: 0.5rem;
+    }
+
+    .card-design .art,
+    .card-consulting .art {
+      flex: 1;
+      min-block-size: 14rem;
+    }
+
+    .card-consulting .art {
+      justify-content: flex-end;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .card-title {
+      font-size: 1.75rem;
+    }
+
+    .card-web .art,
+    .card-mobile .art {
+      min-block-size: 18rem;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .bento-card:hover {
+      --p: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bento-card {
+      --p: 1;
+      transition: --glow 0.5s ease;
+    }
+  }
+
+  @keyframes bento-activate {
+    to {
+      --p: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @media (hover: none), (pointer: coarse) {
+      @supports ((animation-timeline: view()) and (animation-range: entry)) {
+        .bento-card {
+          animation-name: bento-activate;
+          animation-timing-function: linear;
+          animation-fill-mode: both;
+          animation-timeline: view();
+          animation-range: entry 70% cover 55%;
+        }
+      }
+    }
+  }
+</style>

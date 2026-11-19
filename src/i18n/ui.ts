@@ -29,11 +29,3 @@ export const LANGUAGES = {
 export type Lang = keyof typeof LANGUAGES;
 
 export const defaultLang: Lang = 'es';
-export const showDefaultLang = false;
-
-export const routes: Record<Lang, Record<string, string>> = {
-    es: {},
-    en: {},
-    no: {},
-    nl: {},
-};

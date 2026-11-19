@@ -1,0 +1,75 @@
+---
+import { SOCIAL_PROFILES } from '@/data/company';
+import { SOCIAL_ICONS } from '@/data/social-icons';
+---
+
+<ul class="socials" role="list">
+  {SOCIAL_PROFILES.map(({ name, href }) => (
+    <li>
+      <a href={href} target="_blank" rel="noopener noreferrer" class="social focus-ring" aria-label={name}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d={SOCIAL_ICONS[name]} />
+        </svg>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .socials {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .social {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: 999px;
+    color: var(--color-gray-200);
+    transition:
+      color 0.25s ease-out,
+      border-color 0.25s ease-out,
+      translate 0.25s ease-out;
+  }
+
+  .social::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-pink));
+    opacity: 0;
+    scale: 0.4;
+    border-radius: inherit;
+    transition:
+      opacity 0.25s ease-out,
+      scale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .social svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    fill: currentColor;
+  }
+
+  .social:hover {
+    border-color: transparent;
+    color: white;
+    translate: 0 -2px;
+  }
+
+  .social:hover::before {
+    opacity: 1;
+    scale: 1;
+  }
+
+  .social:active {
+    translate: 0 0;
+  }
+</style>

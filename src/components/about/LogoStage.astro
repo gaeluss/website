@@ -1,0 +1,221 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/images/logo-blanco.webp';
+---
+
+<div class="about-stage" aria-hidden="true" data-stage>
+  <div class="stage-tilt">
+    <div class="stage-layer stage-glow"></div>
+    <svg class="stage-layer stage-orbits" viewBox="0 0 400 400" focusable="false">
+      <g class="orbit orbit-outer">
+        <circle cx="200" cy="200" r="194" />
+        <circle class="moon" cx="200" cy="6" r="3.5" />
+      </g>
+      <g class="orbit orbit-mid">
+        <circle cx="200" cy="200" r="163" />
+        <circle class="moon moon-pink" cx="363" cy="200" r="5" />
+      </g>
+      <g class="orbit orbit-inner">
+        <circle cx="200" cy="200" r="132" />
+        <circle class="moon moon-blue" cx="200" cy="332" r="4" />
+      </g>
+    </svg>
+    <div class="stage-layer stage-logo">
+      <video id="about-video" class="hidden" preload="metadata" muted playsinline>
+        <source src="/motion-logo.webm" type="video/webm" />
+        <source src="/motion-logo.mp4" type="video/mp4" />
+      </video>
+      <Image
+        id="about-image"
+        src={logo}
+        alt=""
+        widths={[272, 416, 544, 832]}
+        sizes="(width >= 48rem) 26rem, 17rem"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+</div>
+
+<script>
+  import { finePointerMotion, trackPointer } from '@/scripts/pointer';
+
+  const stage = document.querySelector<HTMLElement>('[data-stage]');
+  const area = stage?.closest<HTMLElement>('section');
+  const video = document.getElementById('about-video') as HTMLVideoElement | null;
+  const image = document.getElementById('about-image');
+
+  if (video && image && finePointerMotion.matches) {
+    video.classList.remove('hidden');
+    image.classList.add('hidden');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        video.play().catch(() => {
+          video.classList.add('hidden');
+          image.classList.remove('hidden');
+        });
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(video);
+  }
+
+  if (stage && area) {
+    const clamp = (value: number) => Math.min(1, Math.max(-1, value));
+    const setTilt = (x: number, y: number) => {
+      stage.style.setProperty('--px', x.toFixed(3));
+      stage.style.setProperty('--py', y.toFixed(3));
+    };
+
+    trackPointer(
+      area,
+      (x, y) => {
+        const rect = stage.getBoundingClientRect();
+        setTilt(
+          clamp((x - rect.left - rect.width / 2) / rect.width),
+          clamp((y - rect.top - rect.height / 2) / rect.height)
+        );
+      },
+      { when: finePointerMotion, onLeave: () => setTilt(0, 0) }
+    );
+  }
+</script>
+
+<style>
+  .about-stage {
+    --px: 0;
+    --py: 0;
+    position: relative;
+    justify-self: center;
+    width: min(100%, 22rem);
+    aspect-ratio: 1;
+  }
+
+  .stage-tilt {
+    position: absolute;
+    inset: 0;
+    transform: perspective(60rem) rotateX(calc(var(--py) * -9deg)) rotateY(calc(var(--px) * 9deg));
+    transition: transform 0.9s cubic-bezier(0.22, 0.8, 0.24, 1);
+  }
+
+  .stage-layer {
+    --depth: 1;
+    position: absolute;
+    inset: 0;
+    translate: calc(var(--px) * var(--depth) * 1.5rem) calc(var(--py) * var(--depth) * 1.5rem);
+    transition: translate 0.9s cubic-bezier(0.22, 0.8, 0.24, 1);
+  }
+
+  .stage-glow {
+    --depth: -0.6;
+    inset: -12%;
+    background:
+      radial-gradient(closest-side at 62% 64%, color-mix(in srgb, var(--color-brand-pink) 28%, transparent), transparent),
+      radial-gradient(closest-side, rgb(64 98 255 / 0.42), color-mix(in srgb, var(--color-brand-blue) 12%, transparent) 60%, transparent);
+  }
+
+  .stage-orbits {
+    --depth: 0.35;
+    overflow: visible;
+    fill: none;
+    stroke: rgb(255 255 255 / 0.14);
+    stroke-width: 1;
+  }
+
+  .stage-orbits circle {
+    vector-effect: non-scaling-stroke;
+  }
+
+  .orbit {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+  }
+
+  .orbit-outer {
+    --turn: 80deg;
+    stroke-dasharray: 2 7;
+  }
+
+  .orbit-mid {
+    --turn: -130deg;
+  }
+
+  .orbit-inner {
+    --turn: 190deg;
+    stroke: rgb(255 255 255 / 0.08);
+  }
+
+  .moon {
+    fill: rgb(255 255 255 / 0.75);
+    stroke: none;
+  }
+
+  .moon-pink {
+    fill: var(--color-brand-pink);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-brand-pink) 90%, transparent));
+  }
+
+  .moon-blue {
+    fill: var(--color-brand-periwinkle);
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--color-brand-indigo) 90%, transparent));
+  }
+
+  .stage-logo {
+    --depth: 1;
+    inset: 12%;
+  }
+
+  .stage-logo video,
+  .stage-logo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stage-logo video {
+    mix-blend-mode: screen;
+  }
+
+  @media (width >= 48rem) {
+    .about-stage {
+      width: min(100%, 34rem);
+    }
+  }
+
+  @keyframes orbit-turn {
+    to {
+      rotate: var(--turn);
+    }
+  }
+
+  @keyframes stage-glow-in {
+    from {
+      opacity: 0.25;
+      scale: 0.8;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      .orbit {
+        animation-name: orbit-turn;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --about;
+        animation-range: cover 0% cover 100%;
+      }
+
+      .stage-glow {
+        animation-name: stage-glow-in;
+        animation-timing-function: ease-out;
+        animation-fill-mode: both;
+        animation-timeline: --about;
+        animation-range: entry 40% cover 45%;
+      }
+    }
+  }
+</style>

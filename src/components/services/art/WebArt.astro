@@ -1,0 +1,150 @@
+<div class="browser">
+  <div class="browser-bar">
+    <span class="browser-dot"></span>
+    <span class="browser-dot"></span>
+    <span class="browser-dot"></span>
+    <span class="browser-url"></span>
+  </div>
+  <div class="browser-body">
+    <div class="code">
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
+    <div class="preview">
+      <span class="step preview-nav"></span>
+      <span class="step preview-hero"></span>
+      <span class="step preview-tile"></span>
+      <span class="step preview-tile"></span>
+      <span class="step preview-tile"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .browser {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 34rem);
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: 0.9rem;
+    background: linear-gradient(#10172a, #0b101e);
+    box-shadow: 0 1.5rem 3rem -1.25rem rgb(0 0 0 / 0.85);
+    overflow: hidden;
+    translate: 0 calc(var(--p) * -0.4rem);
+  }
+
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5cqi;
+    padding: 2.5cqi 3cqi;
+    border-bottom: 1px solid rgb(255 255 255 / 0.06);
+  }
+
+  .browser-dot {
+    width: 2cqi;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.16);
+  }
+
+  .browser-dot:first-child {
+    background: color-mix(in srgb, var(--color-brand-pink) 75%, transparent);
+  }
+
+  .browser-url {
+    flex: 1;
+    height: 3.2cqi;
+    margin-inline-start: 2.5cqi;
+    border-radius: 99px;
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .browser-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 4cqi;
+    padding: 4cqi;
+  }
+
+  .code {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.4cqi;
+  }
+
+  .code span {
+    --span: 0.25;
+    width: var(--w);
+    height: 2.2cqi;
+    margin-inline-start: calc(var(--x) * 4.5cqi);
+    border-radius: 99px;
+    background: var(--c, rgb(255 255 255 / 0.22));
+    opacity: calc(0.45 + 0.55 * var(--t));
+  }
+
+  .code span:nth-child(1) { --w: 45%; --x: 0; --d: 0; --c: color-mix(in srgb, var(--color-brand-pink) 80%, transparent); }
+  .code span:nth-child(2) { --w: 72%; --x: 1; --d: 0.08; --c: rgb(110 135 255 / 0.85); }
+  .code span:nth-child(3) { --w: 54%; --x: 2; --d: 0.16; }
+  .code span:nth-child(4) { --w: 38%; --x: 2; --d: 0.24; --c: rgb(167 139 250 / 0.8); }
+  .code span:nth-child(5) { --w: 62%; --x: 1; --d: 0.32; }
+  .code span:nth-child(6) { --w: 30%; --x: 0; --d: 0.4; --c: color-mix(in srgb, var(--color-brand-pink) 80%, transparent); }
+
+  .preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr auto;
+    gap: 2.4cqi;
+    padding: 3cqi;
+    border: 1px solid rgb(255 255 255 / 0.07);
+    border-radius: 2.4cqi;
+    background: rgb(255 255 255 / 0.03);
+  }
+
+  .preview span {
+    --span: 0.3;
+    position: relative;
+    border-radius: 1.4cqi;
+    background: rgb(255 255 255 / 0.08);
+    overflow: hidden;
+  }
+
+  .preview span::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--fill);
+    opacity: var(--t);
+  }
+
+  .preview-nav {
+    --d: 0.1;
+    --fill: rgb(255 255 255 / 0.4);
+    grid-column: 1 / -1;
+    width: 45%;
+    height: 2.4cqi;
+  }
+
+  .preview-hero {
+    --d: 0.25;
+    --fill: linear-gradient(120deg, var(--color-brand-blue), var(--color-brand-pink));
+    grid-column: 1 / -1;
+  }
+
+  .preview-tile {
+    height: 8cqi;
+    translate: 0 calc(var(--t) * -1cqi);
+  }
+
+  .preview-tile:nth-child(3) { --d: 0.45; --fill: rgb(110 135 255 / 0.45); }
+  .preview-tile:nth-child(4) { --d: 0.55; --fill: rgb(167 139 250 / 0.45); }
+  .preview-tile:nth-child(5) { --d: 0.65; --fill: color-mix(in srgb, var(--color-brand-pink) 45%, transparent); }
+</style>
