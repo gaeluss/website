@@ -1,0 +1,140 @@
+---
+import { getI18N } from '@/i18n';
+import { LANGUAGES, defaultLang, type Lang } from '@/i18n/ui';
+import { getLangFromUrl, useTranslatedPath } from '@/i18n/utils';
+import { COMPANY, OG_LOCALES, SOCIAL_PROFILES, stripTags } from '@/data/company';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const i18n = getI18N({ currentLocale: lang });
+const translatePath = useTranslatedPath(lang);
+
+const site = Astro.site ?? new URL(Astro.url.origin);
+const absolute = (path: string) => new URL(path, site).href;
+
+const canonicalURL = absolute(Astro.url.pathname);
+const homeURL = absolute('/');
+const languageCodes = Object.keys(LANGUAGES) as Lang[];
+const alternates = languageCodes.map((code) => ({
+  hreflang: code,
+  href: absolute(translatePath('/', code)),
+}));
+const defaultURL = absolute(translatePath('/', defaultLang));
+const ogImage = absolute(COMPANY.ogImage);
+
+const organizationId = `${homeURL}#organization`;
+const websiteId = `${homeURL}#website`;
+const pageId = `${canonicalURL}#webpage`;
+
+const services = [
+  { id: 'web-development', name: i18n.SERVICES.WEB_DEVELOPMENT, description: i18n.SERVICES.WEB_DEVELOPMENT_DESCRIPTION },
+  { id: 'mobile-development', name: i18n.SERVICES.MOBILE_DEVELOPMENT, description: i18n.SERVICES.MOBILE_DEVELOPMENT_DESCRIPTION },
+  { id: 'ui-ux-design', name: i18n.SERVICES.DESIGN, description: i18n.SERVICES.DESIGN_DESCRIPTION },
+  { id: 'consulting', name: i18n.SERVICES.CONSULTING, description: i18n.SERVICES.CONSULTING_DESCRIPTION },
+].map((service) => ({
+  '@type': 'Service',
+  '@id': `${canonicalURL}#${service.id}`,
+  name: service.name,
+  serviceType: service.name,
+  description: stripTags(service.description),
+  url: `${canonicalURL}#services`,
+  provider: { '@id': organizationId },
+}));
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: COMPANY.name,
+      url: homeURL,
+      logo: {
+        '@type': 'ImageObject',
+        url: absolute(COMPANY.logo),
+        width: 512,
+        height: 512,
+      },
+      image: ogImage,
+      email: COMPANY.email,
+      slogan: i18n.VIDEO.SUBTITLE,
+      description: stripTags(i18n.ABOUT.DESCRIPTION),
+      knowsAbout: i18n.SEO_KEYWORDS.split(',').map((keyword) => keyword.trim()),
+      knowsLanguage: languageCodes,
+      sameAs: SOCIAL_PROFILES.map(({ href }) => href),
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        email: COMPANY.email,
+        availableLanguage: languageCodes,
+      },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: i18n.SERVICES.TITLE,
+        itemListElement: services.map(({ '@id': id }) => ({
+          '@type': 'Offer',
+          itemOffered: { '@id': id },
+        })),
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: homeURL,
+      name: COMPANY.name,
+      inLanguage: languageCodes,
+      publisher: { '@id': organizationId },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': pageId,
+      url: canonicalURL,
+      name: title,
+      description,
+      inLanguage: lang,
+      isPartOf: { '@id': websiteId },
+      about: { '@id': organizationId },
+      primaryImageOfPage: { '@type': 'ImageObject', url: ogImage, width: 1200, height: 630 },
+    },
+    ...services,
+  ],
+};
+
+const jsonLd = JSON.stringify(structuredData).replaceAll('<', '\\u003c');
+---
+
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<link rel="canonical" href={canonicalURL} />
+{alternates.map(({ hreflang, href }) => (
+  <link rel="alternate" hreflang={hreflang} href={href} />
+))}
+<link rel="alternate" hreflang="x-default" href={defaultURL} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={COMPANY.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:locale" content={OG_LOCALES[lang]} />
+{languageCodes.filter((code) => code !== lang).map((code) => (
+  <meta property="og:locale:alternate" content={OG_LOCALES[code]} />
+))}
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={COMPANY.ogImageAlt} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={COMPANY.xHandle} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={COMPANY.ogImageAlt} />
+
+<script is:inline type="application/ld+json" set:html={jsonLd} />
