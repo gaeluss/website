@@ -34,6 +34,7 @@
 
 :root {
   color-scheme: dark;
+  --about-peak: clamp(4rem, 10vw, 8rem);
   --scrollbar-thumb: rgb(255 255 255 / 0.4);
   --scrollbar-thumb-hover: rgb(255 255 255 / 0.6);
   --scrollbar-track: transparent;
