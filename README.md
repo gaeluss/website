@@ -37,26 +37,26 @@ To start the development server, run:
 pnpm dev
 ```
 
-This will start a local server at http://localhost:3000 where you can view and work on the project in real time.
+This will start a local server at http://localhost:4321 where you can view and work on the project in real time.
 
 ## 🛠️ Available Commands
 
 - `pnpm dev` - Starts the development server.
 - `pnpm build` - Builds an optimized version for production.
 - `pnpm preview` - Previews the optimized build.
-- `pnpm lint` - Checks the code for errors and best practices.
+- `pnpm astro check` - Type-checks the project (also runs as part of `pnpm build`).
 
 ## 📂 Project Structure
 
 ```sh
-├── public/                # Static files
+├── public/                # Static files (robots.txt, sitemap.xml, fonts, media)
 ├── src/
 │   ├── components/        # Reusable Astro components
 │   ├── layouts/           # Layouts for pages
 │   ├── pages/             # Main site pages
 │   └── i18n/              # Internationalization files
 ├── astro.config.mjs       # Astro configuration
-├── tailwind.config.cjs    # Tailwind CSS configuration
+├── tailwind.config.mjs    # Tailwind CSS configuration
 └── package.json           # Dependency configuration file
 ```
 
