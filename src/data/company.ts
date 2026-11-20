@@ -5,7 +5,6 @@ export const COMPANY = {
   email: 'info@gaeluss.com',
   logo: '/brand/logo.png',
   ogImage: '/brand/og-image.png',
-  ogImageAlt: 'Gaeluss — Web · Mobile · UI/UX · Consulting',
   xHandle: '@gaeluss_es',
 };
 
