@@ -18,18 +18,7 @@ const values = [
 <section id="about" tabindex="-1" class="about relative isolate w-full">
   <div class="about-blend" aria-hidden="true"></div>
   <svg class="about-peak" aria-hidden="true" viewBox="0 0 100 10" preserveAspectRatio="none" focusable="false">
-    <defs>
-      <linearGradient id="peak-rim" x1="0" x2="1" y1="0" y2="0">
-        <stop class="peak-stop peak-stop-fade" offset="0" />
-        <stop class="peak-stop peak-stop-blue" offset="0.22" />
-        <stop class="peak-stop peak-stop-white" offset="0.5" />
-        <stop class="peak-stop peak-stop-pink" offset="0.78" />
-        <stop class="peak-stop peak-stop-fade peak-stop-pink" offset="1" />
-      </linearGradient>
-    </defs>
     <polygon class="peak-body" points="0,10 50,0 100,10" />
-    <polyline class="peak-edge peak-glow" points="0,10 50,0 100,10" />
-    <polyline class="peak-edge" points="0,10 50,0 100,10" />
   </svg>
 
   <div class="about-inner">
@@ -59,41 +48,11 @@ const values = [
     z-index: -1;
     width: 100%;
     height: calc(var(--peak) + 1px);
-    overflow: visible;
     transform-origin: bottom;
   }
 
   .peak-body {
     fill: var(--color-night);
-  }
-
-  .peak-edge {
-    fill: none;
-    stroke: url(#peak-rim);
-    stroke-width: 1.5px;
-    stroke-linejoin: round;
-    vector-effect: non-scaling-stroke;
-  }
-
-  .peak-glow {
-    stroke-width: 9px;
-    opacity: 0.22;
-  }
-
-  .peak-stop {
-    stop-color: var(--color-brand-periwinkle);
-  }
-
-  .peak-stop-white {
-    stop-color: white;
-  }
-
-  .peak-stop-pink {
-    stop-color: var(--color-brand-rose);
-  }
-
-  .peak-stop-fade {
-    stop-opacity: 0;
   }
 
   .about-blend {
