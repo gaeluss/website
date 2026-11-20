@@ -1,115 +1,143 @@
 ---
 import { getI18N } from '@/i18n';
+import LogoStage from '@/components/about/LogoStage.astro';
+import ValuesList from '@/components/about/ValuesList.astro';
 
 const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
+
+const values = [
+  i18n.ABOUT.LIST_1,
+  i18n.ABOUT.LIST_2,
+  i18n.ABOUT.LIST_3,
+  i18n.ABOUT.LIST_4,
+  i18n.ABOUT.LIST_5,
+];
 ---
 
-<section
-  id="about"
-  class="relative w-full flex items-center justify-center bg-gray-800 py-28"
->
-  <div class="container mx-auto flex flex-col items-center md:flex-row p-4">
-    <div class="w-full md:w-5/6 lg:w-4/5 h-96 md:h-[40rem] relative overflow-hidden rounded-lg">
-      <video
-        id="about-video"
-        class="w-full h-full object-cover hidden"
-        preload="metadata"
-        muted
-        playsinline
-        aria-label="Video de presentación de Gaeluss"
-      >
-        <source src="/motion-logo.webm" type="video/webm" />
-        <source src="/motion-logo.mp4" type="video/mp4" />
-      </video>
+<section id="about" tabindex="-1" class="about relative isolate w-full">
+  <div class="about-blend" aria-hidden="true"></div>
+  <svg class="about-peak" aria-hidden="true" viewBox="0 0 100 10" preserveAspectRatio="none" focusable="false">
+    <polygon class="peak-body" points="0,10 50,0 100,10" />
+  </svg>
 
-      <img
-        id="about-image"
-        src="/assets/images/logo-blanco.webp"
-        alt="Animación del logo de Gaeluss"
-        class="block w-full h-full object-cover"
-      >
-    </div>
+  <div class="about-inner">
+    <LogoStage />
 
-    <div
-      class="w-full md:w-3/4 lg:w-2/3 text-white text-center md:text-left mt-6 md:mt-0 gradient-border-alt"
-    >
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-100 mb-4" aria-label={`Título: ${i18n.ABOUT.TITLE}`}>
-        {i18n.ABOUT.TITLE}
-      </h1>
-      <p set:html={i18n.ABOUT.DESCRIPTION} class="text-lg md:text-xl text-gray-300 text-pretty mb-8"></p>
-      <h2 class="text-3xl font-semibold text-gray-100 mb-3">
-        {i18n.ABOUT.SUBTITLE}
-      </h2>
-      <ul class="list-disc list-inside text-lg md:text-xl text-gray-300 text-pretty space-y-2">
-        <li set:html={i18n.ABOUT.LIST_1}></li>
-        <li set:html={i18n.ABOUT.LIST_2}></li>
-        <li set:html={i18n.ABOUT.LIST_3}></li>
-        <li set:html={i18n.ABOUT.LIST_4}></li>
-        <li set:html={i18n.ABOUT.LIST_5}></li>
-      </ul>
+    <div class="about-copy">
+      <h2 class="about-title section-title">{i18n.ABOUT.TITLE}</h2>
+      <p set:html={i18n.ABOUT.DESCRIPTION} class="about-text"></p>
+      <ValuesList title={i18n.ABOUT.SUBTITLE} items={values} />
     </div>
   </div>
 </section>
 
-<script>
-  function isMobile() {
-    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    return regex.test(navigator.userAgent);
-  }
-
-  function hasTouchSupport() {
-    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  }
-
-  document.addEventListener("astro:page-load", () => {
-    const video = document.getElementById("about-video") as HTMLVideoElement;
-    const image = document.getElementById("about-image") as HTMLImageElement;
-    const aboutSection = document.getElementById("about");
-
-    if (isMobile() || hasTouchSupport()) {
-      video.classList.add("hidden");
-      image.classList.remove("hidden");
-      return;
-    }
-
-    if (video && aboutSection) {
-      video.classList.remove("hidden");
-      image.classList.add("hidden");
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              video.play();
-              observer.disconnect();
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-      observer.observe(aboutSection);
-    }
-  });
-</script>
-
 <style>
-  #about {
-    clip-path: polygon(50% 0, 100% 10%, 100% 100%, 0 100%, 0 10%);
+  .about {
+    --peak: var(--about-peak);
+    margin-top: calc(-1 * var(--peak));
+    padding-top: max(7rem, calc(var(--peak) + 2rem));
+    padding-bottom: clamp(6rem, 12vw, 10rem);
+    overflow-x: clip;
   }
-  .gradient-border-alt::before {
-    content: '';
+
+  .about-peak {
     position: absolute;
-    top: -2px; left: -2px; right: -2px;
-    bottom: -2px;
-    border-radius: 8px;
-    background: linear-gradient(to top, #284add, #f21973);
+    inset-inline: 0;
+    top: 0;
     z-index: -1;
+    width: 100%;
+    height: calc(var(--peak) + 1px);
+    transform-origin: bottom;
   }
-  .gradient-border-alt {
-    position: relative;
-    background-color: #1f2937;
-    padding: 40px;
-    border-radius: 8px;
+
+  .peak-body {
+    fill: var(--color-night);
+  }
+
+  .about-blend {
+    position: absolute;
+    inset-inline: 0;
+    bottom: calc(100% - var(--peak) - 1px);
+    z-index: -1;
+    height: 60vh;
+    background: linear-gradient(
+      in oklab,
+      transparent,
+      color-mix(in oklab, var(--color-night) 55%, transparent) 55%,
+      var(--color-night)
+    );
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .about-inner {
+    display: grid;
+    gap: 3.5rem;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  .about-copy {
+    color: white;
+  }
+
+  .about-title {
+    margin-bottom: 1.25rem;
+  }
+
+  .about-text {
+    max-width: 60ch;
+    margin-bottom: 2.75rem;
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    color: var(--color-gray-300);
+    text-wrap: pretty;
+  }
+
+  @media (width >= 48rem) {
+    .about-inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      align-items: center;
+      gap: clamp(3rem, 6vw, 6rem);
+      padding-inline: 3rem;
+    }
+  }
+
+  @keyframes about-peak-flatten {
+    to {
+      scale: 1 0;
+    }
+  }
+
+  @keyframes about-blend-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      .about {
+        view-timeline-name: --about;
+        view-timeline-inset: 0;
+      }
+
+      .about-peak {
+        animation-name: about-peak-flatten;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --about;
+        animation-range: entry 30% entry 90%;
+      }
+
+      .about-blend {
+        animation-name: about-blend-in;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --about;
+        animation-range: entry 30% entry 90%;
+      }
+    }
   }
 </style>

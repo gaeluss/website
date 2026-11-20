@@ -1,95 +1,143 @@
 ---
 import LanguageSelector from './LanguageSelector.astro';
+import MobileMenu from './MobileMenu.astro';
 
 import { getI18N } from '@/i18n';
 
 const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
+
+const navItems = [
+    { href: '#about', label: i18n.HEADER.ABOUT },
+    { href: '#services', label: i18n.HEADER.SERVICES },
+    { href: '#contact', label: i18n.HEADER.CONTACT },
+];
 ---
 
-<header id="header-nav" class="fixed w-screen py-3 z-20 top-0 px-8 lg:px-0">
+<header id="header-nav" class="fixed inset-x-0 top-0 z-20 py-3 px-8 lg:px-0">
     <div class="flex justify-between items-center max-w-7xl mx-auto">
-        <a href="#home" class="flex-shrink-0 size-16">
-            <img src="/logo.svg" alt="Logo">
+        <a href="#home" class="shrink-0 size-16">
+            <img src="/logo.svg" alt="Gaeluss" width="64" height="64">
         </a>
 
-        <nav class="hidden lg:flex flex-1 justify-center">
+        <nav class="site-nav hidden lg:flex flex-1 justify-center">
             <ul class="flex gap-1 md:gap-12">
-                <li><a href="#about" class="relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{i18n.HEADER.VISION}</a></li>
-                <li><a href="#services" class="relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{i18n.HEADER.SERVICES}</a></li>
-                <li><a href="#contact" class="relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{i18n.HEADER.CONTACT}</a></li>
+                {navItems.map(({ href, label }) => (
+                    <li><a href={href} class="nav-link relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{label}</a></li>
+                ))}
             </ul>
         </nav>
 
         <div class="hidden lg:flex items-center">
-            <LanguageSelector />
+            <LanguageSelector id="lang-desktop" />
         </div>
 
-        <button id="menu-toggle" class="lg:hidden focus:outline-none" aria-label="Open the menu">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <button
+            id="menu-toggle"
+            type="button"
+            class="menu-toggle focus-ring"
+            aria-label={i18n.HEADER.MENU}
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            data-menu-toggle
+        >
+            <svg class="w-6 h-6 text-white" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
     </div>
-    
-    <div id="mobile-menu" class="lg:hidden hidden flex-col items-center mt-4 space-y-4">
-        <nav>
-            <ul class="flex flex-col gap-4 uppercase">
-                <li><a href="#about">{i18n.HEADER.VISION}</a></li>
-                <li><a href="#services">{i18n.HEADER.SERVICES}</a></li>
-                <li><a href="#contact">{i18n.HEADER.CONTACT}</a></li>
-            </ul>
-        </nav>
-        <LanguageSelector />
-    </div>
+
+    <MobileMenu items={navItems} />
 </header>
 
 <script>
-    document.addEventListener('astro:page-load', function () {
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('nav ul li a');
+    const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('.site-nav a[href^="#"]')];
 
-        const options = {
-        root: null,
-        threshold: 0.3
+    if (CSS.supports('scroll-target-group: auto')) {
+        const syncAriaCurrent = () => {
+            const current = new Set(document.querySelectorAll('.site-nav a:target-current'));
+            navLinks.forEach((link) => link.setAttribute('aria-current', String(current.has(link))));
+        };
+        syncAriaCurrent();
+        document.addEventListener('scrollend', syncAriaCurrent);
+        document.querySelector('[data-menu-toggle]')?.addEventListener('click', () => requestAnimationFrame(() => requestAnimationFrame(syncAriaCurrent)));
+    } else {
+        let currentId: string | null = null;
+        const setCurrent = (id: string | null) => {
+            currentId = id;
+            navLinks.forEach((link) => {
+                const isActive = id !== null && link.hash === `#${id}`;
+                link.classList.toggle('target-current', isActive);
+                link.setAttribute('aria-current', String(isActive));
+            });
         };
 
-        function handleIntersect(entries: any[]) {
-            entries.forEach((entry: { isIntersecting: any; target: { getAttribute: (arg0: string) => any; }; }) => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                const sectionId = entry.target.getAttribute('id');
-
-                navLinks.forEach((link) => link.classList.remove('active-link'));
-
-                const activeLink = document.querySelector(`nav ul li a[href="#${sectionId}"]`);
-                if (activeLink) {
-                    activeLink.classList.add('active-link');
-                }
+                    setCurrent(entry.target.id);
+                } else if (entry.target.id === currentId) {
+                    setCurrent(null);
                 }
             });
-        }
+        }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
 
-        const observer = new IntersectionObserver(handleIntersect, options);
-
-        sections.forEach((section) => observer.observe(section));
-
-        const menuToggle = document.getElementById('menu-toggle')!;
-        const mobileMenu = document.getElementById('mobile-menu')!;
-
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        new Set(navLinks.map((link) => link.hash.slice(1))).forEach((id) => {
+            const section = document.getElementById(id);
+            if (section) observer.observe(section);
         });
-    });
+    }
 </script>
 
 <style>
-.active-link::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: white;
-    transform: scaleX(1);
-    transition: transform 0.5s;
-}
+    #header-nav {
+        scroll-target-group: auto;
+    }
+
+    @keyframes header-backdrop {
+        to {
+            box-shadow:
+                0 5px 50px -5px rgb(0 0 0 / 0.1),
+                0 0 0 1px rgb(0 0 0 / 0.3);
+            background: rgb(0 0 0 / 0.3);
+            backdrop-filter: blur(10px);
+        }
+    }
+
+    #header-nav {
+        animation-name: header-backdrop;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+    }
+
+    @supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+        #header-nav {
+            animation-timeline: scroll(root);
+            animation-range: 0 500px;
+        }
+    }
+
+    .nav-link:is(:target-current, .target-current)::after {
+        scale: 1;
+    }
+
+    .menu-toggle {
+        display: grid;
+        place-items: center;
+        inline-size: 2.75rem;
+        block-size: 2.75rem;
+        margin-inline-end: -0.625rem;
+        border-radius: 999px;
+        transition: background-color 0.2s ease-out;
+    }
+
+    .menu-toggle:hover {
+        background: rgb(255 255 255 / 0.08);
+    }
+
+    @media (width >= 64rem) {
+        .menu-toggle {
+            display: none;
+        }
+    }
 </style>

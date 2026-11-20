@@ -1,35 +1,280 @@
 ---
-import Error404Layout from "@/layouts/Error404Layout.astro";
-import { getI18N } from "@/i18n";
+import Error404Layout from '@/layouts/Error404Layout.astro';
+import { getI18N } from '@/i18n';
+import { LANGUAGES, defaultLang, type Lang } from '@/i18n/ui';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { COMPANY } from '@/data/company';
+import LostPlanet from '@/components/404/LostPlanet.astro';
+import PillButton from '@/components/ui/PillButton.astro';
 
-import { getLangFromUrl, useTranslatedPath } from "@/i18n/utils";
+const fallbackLang: Lang = 'en';
+const codes = Object.keys(LANGUAGES) as Lang[];
 
-const lang = getLangFromUrl(Astro.url);
-const defaultLng = 'en';
-const i18n = getI18N({ currentLocale: defaultLng })
-const translatePath = useTranslatedPath(lang);
+const copy = Object.fromEntries(
+  codes.map((code) => {
+    const i18n = getI18N({ currentLocale: code });
+    const home = getRelativeLocaleUrl(code);
+    return [
+      code,
+      {
+        documentTitle: `404 · ${i18n.ERRORS.PAGE_NOT_FOUND_TITLE} | ${COMPANY.name}`,
+        description: i18n.ERRORS.PAGE_NOT_FOUND_DESCRIPTION,
+        title: i18n.ERRORS.PAGE_NOT_FOUND_TITLE,
+        message: i18n.ERRORS.PAGE_NOT_FOUND_MESSAGE,
+        home: i18n.ERRORS.GO_BACK_HOME,
+        nav: i18n.FOOTER.LINKS,
+        homeHref: home,
+        links: [
+          { label: i18n.HEADER.ABOUT, href: `${home}#about` },
+          { label: i18n.HEADER.SERVICES, href: `${home}#services` },
+          { label: i18n.HEADER.CONTACT, href: `${home}#contact` },
+        ],
+      },
+    ];
+  })
+) as Record<Lang, {
+  documentTitle: string;
+  description: string;
+  title: string;
+  message: string;
+  home: string;
+  nav: string;
+  homeHref: string;
+  links: { label: string; href: string }[];
+}>;
+
+const initial = copy[fallbackLang];
 ---
 
-<Error404Layout title=`${i18n.ERRORS.PAGE_NOT_FOUND_TITLE}&nbsp;${new Date().getFullYear()}` description={i18n.ERRORS.PAGE_NOT_FOUND_DESCRIPTION}>
-    <div class="relative min-h-screen flex items-center justify-center">
-        <div class="absolute inset-0 overflow-hidden">
-          <div class="absolute w-[500px] h-[500px] rounded-full bg-[#284add] opacity-70 blur-[100px] -top-48 -left-24"></div>
-          <div class="absolute w-[400px] h-[400px] rounded-full bg-[#f21973] opacity-70 blur-[100px] -bottom-32 -right-16"></div>
-        </div>
-  
-        <main class="relative z-10 text-center p-4 max-w-2xl mx-auto">
-          <h1 class="text-[150px] font-bold leading-none tracking-tighter mb-6 bg-gradient-to-r from-[#284add] to-[#f21973] text-transparent bg-clip-text">
-            404
-          </h1>
-          <p class="text-2xl mb-8 font-light">
-            {i18n.ERRORS.PAGE_NOT_FOUND_MESSAGE}
-          </p>
-          <a 
-            href={translatePath('/')}
-            class="inline-block px-8 py-3 rounded-full bg-gradient-to-br from-[#284add] to-[#f21973] text-white font-medium transition-transform hover:scale-105 hover:shadow-lg hover:shadow-[#284add]/20"
-          >
-            {i18n.ERRORS.GO_BACK_HOME}
-          </a>
-        </main>
+<Error404Layout lang={fallbackLang} title={initial.documentTitle} description={initial.description}>
+  <div class="lost">
+    <div class="lost-sky" aria-hidden="true">
+      <div class="lost-stars starfield"></div>
     </div>
+
+    <header class="lost-header">
+      <a href={initial.homeHref} class="lost-logo focus-ring" data-home>
+        <img src="/logo.svg" alt={COMPANY.name} width="56" height="56" />
+      </a>
+    </header>
+
+    <main class="lost-main">
+      <div class="lost-scene" aria-hidden="true">
+        <span class="lost-digit">4</span>
+        <LostPlanet />
+        <span class="lost-digit">4</span>
+      </div>
+
+      <h1 class="lost-title" data-copy="title">{initial.title}</h1>
+      <p class="lost-text" data-copy="message">{initial.message}</p>
+
+      <p class="lost-path" data-path hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9 15l6-6M10.5 6.5l1.4-1.4a4 4 0 0 1 5.7 5.7l-1.4 1.4M13.5 17.5l-1.4 1.4a4 4 0 0 1-5.7-5.7l1.4-1.4" />
+        </svg>
+        <code></code>
+      </p>
+
+      <PillButton href={initial.homeHref} direction="back" class="lost-button" data-home>
+        <span data-copy="home">{initial.home}</span>
+      </PillButton>
+
+      <nav class="lost-nav" aria-label={initial.nav} data-nav>
+        <ul role="list">
+          {initial.links.map(({ label, href }) => (
+            <li><a href={href} class="link-underline focus-ring text-gray-300" data-link>{label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </main>
+  </div>
+
+  <script is:inline define:vars={{ copy, fallbackLang, defaultLang }}>
+    const segment = location.pathname.split('/')[1];
+    const browserLangs = navigator.languages.map((tag) => {
+      const base = tag.toLowerCase().split('-')[0];
+      return base === 'nb' || base === 'nn' ? 'no' : base;
+    });
+    const fromPath = segment !== defaultLang && Object.hasOwn(copy, segment) ? [segment] : [];
+    const lang = [...fromPath, ...browserLangs].find((code) => Object.hasOwn(copy, code)) ?? fallbackLang;
+    const t = copy[lang];
+
+    document.documentElement.lang = lang;
+    document.title = t.documentTitle;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t.description);
+    document.querySelectorAll('[data-copy]').forEach((element) => {
+      element.textContent = t[element.dataset.copy];
+    });
+    document.querySelectorAll('[data-home]').forEach((element) => element.setAttribute('href', t.homeHref));
+    document.querySelector('[data-nav]')?.setAttribute('aria-label', t.nav);
+    document.querySelectorAll('[data-link]').forEach((element, index) => {
+      element.textContent = t.links[index].label;
+      element.setAttribute('href', t.links[index].href);
+    });
+
+    let path = location.pathname;
+    try {
+      path = decodeURIComponent(path);
+    } catch {}
+    const pathLabel = document.querySelector('[data-path]');
+    if (pathLabel && path !== '/' && !/^\/404(\.html)?$/.test(path)) {
+      pathLabel.querySelector('code').textContent = path;
+      pathLabel.hidden = false;
+    }
+  </script>
 </Error404Layout>
+
+<style>
+  .lost {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100dvh;
+    overflow: clip;
+    background:
+      radial-gradient(60% 50% at 15% 0%, color-mix(in srgb, var(--color-brand-blue) 28%, transparent), transparent),
+      radial-gradient(55% 45% at 90% 100%, color-mix(in srgb, var(--color-brand-pink) 22%, transparent), transparent),
+      linear-gradient(var(--color-night-blue), var(--color-night));
+  }
+
+  .lost-sky {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .lost-stars {
+    position: absolute;
+    inset: 0;
+  }
+
+  .lost-header {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .lost-logo {
+    display: inline-block;
+    border-radius: 0.75rem;
+  }
+
+  .lost-main {
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    padding: 1rem 1.5rem 4rem;
+    text-align: center;
+  }
+
+  .lost-scene {
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: clamp(6.5rem, 26vw, 15rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    user-select: none;
+  }
+
+  .lost-digit {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(#fff 30%, #a9b6e6);
+    background-clip: text;
+    color: transparent;
+  }
+
+  .lost-title {
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.875rem, 1.4rem + 2vw, 3rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .lost-text {
+    max-width: 44ch;
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--color-gray-300);
+    text-wrap: pretty;
+  }
+
+  .lost-path {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    padding: 0.375rem 0.875rem;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.04);
+    color: var(--color-gray-400);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .lost-path[hidden] {
+    display: none;
+  }
+
+  .lost-path svg {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: var(--color-brand-rose);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+  }
+
+  .lost-path code {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in srgb, var(--color-brand-rose) 60%, transparent);
+  }
+
+  .lost-main :global(.lost-button) {
+    margin-bottom: 2rem;
+  }
+
+  .lost-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.75rem;
+  }
+
+  @media (width >= 48rem) {
+    .lost-header {
+      padding: 1rem 3rem;
+    }
+  }
+
+  @keyframes scene-in {
+    from {
+      opacity: 0;
+      scale: 0.92;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lost-scene {
+      animation-name: scene-in;
+      animation-duration: 0.9s;
+      animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+      animation-fill-mode: both;
+    }
+  }
+</style>

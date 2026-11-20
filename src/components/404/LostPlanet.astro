@@ -1,0 +1,148 @@
+<div class="lost-planet" data-planet>
+  <div class="orbit orbit-back">
+    <span class="orbit-ring"></span>
+    <span class="satellite"></span>
+  </div>
+  <span class="planet-ball" data-planet-ball></span>
+  <div class="orbit orbit-front">
+    <span class="orbit-ring"></span>
+    <span class="satellite"></span>
+  </div>
+</div>
+
+<script>
+  import { reducedMotion } from '@/scripts/pointer';
+
+  const planet = document.querySelector<HTMLElement>('[data-planet]');
+  const ball = planet?.querySelector<HTMLElement>('[data-planet-ball]');
+
+  if (planet && ball && !reducedMotion.matches) {
+    const tilt = (-14 * Math.PI) / 180;
+    const radiusX = 0.95;
+    const radiusY = 0.28;
+    let current = 30;
+    let ready = false;
+
+    Promise.all(planet.getAnimations().map((animation) => animation.finished))
+      .catch(() => undefined)
+      .then(() => {
+        ready = true;
+      });
+
+    const follow = (event: PointerEvent) => {
+      if (!ready) return;
+      const rect = ball.getBoundingClientRect();
+      const dx = event.clientX - rect.left - rect.width / 2;
+      const dy = event.clientY - rect.top - rect.height / 2;
+      const localX = dx * Math.cos(tilt) + dy * Math.sin(tilt);
+      const localY = -dx * Math.sin(tilt) + dy * Math.cos(tilt);
+      let target = (Math.atan2(localY / radiusY, localX / radiusX) * 180) / Math.PI;
+      target += 360 * Math.round((current - target) / 360);
+      current = target;
+      planet.style.setProperty('--angle', `${target.toFixed(1)}deg`);
+    };
+
+    window.addEventListener('pointermove', follow, { passive: true });
+    window.addEventListener('pointerdown', follow, { passive: true });
+  }
+</script>
+
+<style>
+  @property --angle {
+    syntax: '<angle>';
+    inherits: true;
+    initial-value: 30deg;
+  }
+
+  .lost-planet {
+    --rx: 0.95em;
+    --ry: 0.28em;
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 1.5em;
+    height: 1em;
+    font-size: 0.66em;
+  }
+
+  .planet-ball {
+    position: relative;
+    z-index: 2;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 32% 28%,
+      #b4c2ff 0%,
+      #5470f2 18%,
+      #2539a8 42%,
+      #101850 70%,
+      #070a1c 100%
+    );
+    box-shadow:
+      inset -0.07em -0.06em 0.14em color-mix(in srgb, var(--color-brand-pink) 60%, transparent),
+      0 0 0.4em color-mix(in srgb, var(--color-brand-blue) 50%, transparent),
+      0 0 0.9em color-mix(in srgb, var(--color-brand-pink) 18%, transparent);
+  }
+
+  .orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--rx) * 2);
+    height: calc(var(--ry) * 2);
+    translate: -50% -50%;
+    rotate: -14deg;
+    pointer-events: none;
+  }
+
+  .orbit-back {
+    z-index: 1;
+  }
+
+  .orbit-front {
+    z-index: 3;
+    clip-path: inset(50% -50% -50% -50%);
+  }
+
+  .orbit-ring {
+    position: absolute;
+    inset: 0;
+    border: 0.012em solid rgb(255 255 255 / 0.4);
+    border-radius: 50%;
+  }
+
+  .orbit-back .orbit-ring {
+    border-color: rgb(255 255 255 / 0.22);
+  }
+
+  .satellite {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.09em;
+    height: 0.09em;
+    margin: -0.045em 0 0 -0.045em;
+    border-radius: 50%;
+    background: var(--color-brand-rose);
+    box-shadow:
+      0 0 0.05em #fff inset,
+      0 0 0.12em color-mix(in srgb, var(--color-brand-pink) 90%, transparent);
+    translate: calc(cos(var(--angle)) * var(--rx)) calc(sin(var(--angle)) * var(--ry));
+  }
+
+  @keyframes satellite-intro {
+    from {
+      --angle: -330deg;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lost-planet {
+      animation-name: satellite-intro;
+      animation-duration: 2.2s;
+      animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+      transition: --angle 0.9s cubic-bezier(0.22, 0.8, 0.24, 1);
+    }
+  }
+</style>

@@ -1,0 +1,421 @@
+---
+import LanguageSelector from './LanguageSelector.astro';
+import SocialLinks from '@/components/ui/SocialLinks.astro';
+import { COMPANY } from '@/data/company';
+import { getI18N } from '@/i18n';
+
+interface Props {
+  items: { href: string; label: string }[];
+}
+
+const { items } = Astro.props;
+const { currentLocale } = Astro;
+const i18n = getI18N({ currentLocale });
+---
+
+<dialog id="mobile-menu" class="menu" aria-label={i18n.HEADER.MENU} data-menu>
+  <div class="menu-sky" aria-hidden="true">
+    <div class="menu-stars starfield"></div>
+    <div class="menu-planet">
+      <div class="menu-halo"></div>
+      <div class="menu-planet-body"></div>
+    </div>
+  </div>
+
+  <div class="menu-inner">
+    <div class="menu-bar">
+      <a href="#home" class="menu-logo focus-ring" data-menu-link>
+        <img src="/logo.svg" alt="Gaeluss" width="64" height="64" />
+      </a>
+      <button type="button" class="menu-button focus-ring" aria-label={i18n.HEADER.CLOSE} data-menu-close autofocus>
+        <svg class="menu-close-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12" />
+          <path d="M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="menu-nav site-nav" aria-label={i18n.HEADER.MENU}>
+      <ul class="menu-list" role="list">
+        {items.map(({ href, label }, index) => (
+          <li class="menu-item" style={`--i: ${index}`}>
+            <a href={href} class="menu-link focus-ring" data-menu-link>
+              <span class="menu-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <span class="menu-label">{label}</span>
+              <svg class="menu-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M7 17L17 7M9 7h8v8" />
+              </svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="menu-footer" style={`--i: ${items.length}`}>
+      <p class="menu-heading">{i18n.HEADER.LANGUAGE}</p>
+      <LanguageSelector id="lang-mobile" variant="inline" />
+
+      <div class="menu-contact">
+        <a href={`mailto:${COMPANY.email}`} class="menu-mail link-underline focus-ring">{COMPANY.email}</a>
+        <SocialLinks />
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>('[data-menu]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+
+  if (menu && toggle) {
+    const desktop = window.matchMedia('(width >= 64rem)');
+    let closing: Promise<void> | null = null;
+
+    const settle = () =>
+      Promise.race([
+        Promise.allSettled(menu.getAnimations({ subtree: true }).map((animation) => animation.finished)),
+        new Promise((resolve) => setTimeout(resolve, 600)),
+      ]);
+
+    const closeMenu = () => {
+      if (!menu.open) return Promise.resolve();
+      closing ??= (async () => {
+        menu.setAttribute('data-closing', '');
+        await settle();
+        menu.removeAttribute('data-closing');
+        menu.close();
+        closing = null;
+      })();
+      return closing;
+    };
+
+    toggle.addEventListener('click', () => {
+      menu.showModal();
+      toggle.setAttribute('aria-expanded', 'true');
+    });
+
+    menu.addEventListener('close', () => toggle.setAttribute('aria-expanded', 'false'));
+
+    menu.addEventListener('cancel', (event) => {
+      if (!event.cancelable) return;
+      event.preventDefault();
+      closeMenu();
+    });
+
+    menu.querySelector('[data-menu-close]')?.addEventListener('click', () => closeMenu());
+
+    menu.addEventListener('click', (event) => {
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[data-menu-link]') : null;
+      if (!link) return;
+      const target = document.getElementById(link.hash.slice(1));
+      if (!target) return;
+      event.preventDefault();
+      closeMenu().then(() => {
+        history.pushState(null, '', link.hash);
+        target.scrollIntoView();
+        target.focus({ preventScroll: true });
+      });
+    });
+
+    desktop.addEventListener('change', (event) => {
+      if (event.matches && menu.open) menu.close();
+    });
+  }
+</script>
+
+<style>
+  :global(html:has(#mobile-menu[open])) {
+    overflow: hidden;
+  }
+
+  .menu {
+    position: fixed;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100dvh;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    background: linear-gradient(var(--color-night-blue), var(--color-night) 70%);
+    color: white;
+    opacity: 1;
+    transition: opacity 0.3s ease-out;
+  }
+
+  .menu::backdrop {
+    background: var(--color-night);
+  }
+
+  .menu[open] {
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  .menu[data-closing] {
+    opacity: 0;
+  }
+
+  .menu-sky,
+  .menu-sky > * {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .menu-sky {
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .menu-stars {
+    inset: 0;
+    background-size: 100% 26rem;
+    mask: linear-gradient(#000 30%, transparent 85%);
+    opacity: 0.8;
+  }
+
+  .menu-planet {
+    left: 50%;
+    top: calc(100% - 5.5rem);
+    width: max(170%, 40rem);
+    aspect-ratio: 1;
+    translate: -50% 0;
+  }
+
+  .menu-halo,
+  .menu-planet-body,
+  .menu-planet-body::after {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+  }
+
+  .menu-halo {
+    inset: -3px;
+    background: linear-gradient(90deg, var(--color-brand-blue), #7b3fe4 50%, var(--color-brand-pink));
+    filter: blur(28px);
+    opacity: 0.85;
+  }
+
+  .menu-planet-body {
+    background: radial-gradient(circle at 50% 0%, #141c38, var(--color-night) 30%);
+  }
+
+  .menu-planet-body::after {
+    content: '';
+    padding: 1.5px;
+    background: linear-gradient(90deg, transparent 18%, var(--color-brand-periwinkle) 34%, #fff 50%, var(--color-brand-rose) 66%, transparent 82%);
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+
+  .menu-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.75rem 2rem calc(7rem + env(safe-area-inset-bottom));
+  }
+
+  .menu-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .menu-logo {
+    flex: none;
+    inline-size: 4rem;
+    block-size: 4rem;
+    border-radius: 999px;
+  }
+
+  .menu-button {
+    display: grid;
+    place-items: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    margin-inline-end: -0.625rem;
+    border-radius: 999px;
+    color: white;
+    transition: background-color 0.2s ease-out;
+  }
+
+  .menu-button:hover {
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  .menu-close-icon {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .menu-nav {
+    margin-block: clamp(2rem, 8dvh, 4.5rem) 2.5rem;
+  }
+
+  .menu-list {
+    display: grid;
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .menu-item,
+  .menu-footer {
+    transition:
+      opacity 0.5s ease-out,
+      translate 0.6s cubic-bezier(0.2, 0.7, 0.3, 1);
+    transition-delay: calc(var(--i) * 70ms + 120ms);
+  }
+
+  .menu-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1.125rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+    font-size: clamp(2rem, 1.4rem + 3vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: white;
+  }
+
+  .menu-index {
+    inline-size: 2ch;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--color-gray-500);
+    transition: color 0.2s ease-out;
+  }
+
+  .menu-arrow {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    margin-inline-start: auto;
+    fill: none;
+    stroke: rgb(255 255 255 / 0.35);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition:
+      stroke 0.2s ease-out,
+      translate 0.25s ease-out;
+  }
+
+  .menu-link:hover .menu-arrow,
+  .menu-link:focus-visible .menu-arrow {
+    stroke: white;
+    translate: 0.125rem -0.125rem;
+  }
+
+  .menu-link:is(:target-current, .target-current) .menu-index {
+    color: var(--color-brand-rose);
+  }
+
+  .menu-link:is(:target-current, .target-current) .menu-arrow {
+    stroke: var(--color-brand-rose);
+  }
+
+  .menu-link:is(:target-current, .target-current) .menu-label {
+    background: linear-gradient(90deg, #fff, var(--color-brand-periwinkle) 55%, var(--color-brand-rose));
+    background-clip: text;
+    color: transparent;
+  }
+
+  .menu-footer {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+
+  .menu-heading {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gray-500);
+  }
+
+  .menu-contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .menu-mail {
+    font-weight: 500;
+    color: var(--color-gray-200);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .menu[open] {
+      .menu-item,
+      .menu-footer {
+        @starting-style {
+          opacity: 0;
+          translate: 0 1.25rem;
+        }
+      }
+
+      .menu-planet {
+        transition: translate 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) 0.1s;
+
+        @starting-style {
+          translate: -50% 4rem;
+        }
+      }
+
+      .menu-close-icon {
+        transition: rotate 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
+
+        @starting-style {
+          rotate: -90deg;
+        }
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu {
+      transition-duration: 0.15s;
+    }
+
+    .menu[open] {
+      .menu-item,
+      .menu-footer {
+        @starting-style {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  @media (height < 36rem) {
+    .menu-planet {
+      top: calc(100% - 2.5rem);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .menu {
+      display: none;
+    }
+  }
+</style>

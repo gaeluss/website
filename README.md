@@ -15,7 +15,7 @@
 
 ## 📦 Installation
 
-To get started with this project, make sure you have `pnpm` installed on your machine. If you don't have it yet, you can install it by running:
+To get started with this project, make sure you have Node.js 22.23.4 or later (the version in `.nvmrc`, use `nvm use`) and `pnpm` installed on your machine. If you don't have it yet, you can install it by running:
 
 ```sh
 npm install -g pnpm
@@ -37,26 +37,29 @@ To start the development server, run:
 pnpm dev
 ```
 
-This will start a local server at http://localhost:3000 where you can view and work on the project in real time.
+This will start a local server at http://localhost:4321 where you can view and work on the project in real time.
 
 ## 🛠️ Available Commands
 
 - `pnpm dev` - Starts the development server.
 - `pnpm build` - Builds an optimized version for production.
 - `pnpm preview` - Previews the optimized build.
-- `pnpm lint` - Checks the code for errors and best practices.
+- `pnpm astro check` - Type-checks the project (also runs as part of `pnpm build`).
 
 ## 📂 Project Structure
 
 ```sh
-├── public/                # Static files
+├── public/                # Static files (robots.txt, brand images, videos)
 ├── src/
-│   ├── components/        # Reusable Astro components
+│   ├── assets/            # Optimized images and self-hosted fonts
+│   ├── components/        # Astro components, grouped by section (about, services, ui, 404)
+│   ├── data/              # Company details and social profiles
 │   ├── layouts/           # Layouts for pages
-│   ├── pages/             # Main site pages
-│   └── i18n/              # Internationalization files
-├── astro.config.mjs       # Astro configuration
-├── tailwind.config.cjs    # Tailwind CSS configuration
+│   ├── pages/             # Site pages and llms.txt endpoint
+│   ├── i18n/              # Translations and language list
+│   ├── scripts/           # Shared client-side scripts
+│   └── styles/            # Global CSS, theme tokens and utilities (Tailwind)
+├── astro.config.mjs       # Astro configuration (i18n, fonts, sitemap)
 └── package.json           # Dependency configuration file
 ```
 

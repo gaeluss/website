@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/images/logo-blanco.webp';
+---
+
+<div class="about-stage" aria-hidden="true">
+  <div class="stage-logo">
+    <video id="about-video" class="hidden" preload="metadata" muted playsinline>
+      <source src="/motion-logo.webm" type="video/webm" />
+      <source src="/motion-logo.mp4" type="video/mp4" />
+    </video>
+    <Image
+      id="about-image"
+      src={logo}
+      alt=""
+      widths={[272, 416, 544, 832]}
+      sizes="(width >= 48rem) 26rem, 17rem"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</div>
+
+<script>
+  import { finePointerMotion } from '@/scripts/pointer';
+
+  const video = document.getElementById('about-video') as HTMLVideoElement | null;
+  const image = document.getElementById('about-image');
+
+  if (video && image && finePointerMotion.matches) {
+    video.classList.remove('hidden');
+    image.classList.add('hidden');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        video.play().catch(() => {
+          video.classList.add('hidden');
+          image.classList.remove('hidden');
+        });
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(video);
+  }
+</script>
+
+<style>
+  .about-stage {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 22rem);
+    aspect-ratio: 1;
+  }
+
+  .stage-logo {
+    position: absolute;
+    inset: -6%;
+  }
+
+  .stage-logo video,
+  .stage-logo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stage-logo video {
+    mix-blend-mode: screen;
+  }
+
+  @media (width >= 48rem) {
+    .about-stage {
+      width: min(100%, 34rem);
+    }
+  }
+</style>

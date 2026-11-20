@@ -4,66 +4,132 @@ const { currentLocale } = Astro;
 const i18n = getI18N({ currentLocale });
 ---
 
-<div id="home" class="relative h-dvh w-full max-w-[100vw] md:aspect-video md:h-[80vh] xl:h-full overflow-hidden">
-  <div class="absolute inset-0 h-full justify-center z-10 m-auto flex flex-col items-center w-full">
-    <div class="w-full h-full absolute z-10 bg-black/70"></div>
-    <section class="absolute z-10 animate-fade-up flex justify-center items-center gap-8 flex-col">
-      <h1 class="title flex items-center gap-5 text-4xl md:text-6xl lg:gap-10 lg:text-8xl text-white">
-        <span>G</span>
-        <span>A</span>
-        <span>E</span>
-        <span>L</span>
-        <span>U</span>
-        <span>S</span>
-        <span>S</span>
-      </h1>
-
-      <p class="subtitle text-xl lg:text-2xl text-center text-wrap px-4 text-white">
-        {i18n.VIDEO.SUBTITLE}
-      </p>
-    </section>
-
+<div id="home" class="hero relative isolate w-full max-w-[100vw] overflow-hidden">
+  <div class="hero-media absolute inset-0">
     <video
-      autoplay
       loop
       muted
       playsinline
       id="main-video"
       preload="metadata"
-      class="video hidden overflow-hidden cp-v h-full w-full object-cover object-top animate-duration-[2s] animate-ease-in-out"
-      style="clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 50% 100%, 0% 85%);"
+      class="h-full w-full object-cover object-top motion-safe:animate-fade animate-duration-[2s] animate-ease-in-out"
     >
       <source src="/video.webm" type="video/webm" />
       <source src="/video.mp4" type="video/mp4" />
     </video>
   </div>
+
+  <div class="hero-shade absolute inset-0 bg-black opacity-70"></div>
+
+  <div class="hero-content absolute inset-x-0 flex items-center justify-center">
+    <div class="motion-safe:animate-fade-up flex justify-center items-center gap-8 flex-col">
+      <h1 class="title text-4xl md:text-6xl lg:text-8xl text-white">
+        <span class="sr-only">Gaeluss</span>{" "}
+        <span class="flex items-center gap-5 lg:gap-10" aria-hidden="true">
+          <span>G</span>
+          <span>A</span>
+          <span>E</span>
+          <span>L</span>
+          <span>U</span>
+          <span>S</span>
+          <span>S</span>
+        </span>
+      </h1>
+
+      <p class="subtitle mb-0 text-xl lg:text-2xl text-center text-wrap px-4 text-white">
+        {i18n.VIDEO.SUBTITLE}
+      </p>
+    </div>
+  </div>
 </div>
 
 <script>
-  function resetAndPlayVideo() {
-    const firstVideo = document.querySelector("#main-video") as HTMLVideoElement;
+  const video = document.getElementById('main-video') as HTMLVideoElement | null;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    if (firstVideo) {
-      firstVideo.pause();
-      firstVideo.currentTime = 0;
-
-      firstVideo.classList.remove("hidden");
-      firstVideo.classList.add("animate-fade");
-
-      firstVideo.play().catch((error) => {
-        console.warn("El video no se pudo reproducir automáticamente:", error);
-      });
+  const syncPlayback = () => {
+    if (!video) return;
+    if (reducedMotion.matches) {
+      video.pause();
+      return;
     }
-  }
+    video.play().catch((error) => {
+      console.warn('El vídeo no se pudo reproducir automáticamente:', error);
+    });
+  };
 
-  document.addEventListener("astro:page-load", resetAndPlayVideo);
+  syncPlayback();
+  reducedMotion.addEventListener('change', syncPlayback);
 </script>
 
 <style>
+  .hero {
+    height: calc(100dvh + var(--about-peak));
+  }
+
+  .hero-content {
+    top: 5.5rem;
+    bottom: var(--about-peak);
+  }
+
   .title {
-    font-family: 'NewestShape', sans-serif;
+    font-family: var(--font-gaeluss-title);
   }
   .subtitle {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+
+  @keyframes hero-media-sink {
+    to {
+      translate: 0 35%;
+      scale: 1.08;
+    }
+  }
+
+  @keyframes hero-shade-darken {
+    to {
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes hero-content-fade {
+    to {
+      translate: 0 20%;
+      scale: 0.94;
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports ((animation-timeline: view()) and (animation-range: entry)) {
+      .hero {
+        view-timeline-name: --hero;
+        view-timeline-inset: 0;
+      }
+
+      .hero-media {
+        animation-name: hero-media-sink;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --hero;
+        animation-range: exit-crossing 0% exit-crossing 100%;
+      }
+
+      .hero-shade {
+        animation-name: hero-shade-darken;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --hero;
+        animation-range: exit-crossing 0% exit-crossing 100%;
+      }
+
+      .hero-content {
+        animation-name: hero-content-fade;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --hero;
+        animation-range: exit-crossing 0% exit-crossing 45%;
+      }
+    }
   }
 </style>
