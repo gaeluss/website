@@ -142,6 +142,30 @@ html {
   }
 }
 
+@utility nav-underline {
+  display: inline-block;
+  transition: color 0.2s ease-out;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 2px;
+    margin-top: 0.25rem;
+    background: white;
+    scale: 0 1;
+    transform-origin: left;
+    transition: scale 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &:hover {
+    color: white;
+  }
+
+  &:hover::after {
+    scale: 1;
+  }
+}
+
 @utility focus-ring {
   &:focus-visible {
     outline: 2px solid white;

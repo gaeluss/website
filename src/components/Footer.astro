@@ -20,14 +20,14 @@ const links = [
       <div class="footer-brand">
         <h2 class="footer-name">Gaeluss</h2>
         <p class="footer-text">{i18n.FOOTER.DESCRIPTION}</p>
-        <a href={`mailto:${COMPANY.email}`} class="footer-mail link-underline focus-ring text-gray-200">{COMPANY.email}</a>
+        <a href={`mailto:${COMPANY.email}`} class="footer-mail nav-underline focus-ring text-gray-200">{COMPANY.email}</a>
       </div>
 
       <nav aria-labelledby="footer-links-title">
         <h2 id="footer-links-title" class="footer-heading">{i18n.FOOTER.LINKS}</h2>
         <ul class="footer-list" role="list">
           {links.map(({ href, label }) => (
-            <li><a href={href} class="link-underline focus-ring text-gray-200">{label}</a></li>
+            <li><a href={href} class="nav-underline focus-ring text-gray-200">{label}</a></li>
           ))}
         </ul>
       </nav>
