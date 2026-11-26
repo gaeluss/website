@@ -23,7 +23,7 @@ const navItems = [
         <nav class="site-nav hidden lg:flex flex-1 justify-center">
             <ul class="flex gap-1 md:gap-12">
                 {navItems.map(({ href, label }) => (
-                    <li><a href={href} class="nav-link relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-white after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-500 after:origin-left after:mt-1 uppercase">{label}</a></li>
+                    <li><a href={href} class="nav-link nav-underline uppercase">{label}</a></li>
                 ))}
             </ul>
         </nav>
